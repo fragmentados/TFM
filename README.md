@@ -1,2 +1,2 @@
-# TFM
-Java Spring Boot Hibernate + Angular  -> Calendar Food Schedule App
+# Eat Fit Week
+Java Spring Boot Hibernate + Angular  -> Eat Fit Week App
