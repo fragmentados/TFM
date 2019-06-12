@@ -1,0 +1,11 @@
+INSERT INTO USER VALUES(1, 'Elías', 'Ferreiro', 'test@mail.com');
+INSERT INTO USER VALUES(2, 'Esther', 'Lopez', 'test@mail.com');
+
+INSERT INTO INGREDIENT VALUES(1, 'Patatas', 100, 100, 100);
+INSERT INTO INGREDIENT VALUES(2, 'Lechuga', 100, 100, 100);
+INSERT INTO INGREDIENT VALUES(3, 'Carne', 100, 100, 100);
+
+INSERT INTO DISH VALUES(1, 'Patatas con lechuga');
+INSERT INTO DISH VALUES(2, 'Carne con patatas');
+
+INSERT INTO MENU VALUES(1);

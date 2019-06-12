@@ -1,6 +1,8 @@
-package com.devglan.userportal;
+package com.eliasfb.efw.service;
 
 import java.util.List;
+
+import com.eliasfb.efw.model.User;
 
 public interface UserService {
 

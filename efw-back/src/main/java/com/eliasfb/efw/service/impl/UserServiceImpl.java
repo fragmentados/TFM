@@ -1,7 +1,11 @@
-package com.devglan.userportal;
+package com.eliasfb.efw.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.eliasfb.efw.model.User;
+import com.eliasfb.efw.repository.UserRepository;
+import com.eliasfb.efw.service.UserService;
 
 import java.util.List;
 

@@ -1,6 +1,8 @@
-package com.devglan.userportal;
+package com.eliasfb.efw.repository;
 
 import org.springframework.data.repository.Repository;
+
+import com.eliasfb.efw.model.User;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
-package com.devglan.userportal;
+package com.eliasfb.efw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserPortalApplication {
+public class EatFitWeeklyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserPortalApplication.class, args);
+		SpringApplication.run(EatFitWeeklyApplication.class, args);
 	}
 }
