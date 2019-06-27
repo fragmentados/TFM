@@ -1,0 +1,27 @@
+<div class="col-md-6">
+  <h2 class="text-center">Add Ingredient</h2>
+<form>
+
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input [(ngModel)]="ingredient.name" placeholder="Name" name="Name" class="form-control" id="Name">
+  </div>
+
+  <div class="form-group">
+    <label for="proteins">Proteins:</label>
+    <input type="proteins" [(ngModel)]="ingredient.proteins" placeholder="Proteins" name="proteins" class="form-control" id="proteins">
+  </div>
+
+  <div class="form-group">
+    <label for="calories">Calories:</label>
+    <input [(ngModel)]="ingredient.calories" placeholder="Last name" name="calories" class="form-control" id="calories">
+  </div>
+
+  <div class="form-group">
+      <label for="fats">Fats:</label>
+      <input [(ngModel)]="ingredient.fats" placeholder="Fats" name="fats" class="form-control" id="fats">
+    </div>
+
+  <button class="btn btn-success" (click)="createIngredient()">Create</button>
+</form>
+</div>

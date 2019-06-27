@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  private userUrl = 'http://localhost:8080/user-portal/users';
+  private userUrl = 'http://192.168.0.15:8080/efw-back/users';
 
   public getUsers() {
     return this.http.get<User[]>(this.userUrl);

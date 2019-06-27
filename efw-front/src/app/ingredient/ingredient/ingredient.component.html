@@ -1,0 +1,26 @@
+<div class="col-md-6">
+  <h2> Ingredient Details</h2>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="hidden">Id</th>
+      <th>Name</th>
+      <th>Proteins</th>
+      <th>Calories</th>
+      <th>Fats</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ingredient of ingredients">
+      <td class="hidden">{{ingredient.id}}</td>
+      <td>{{ingredient.name}}</td>
+      <td>{{ingredient.proteins}}</td>
+      <td>{{ingredient.calories}}</td>
+      <td>{{ingredient.fats}}</td>
+      <td><button class="btn btn-danger" (click)="deleteIngredient(ingredient)"> Delete Ingredient</button></td>
+    </tr>
+    </tbody>
+  </table>
+  </div>

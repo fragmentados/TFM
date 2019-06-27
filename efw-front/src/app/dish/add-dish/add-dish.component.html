@@ -1,0 +1,28 @@
+<div class="col-md-6">
+  <h2 class="text-center">Add Dish</h2>
+<form>
+
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input [(ngModel)]="dish.name" placeholder="Name" name="Name" class="form-control" id="Name">
+  </div>
+
+  <div class="form-group">
+    <label for="ingredientselect">Ingredients:</label>
+    <div class="form-group">
+      <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients">
+        <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">{{ingredient.name}}</option>
+      </select>
+      <button (click)="addIngredient()">Add</button>
+      <button (click)="clearIngredients()">Clear</button>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="selectedingredients">Selected ingredients:</label>
+    {{selectedIngredients.join(', ')}}
+  </div>
+
+  <button class="btn btn-success" (click)="createDish()">Create</button>
+</form>
+</div>

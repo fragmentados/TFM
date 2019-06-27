@@ -10,6 +10,8 @@ import {UserService} from './user/user.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AddUserComponent} from './user/add-user.component';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { IngredientComponent } from './ingredient/ingredient/ingredient.component';
+import { AddIngredientComponent } from './ingredient/add-ingredient/add-ingredient.component';
 
 @NgModule({
   declarations: [

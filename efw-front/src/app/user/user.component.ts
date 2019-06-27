@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
-import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-user',
