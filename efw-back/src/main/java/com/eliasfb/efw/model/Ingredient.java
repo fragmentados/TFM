@@ -36,6 +36,8 @@ public class Ingredient {
 	private int proteins;
 	@Column
 	private int fats;
+	@Column
+	private int carbohydrates;
 
 	@ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("ingredients")

@@ -30,7 +30,7 @@ export class AddDishComponent implements OnInit {
       if (this.dish.ingredients == null) {
         this.dish.ingredients = [this.selectedIng];
         this.selectedIngredients = [this.selectedIng.name];
-      } else if(this.dish.ingredients.indexOf(this.selectedIng) == -1) {
+      } else if (this.dish.ingredients.indexOf(this.selectedIng) === -1) {
         this.dish.ingredients.push(this.selectedIng);
         this.selectedIngredients.push(this.selectedIng.name);
       } else {
@@ -49,7 +49,7 @@ export class AddDishComponent implements OnInit {
   createDish(): void {
     this.dishService.createDish(this.dish)
         .subscribe( data => {
-          alert('Dish created successfully.');
+          alert('Dish ' + this.dish.name + ' created successfully.');
         });
   }
 

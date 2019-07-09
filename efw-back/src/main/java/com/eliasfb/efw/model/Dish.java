@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -25,8 +24,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "dish")
 @Data
-@ToString(exclude = { "ingredients", "menus" })
-@EqualsAndHashCode(exclude = { "ingredients", "menus" })
+@ToString(exclude = { "ingredients" })
+@EqualsAndHashCode(exclude = { "ingredients" })
 public class Dish {
 
 	@Id
@@ -36,15 +35,38 @@ public class Dish {
 	@Column
 	private String name;
 
+	public int getCalories() {
+		return this.ingredients.stream().mapToInt(ig -> ig.getCalories()).sum();
+	}
+
+	public int getProteins() {
+		return this.ingredients.stream().mapToInt(ig -> ig.getProteins()).sum();
+	}
+
+	public int getFats() {
+		return this.ingredients.stream().mapToInt(ig -> ig.getFats()).sum();
+	}
+
+	public int getCarbohydrates() {
+		return this.ingredients.stream().mapToInt(ig -> ig.getCarbohydrates()).sum();
+	}
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ingdisrel", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
+	@JoinTable(name = "ingdisrel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
 	@JsonIgnoreProperties("dishes")
 	private Set<Ingredient> ingredients;
 
-	@ManyToMany(mappedBy = "dishes", fetch = FetchType.LAZY)
-	@JsonIgnoreProperties("dishes")
-	@JsonIgnore
-	private Set<Menu> menus;
+	/*
+	 * @ManyToMany(mappedBy = "dishes", fetch = FetchType.LAZY)
+	 * 
+	 * @JsonIgnoreProperties("dishes")
+	 */
+	/*
+	 * @JsonIgnore
+	 * 
+	 * @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval =
+	 * true) private List<MenuDisRel> menus;
+	 */
 
 	public Dish() {
 

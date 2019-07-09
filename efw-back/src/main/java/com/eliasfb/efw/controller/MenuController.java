@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eliasfb.efw.dto.menu.MenuDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.service.MenuService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping({ "/menus" })
+@RequestMapping({ "/users/{userId}/menus" })
 public class MenuController {
 	@Autowired
 	private MenuService service;
@@ -51,7 +53,7 @@ public class MenuController {
 	}
 
 	@GetMapping
-	public List<Menu> findAll() {
-		return service.findAll();
+	public List<MenuDto> findUserMenu(@PathVariable("userId") int userId, @RequestParam("startDate") String startDate) {
+		return service.findUserMenu(userId, startDate);
 	}
 }

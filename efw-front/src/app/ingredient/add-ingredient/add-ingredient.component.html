@@ -20,7 +20,12 @@
   <div class="form-group">
       <label for="fats">Fats:</label>
       <input [(ngModel)]="ingredient.fats" placeholder="Fats" name="fats" class="form-control" id="fats">
-    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="fats">Carbohydrates:</label>
+    <input [(ngModel)]="ingredient.carbohydrates" placeholder="Carbohydrates" name="carbohydrates" class="form-control" id="carbohydrates">
+  </div>
 
   <button class="btn btn-success" (click)="createIngredient()">Create</button>
 </form>

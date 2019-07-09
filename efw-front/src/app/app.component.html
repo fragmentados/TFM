@@ -1,17 +1,39 @@
 <div class="container-fluid">
 <div class="col-md-offset-1">
-  <h1>
-    Welcome to {{title}}!
+  <h1 align="center">
+    {{title}}!
   </h1>
 </div>
 
-<a routerLink="/users">List Users</a>
-<a style="margin-left:10px" routerLink="/addUser">Add User</a>
-<a style="margin-left:10px" routerLink="/ingredients">List Ingredients</a>
-<a style="margin-left:10px" routerLink="/ingredients/addIngredient">Add Ingredient</a>
-<a style="margin-left:10px" routerLink="/dishes">List Dishes</a>
-<a style="margin-left:10px" routerLink="/dishes/addDish">Add Dish</a>
+<ul>
+  <li>
+    <a routerLink="/users">List Users</a>
+  </li>
+  <li>
+    <a routerLink="/addUser">Add User</a>
+  </li>
+  <li>
+    <a routerLink="/ingredients">List Ingredients</a>
+  </li>
+  <li>
+    <a routerLink="/ingredients/addIngredient">Add Ingredient</a>
+  </li>
+  <li>
+    <a routerLink="/dishes">List Dishes</a>
+  </li>
+  <li>
+    <a routerLink="/dishes/addDish">Add Dish</a>
+  </li>
+  <li>
+    <a routerLink="/menu">Menu Calendar</a>
+  </li>
+</ul>
+
 <br/>
+<app-calendar-week-view
+[viewDate]="viewDate"
+[weekStartsOn]=[1]
+[events]="events"></app-calendar-week-view>
 <router-outlet></router-outlet>
 </div>
 

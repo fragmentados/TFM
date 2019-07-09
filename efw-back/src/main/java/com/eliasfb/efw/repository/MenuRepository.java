@@ -11,6 +11,8 @@ public interface MenuRepository extends Repository<Menu, Integer> {
 
 	List<Menu> findAll();
 
+	List<Menu> findByUserIdAndStartDate(int userId, String startDate);
+
 	Menu findOne(int id);
 
 	Menu save(Menu menu);

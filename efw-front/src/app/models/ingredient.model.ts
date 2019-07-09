@@ -5,4 +5,5 @@ export class Ingredient {
   proteins: string;
   calories: string;
   fats: string;
+  carbohydrates: string;
 }
