@@ -1,9 +1,9 @@
 
 <!--[style.width.px]="segment.name != null ? 300 : style.width.px "-->
+<!--[ngClass]="segment.cssClass"-->
 <div
   class="cal-hour-segment"
   [style.height.px]="segmentHeight"
-  [ngClass]="segment.cssClass"
 >
   <div class="cal-time" *ngIf="isMealLabel">
     {{segment.name}}
