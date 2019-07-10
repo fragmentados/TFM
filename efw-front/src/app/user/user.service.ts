@@ -1,3 +1,4 @@
+import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -13,7 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  private userUrl = 'http://192.168.0.15:8080/efw-back/users';
+  private userUrl = BACKEND_URL + 'users';
 
   public getUsers() {
     return this.http.get<User[]>(this.userUrl);

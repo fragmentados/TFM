@@ -1,3 +1,4 @@
+import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Menu } from '../models/menu/menu.model';
@@ -12,7 +13,7 @@ export class MenuService {
 
   constructor(private http: HttpClient) {}
 
-  private menuUrl = 'https://192.168.0.15:8080/efw-back/users/';
+  private menuUrl = BACKEND_URL + 'users/';
 
   public getUserMenu(userId: number, startDate: Date) {
     const params = new HttpParams().set('startDate', this.formatDate(startDate));

@@ -1,3 +1,4 @@
+import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Ingredient } from '../models/ingredient.model';
@@ -12,7 +13,7 @@ export class IngredientService {
 
   constructor(private http: HttpClient) {}
 
-  private ingredientUrl = 'http://192.168.0.15:8080/efw-back/ingredients';
+  private ingredientUrl = BACKEND_URL + 'ingredients';
 
   public getIngredients() {
     return this.http.get<Ingredient[]>(this.ingredientUrl);

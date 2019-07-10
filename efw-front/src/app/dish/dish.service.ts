@@ -1,3 +1,4 @@
+import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Dish } from '../models/dish.model';
@@ -12,7 +13,7 @@ export class DishService {
 
   constructor(private http: HttpClient) {}
 
-  private dishUrl = 'http://192.168.0.15:8080/efw-back/dishes';
+  private dishUrl = BACKEND_URL + 'dishes';
 
   public getDishes() {
     return this.http.get<Dish[]>(this.dishUrl);
