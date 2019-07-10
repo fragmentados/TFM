@@ -12,7 +12,7 @@ export class MenuService {
 
   constructor(private http: HttpClient) {}
 
-  private menuUrl = 'http://192.168.0.15:8080/efw-back/users/';
+  private menuUrl = 'https://192.168.0.15:8080/efw-back/users/';
 
   public getUserMenu(userId: number, startDate: Date) {
     const params = new HttpParams().set('startDate', this.formatDate(startDate));
