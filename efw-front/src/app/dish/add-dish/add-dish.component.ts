@@ -1,8 +1,9 @@
+import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { DishService } from '../dish.service';
 import { Dish } from '../../models/dish.model';
 import { Router } from '@angular/router';
-import { Ingredient } from '../../models/ingredient.model';
+import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '../../ingredient/ingredient.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class AddDishComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ingredientService.getIngredients().subscribe(data => this.ingredients = data);
+    this.ingredientService.getUserIngredients(LOGGED_IN_USER).subscribe(data => this.ingredients = data);
   }
 
   addIngredient(): void {

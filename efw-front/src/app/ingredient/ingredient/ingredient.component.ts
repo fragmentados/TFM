@@ -1,7 +1,8 @@
+import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Ingredient } from '../../models/ingredient.model';
+import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '.././ingredient.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class IngredientComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ingredientService.getIngredients()
+    this.ingredientService.getUserIngredients(LOGGED_IN_USER)
       .subscribe( data => {
         this.ingredients = data;
       });
