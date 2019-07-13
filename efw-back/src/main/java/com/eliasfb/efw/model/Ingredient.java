@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
@@ -24,6 +25,7 @@ import lombok.ToString;
 @Data
 @ToString(exclude = { "dishes", "users" })
 @EqualsAndHashCode(exclude = { "dishes", "users" })
+@NoArgsConstructor
 public class Ingredient {
 	@Id
 	@Column
@@ -48,5 +50,10 @@ public class Ingredient {
 	@ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Set<Dish> dishes;
+
+	public Ingredient(int id) {
+		super();
+		this.id = id;
+	}
 
 }

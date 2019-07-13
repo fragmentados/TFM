@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.mapper.DishToDtoMapper;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.repository.DishRepository;
@@ -12,12 +14,15 @@ import com.eliasfb.efw.service.DishService;
 
 @Service
 public class DishServiceImpl implements DishService {
+
 	@Autowired
 	private DishRepository repository;
+	@Autowired
+	private DishToDtoMapper mapper;
 
 	@Override
-	public Dish create(Dish dish) {
-		return repository.save(dish);
+	public Dish create(CreateDishDto createDish) {
+		return repository.save(mapper.toEntity(createDish));
 	}
 
 	@Override
@@ -27,6 +32,17 @@ public class DishServiceImpl implements DishService {
 			repository.delete(dish);
 		}
 		return dish;
+	}
+
+	@Override
+	public List<Dish> findUserDishes(Integer userId) {
+		List<Dish> dishes;
+		if (userId == null) {
+			dishes = repository.findAll();
+		} else {
+			dishes = repository.findUserDishes(userId);
+		}
+		return dishes;
 	}
 
 	@Override

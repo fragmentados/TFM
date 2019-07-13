@@ -42,5 +42,8 @@ public class User {
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Set<Ingredient> ingredients;
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Set<Dish> dishes;
 
 }

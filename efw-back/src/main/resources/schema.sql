@@ -8,8 +8,27 @@ drop table if exists menu;
 drop table if exists user;
 
 -- CREATE TABLES
-create table if not exists user (id integer not null auto_increment, email varchar(255), first_name varchar(255), last_name varchar(255), primary key (id));
-create table if not exists dish (id integer not null auto_increment, name varchar(255), primary key(id));
+create table if not exists user (
+	id integer not null auto_increment, 
+	email varchar(255), 
+	first_name varchar(255), 
+	last_name varchar(255), 
+	primary key (id)
+);
+
+create table if not exists dish (
+	id integer not null auto_increment, 
+	name varchar(255), 
+	primary key(id)
+);
+
+create table if not exists disuserel (
+	dish_id integer not null, 
+	user_id integer not null, 
+	foreign key fk_dish_user(dish_id) references dish(id), 
+	foreign key fk_user_dish(user_id) references user(id),
+	primary key (dish_id, user_id)
+);
 
 create table if not exists ingredient (
 	id integer not null auto_increment, 
