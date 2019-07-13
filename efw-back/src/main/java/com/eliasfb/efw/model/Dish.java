@@ -56,22 +56,6 @@ public class Dish {
 	@JsonIgnoreProperties("dishes")
 	private Set<Ingredient> ingredients;
 
-	/*
-	 * @ManyToMany(mappedBy = "dishes", fetch = FetchType.LAZY)
-	 * 
-	 * @JsonIgnoreProperties("dishes")
-	 */
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval =
-	 * true) private List<MenuDisRel> menus;
-	 */
-
-	public Dish() {
-
-	}
-
 	public Dish(String name, Ingredient... ingredients) {
 		this.name = name;
 		this.ingredients = Stream.of(ingredients).collect(Collectors.toSet());
