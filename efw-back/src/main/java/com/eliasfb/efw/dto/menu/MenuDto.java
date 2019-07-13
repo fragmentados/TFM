@@ -12,20 +12,6 @@ public class MenuDto implements Serializable {
 
 	private String startDate;
 	private List<MenuDayDto> days;
+	private List<MenuStatDto> stats;
 
-	public int getCalories() {
-		return this.days.stream().mapToInt(di -> di.getCalories()).sum();
-	}
-
-	public int getProteins() {
-		return this.days.stream().mapToInt(di -> di.getProteins()).sum();
-	}
-
-	public int getFats() {
-		return this.days.stream().mapToInt(di -> di.getFats()).sum();
-	}
-
-	public int getCarbohydrates() {
-		return this.days.stream().mapToInt(di -> di.getCarbohydrates()).sum();
-	}
 }

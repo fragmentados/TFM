@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
 import { MenuService } from '../menu.service';
 import { Menu } from '../../models/menu/menu.model';
-import { addDays, addHours, startOfDay } from 'date-fns';
-import { MenuDish } from '../../models/menu/menuDish.model';
+import { addHours, startOfDay } from 'date-fns';
+import { MenuDay } from '../../models/menu/menuDay.model';
+import { CalendarEvent } from '../../calendar/common/calendar-common.module';
 
 @Component({
   selector: 'app-menu-calendar',
   templateUrl: './menu-calendar.component.html',
   styleUrls: ['./menu-calendar.component.css']
 })
-export class MenuCalendarComponent {
+export class MenuCalendarComponent implements OnInit {
 
   viewDate: Date = new Date();
   events: CalendarEvent[];
@@ -18,33 +18,41 @@ export class MenuCalendarComponent {
 
   constructor(private menuService: MenuService) { }
 
-  /*initCalendarEventsWithDishes() {
-    let day = 0;
-    for(const dish of this.menu.dishes) {
-      const event: CalendarEvent = this.createCalendarEvent(dish, day);
-      if (this.events == null) {
-        this.events = [event];
-      } else {
-        this.events.push(event);
+  ngOnInit() {
+    this.menuService.getUserMenu(1, this.viewDate).subscribe(data => {
+      this.menu = data[0];
+      const events = this.initCalendarEventsWithDishes();
+      this.events = events;
+      console.log(events);
+    });
+  }
+
+  initCalendarEventsWithDishes() {
+    for (const day of this.menu.days) {
+      const dayEvents = this.createCalendarEventsForDay(day);
+      for (const event of dayEvents) {
+        if (!this.events) {
+          this.events = [event];
+        } else {
+          this.events.push(event);
+        }
       }
-      day++;
     }
+    return this.events;
   }
 
-  createCalendarEvent(dish: MenuDish, day: number) {
-    return {
-      start: addHours(startOfDay(addDays(new Date(), day)), 9),
-      end: addHours(startOfDay(addDays(new Date(), day)), 10),
-      title: dish.name
+  createCalendarEventsForDay(day: MenuDay) {
+    const dayMeals: CalendarEvent[] = [];
+    let offset = 0;
+    for (const meal of day.meals) {
+      dayMeals.push({
+        start: addHours(startOfDay(new Date(day.date)), offset),
+        end: addHours(startOfDay(new Date(day.date)), offset + 1),
+        title: meal.name
+      });
+      offset++;
     }
+    return dayMeals;
   }
-
-  dayHeaderClicked({ event }: { event: CalendarEvent }): void {
-    alert('Has clickado en dia');
-  }
-
-  hourClicked({ event }: { event: CalendarEvent }): void {
-    alert('Has clickado en hora');
-  }*/
 
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.eliasfb.efw.dto.menu.MenuDayDto;
 import com.eliasfb.efw.dto.menu.MenuDishDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
+import com.eliasfb.efw.dto.menu.MenuStatDto;
+import com.eliasfb.efw.dto.menu.NutritionalStatEnum;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.model.MenuDisRel;
@@ -27,7 +29,22 @@ public abstract class MenuToDtoMapper {
 	public abstract List<MenuDto> menuListToMenuDtoList(List<Menu> menu);
 
 	@Mapping(source = "dishes", target = "days")
+	@Mapping(source = "dishes", target = "stats")
 	public abstract MenuDto menuToMenuDto(Menu menu);
+
+	public List<MenuStatDto> menuStatListToDto(List<MenuDisRel> menuDisRels) {
+		List<MenuStatDto> menuStats = new ArrayList<>();
+		menuStats.add(new MenuStatDto(NutritionalStatEnum.CALORIES.getName(), String.valueOf(menuDisRels.stream()
+				.map(md -> md.getId().getDish().getCalories()).collect(Collectors.summingInt(Integer::intValue)))));
+		menuStats.add(new MenuStatDto(NutritionalStatEnum.PROTEINS.getName(), String.valueOf(menuDisRels.stream()
+				.map(md -> md.getId().getDish().getProteins()).collect(Collectors.summingInt(Integer::intValue)))));
+		menuStats.add(new MenuStatDto(NutritionalStatEnum.FATS.getName(), String.valueOf(menuDisRels.stream()
+				.map(md -> md.getId().getDish().getFats()).collect(Collectors.summingInt(Integer::intValue)))));
+		menuStats.add(new MenuStatDto(NutritionalStatEnum.CARBOHYDRATES.getName(),
+				String.valueOf(menuDisRels.stream().map(md -> md.getId().getDish().getCarbohydrates())
+						.collect(Collectors.summingInt(Integer::intValue)))));
+		return menuStats;
+	}
 
 	public List<MenuDayDto> menuDisListToDto(List<MenuDisRel> menuDisRels) {
 		List<MenuDayDto> menuDays = new ArrayList<>();

@@ -1,9 +1,9 @@
-<!--<mwl-calendar-week-view
+<app-calendar-week-view
 [viewDate]="viewDate"
-[events]="events"
-[dayStartHour]="9"
-[dayEndHour]="10"
-(dayHeaderClicked)="dayHeaderClicked($event)"
-(hourSegmentClicked)="hourClicked($event)"
->
-</mwl-calendar-week-view>-->
+[weekStartsOn]=[1]
+[events]="events">
+</app-calendar-week-view>
+
+<app-calendar-week-view-stats
+[stats]="menu.stats">
+</app-calendar-week-view-stats>

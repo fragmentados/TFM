@@ -65,11 +65,10 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public Menu addDishToMenu(int menuId, Dish dish) {
 		Menu menu = repository.findOne(menuId);
-		if (!menu.getDishes().contains(dish)) {
-			// TODO EFB REVIEW
-			// menu.getDishes().add(dish);
-			repository.save(menu);
-		}
+		/*
+		 * if (!menu.getDishes().contains(dish)) { // TODO EFB REVIEW //
+		 * menu.getDishes().add(dish); repository.save(menu); }
+		 */
 		return menu;
 	}
 }

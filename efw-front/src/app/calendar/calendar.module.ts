@@ -8,14 +8,14 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { CommonModule } from '@angular/common';
 import { CalendarCommonModule, CalendarModuleConfig, CalendarEventTitleFormatter,
   CalendarDateFormatter, CalendarUtils } from './common/calendar-common.module';
-import { CalendarTestComponent } from './calendar-test/calendar-test.component';
+import { CalendarWeekViewStatsComponent } from './calendar-week-view-stats/calendar-week-view-stats.component';
 
 @NgModule({
   declarations: [CalendarWeekViewEventComponent,
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewHourSegmentComponent,
     CalendarWeekViewComponent,
-    CalendarTestComponent],
+    CalendarWeekViewStatsComponent],
   imports: [
     CommonModule,
     ResizableModule,
@@ -29,7 +29,8 @@ import { CalendarTestComponent } from './calendar-test/calendar-test.component';
     CalendarWeekViewComponent,
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewEventComponent,
-    CalendarWeekViewHourSegmentComponent
+    CalendarWeekViewHourSegmentComponent,
+    CalendarWeekViewStatsComponent
   ]
 })
 export class CalendarModule {

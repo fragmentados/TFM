@@ -16,16 +16,15 @@ import { MenuService } from './menu/menu.service';
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
-    AddUserComponent
+    AddUserComponent,
+    UserComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CalendarCommonModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
