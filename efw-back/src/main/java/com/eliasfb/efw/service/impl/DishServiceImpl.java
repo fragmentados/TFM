@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.DishToDtoMapper;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
@@ -26,12 +27,12 @@ public class DishServiceImpl implements DishService {
 	}
 
 	@Override
-	public Dish delete(int id) {
+	public ResponseDto delete(int id) {
 		Dish dish = findById(id);
 		if (dish != null) {
 			repository.delete(dish);
 		}
-		return dish;
+		return new ResponseDto(0, "Dish with name = '" + dish.getName() + "' deleted correctly.");
 	}
 
 	@Override

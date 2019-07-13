@@ -1,6 +1,6 @@
 export class Ingredient {
 
-  id: string;
+  id: number;
   name: string;
   proteins: string;
   calories: string;

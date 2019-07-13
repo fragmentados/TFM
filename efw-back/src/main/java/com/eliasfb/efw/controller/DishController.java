@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.DishService;
@@ -48,7 +49,7 @@ public class DishController {
 	}
 
 	@DeleteMapping(path = { "/{id}" })
-	public Dish delete(@PathVariable("id") int id) {
+	public ResponseDto delete(@PathVariable("id") int id) {
 		return service.delete(id);
 	}
 
