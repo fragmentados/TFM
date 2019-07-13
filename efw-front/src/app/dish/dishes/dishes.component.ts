@@ -1,7 +1,8 @@
+import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DishService } from '../dish.service';
-import { Dish } from '../../models/dish.model';
+import { Dish } from '../../models/dish/dish.model';
 
 @Component({
   selector: 'app-dishes',
@@ -15,7 +16,7 @@ export class DishesComponent implements OnInit {
   constructor(private router: Router, private dishService: DishService) { }
 
   ngOnInit() {
-    this.dishService.getDishes()
+    this.dishService.getUserDishes(LOGGED_IN_USER)
       .subscribe( data => {
         this.dishes = data;
       });

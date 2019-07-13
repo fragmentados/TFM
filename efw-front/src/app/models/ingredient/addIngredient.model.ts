@@ -1,6 +1,5 @@
-export class Ingredient {
-
-  id: string;
+export class AddIngredient {
+  userId: number;
   name: string;
   proteins: string;
   calories: string;

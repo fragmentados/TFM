@@ -15,17 +15,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Table(name = "dish")
 @Data
-@ToString(exclude = { "ingredients" })
-@EqualsAndHashCode(exclude = { "ingredients" })
+@ToString(exclude = { "ingredients", "users" })
+@EqualsAndHashCode(exclude = { "ingredients", "users" })
+@NoArgsConstructor
 public class Dish {
 
 	@Id
@@ -34,6 +37,22 @@ public class Dish {
 	private int id;
 	@Column
 	private String name;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "ingdisrel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+	@JsonIgnoreProperties("dishes")
+	private Set<Ingredient> ingredients;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "disuserel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JsonIgnore
+	private Set<User> users;
+
+	public Dish(String name, Ingredient... ingredients) {
+		this.name = name;
+		this.ingredients = Stream.of(ingredients).collect(Collectors.toSet());
+		this.ingredients.forEach(x -> x.getDishes().add(this));
+	}
 
 	public int getCalories() {
 		return this.ingredients.stream().mapToInt(ig -> ig.getCalories()).sum();
@@ -49,32 +68,5 @@ public class Dish {
 
 	public int getCarbohydrates() {
 		return this.ingredients.stream().mapToInt(ig -> ig.getCarbohydrates()).sum();
-	}
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ingdisrel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-	@JsonIgnoreProperties("dishes")
-	private Set<Ingredient> ingredients;
-
-	/*
-	 * @ManyToMany(mappedBy = "dishes", fetch = FetchType.LAZY)
-	 * 
-	 * @JsonIgnoreProperties("dishes")
-	 */
-	/*
-	 * @JsonIgnore
-	 * 
-	 * @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval =
-	 * true) private List<MenuDisRel> menus;
-	 */
-
-	public Dish() {
-
-	}
-
-	public Dish(String name, Ingredient... ingredients) {
-		this.name = name;
-		this.ingredients = Stream.of(ingredients).collect(Collectors.toSet());
-		this.ingredients.forEach(x -> x.getDishes().add(this));
 	}
 }

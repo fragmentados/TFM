@@ -1,6 +1,6 @@
 import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { User } from '../models/user.model';
 
@@ -15,6 +15,10 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   private userUrl = BACKEND_URL + 'users';
+
+  public getUser(userId: number) {
+    return this.http.get<User>(this.userUrl + '/' + userId);
+  }
 
   public getUsers() {
     return this.http.get<User[]>(this.userUrl);

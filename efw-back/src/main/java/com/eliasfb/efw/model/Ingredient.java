@@ -8,21 +8,24 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Table(name = "ingredient")
 @Data
-@ToString(exclude = "dishes")
-@EqualsAndHashCode(exclude = "dishes")
+@ToString(exclude = { "dishes", "users" })
+@EqualsAndHashCode(exclude = { "dishes", "users" })
+@NoArgsConstructor
 public class Ingredient {
 	@Id
 	@Column
@@ -39,8 +42,18 @@ public class Ingredient {
 	@Column
 	private int carbohydrates;
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "inguserel", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JsonIgnore
+	private Set<User> users;
+
 	@ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
-	@JsonIgnoreProperties("ingredients")
 	@JsonIgnore
 	private Set<Dish> dishes;
+
+	public Ingredient(int id) {
+		super();
+		this.id = id;
+	}
+
 }

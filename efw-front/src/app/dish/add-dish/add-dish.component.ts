@@ -1,9 +1,11 @@
+import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { DishService } from '../dish.service';
-import { Dish } from '../../models/dish.model';
+import { AddDish } from '../../models/dish/addDish.model';
 import { Router } from '@angular/router';
-import { Ingredient } from '../../models/ingredient.model';
+import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '../../ingredient/ingredient.service';
+
 
 @Component({
   selector: 'app-add-dish',
@@ -12,7 +14,7 @@ import { IngredientService } from '../../ingredient/ingredient.service';
 })
 export class AddDishComponent implements OnInit {
 
-  dish: Dish = new Dish();
+  dish: AddDish = new AddDish();
   ingredients: Ingredient[];
   selectedIng: Ingredient;
   selectedIngredients: String[];
@@ -22,16 +24,16 @@ export class AddDishComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ingredientService.getIngredients().subscribe(data => this.ingredients = data);
+    this.ingredientService.getUserIngredients(LOGGED_IN_USER).subscribe(data => this.ingredients = data);
   }
 
   addIngredient(): void {
     if (this.selectedIng != null) {
       if (this.dish.ingredients == null) {
-        this.dish.ingredients = [this.selectedIng];
+        this.dish.ingredients = [this.selectedIng.id];
         this.selectedIngredients = [this.selectedIng.name];
-      } else if (this.dish.ingredients.indexOf(this.selectedIng) === -1) {
-        this.dish.ingredients.push(this.selectedIng);
+      } else if (this.dish.ingredients.indexOf(this.selectedIng.id) === -1) {
+        this.dish.ingredients.push(this.selectedIng.id);
         this.selectedIngredients.push(this.selectedIng.name);
       } else {
         alert('That ingredient has already been selected');
@@ -47,6 +49,7 @@ export class AddDishComponent implements OnInit {
   }
 
   createDish(): void {
+    this.dish.userId = LOGGED_IN_USER;
     this.dishService.createDish(this.dish)
         .subscribe( data => {
           alert('Dish ' + this.dish.name + ' created successfully.');

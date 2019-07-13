@@ -1,5 +1,5 @@
-INSERT INTO USER VALUES(1, 'Elías', 'Ferreiro', 'test@mail.com');
-INSERT INTO USER VALUES(2, 'Esther', 'Lopez', 'test@mail.com');
+INSERT INTO USER VALUES(1, 'test@mail.com', 'Elías', 'Ferreiro');
+INSERT INTO USER VALUES(2, 'test@mail.com', 'Esther', 'Lopez');
 
 INSERT INTO INGREDIENT VALUES(1, 'Patatas', 10, 20, 30, 40);
 INSERT INTO INGREDIENT VALUES(2, 'Lechuga', 20, 30, 40, 50);

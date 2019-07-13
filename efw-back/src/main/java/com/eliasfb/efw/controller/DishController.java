@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.DishService;
@@ -25,7 +28,7 @@ public class DishController {
 	private DishService service;
 
 	@PostMapping
-	public Dish create(@RequestBody Dish dish) {
+	public Dish create(@RequestBody CreateDishDto dish) {
 		return service.create(dish);
 	}
 
@@ -46,12 +49,12 @@ public class DishController {
 	}
 
 	@DeleteMapping(path = { "/{id}" })
-	public Dish delete(@PathVariable("id") int id) {
+	public ResponseDto delete(@PathVariable("id") int id) {
 		return service.delete(id);
 	}
 
 	@GetMapping
-	public List<Dish> findAll() {
-		return service.findAll();
+	public List<Dish> findUserDishes(@RequestParam(required = false) Integer userId) {
+		return service.findUserDishes(userId);
 	}
 }

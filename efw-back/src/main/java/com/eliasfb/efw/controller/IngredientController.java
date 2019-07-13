@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eliasfb.efw.dto.CreateIngredientDto;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.IngredientService;
 
@@ -24,8 +26,8 @@ public class IngredientController {
 	private IngredientService service;
 
 	@PostMapping
-	public Ingredient create(@RequestBody Ingredient ingredient) {
-		return service.create(ingredient);
+	public Ingredient create(@RequestBody CreateIngredientDto createIngredient) {
+		return service.create(createIngredient);
 	}
 
 	@GetMapping(path = { "/{id}" })
@@ -45,7 +47,7 @@ public class IngredientController {
 	}
 
 	@GetMapping
-	public List<Ingredient> findAll() {
-		return service.findAll();
+	public List<Ingredient> findUserIngredients(@RequestParam(required = false) Integer userId) {
+		return service.findUserIngredients(userId);
 	}
 }
