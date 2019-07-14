@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Menu } from '../models/menu/menu.model';
 import { AddDishToMenu } from '../models/menu/addDishToMenu.model';
 import { ShoppingList } from '../models/menu/shoppingList/shoppingList.model';
+import { AddMenu } from '../models/menu/addMenu.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,6 +16,13 @@ export class MenuService {
   constructor(private http: HttpClient) {}
 
   private menuUrl = BACKEND_URL + 'menus';
+
+  public createMenu(userId: number, startDate: Date) {
+    const menu: AddMenu  = new AddMenu();
+    menu.userId = userId;
+    menu.startDate = this.formatDate(startDate);
+    return this.http.post<Menu>(this.menuUrl, menu);
+  }
 
   public getUserMenu(userId: number, startDate: Date) {
     const params = new HttpParams().set('startDate', this.formatDate(startDate)).set('userId', userId.toString());

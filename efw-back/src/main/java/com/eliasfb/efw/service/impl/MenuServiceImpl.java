@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
+import com.eliasfb.efw.dto.CreateMenuDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.MenuToDtoMapper;
 import com.eliasfb.efw.dto.menu.MenuDto;
@@ -22,6 +23,7 @@ import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.model.MenuDisRel;
 import com.eliasfb.efw.model.MenuDisRelId;
+import com.eliasfb.efw.model.User;
 import com.eliasfb.efw.repository.DishRepository;
 import com.eliasfb.efw.repository.MenuRepository;
 import com.eliasfb.efw.service.MenuService;
@@ -38,8 +40,19 @@ public class MenuServiceImpl implements MenuService {
 	private MenuToDtoMapper mapper;
 
 	@Override
-	public Menu create(Menu menu) {
-		return repository.save(menu);
+	public ResponseDto create(CreateMenuDto dto) {
+		// We initialize the menu entity with the data supplied :
+		Menu menu = new Menu();
+		// user id
+		User user = new User();
+		user.setId(dto.getUserId());
+		menu.setUser(user);
+		// start date
+		menu.setStartDate(getLastWeekStart(dto.getStartDate()));
+		// We persist the entity
+		repository.save(menu);
+
+		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been created correctly");
 	}
 
 	@Override
@@ -122,8 +135,8 @@ public class MenuServiceImpl implements MenuService {
 		Menu menu = repository.findOne(menuId);
 		Dish dish = dishRepository.findOne(dto.getDishId());
 		// We join them on the relationship entity
-		MenuDisRelId id = new MenuDisRelId(menu, dish);
-		MenuDisRel menuDisRel = new MenuDisRel(id, dto.getDate());
+		MenuDisRelId id = new MenuDisRelId(menu, dish, dto.getDate());
+		MenuDisRel menuDisRel = new MenuDisRel(id);
 		// We persist the changes
 		if (!menu.getDishes().contains(menuDisRel)) {
 			menu.getDishes().add(menuDisRel);

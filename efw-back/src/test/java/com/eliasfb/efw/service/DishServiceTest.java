@@ -1,4 +1,4 @@
-package com.devglan.userportal;
+package com.eliasfb.efw.service;
 
 public class DishServiceTest {
 

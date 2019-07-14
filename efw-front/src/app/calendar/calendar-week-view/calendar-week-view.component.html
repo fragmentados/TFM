@@ -127,6 +127,8 @@
           [segmentHeight]="hourSegmentHeight"
           [locale]="locale"
           [isMealLabel]="true"
+          [menuId]="menuId"
+          (dishAdded)="addDishEvent($event)"
         >
         </app-calendar-week-view-hour-segment>
       </div>
@@ -244,6 +246,8 @@
               trackBy: trackByHourSegment
             "
             [style.height.px]="hourSegmentHeight"
+            [menuId]="menuId"
+            (dishAdded)="addDishEvent($event)"
             [segment]="segment"
             [segmentHeight]="hourSegmentHeight"
             [locale]="locale"

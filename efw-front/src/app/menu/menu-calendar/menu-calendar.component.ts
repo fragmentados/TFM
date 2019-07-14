@@ -23,6 +23,10 @@ export class MenuCalendarComponent implements OnInit {
   constructor(private menuService: MenuService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.initMenuAndEvents();
+  }
+
+  initMenuAndEvents() {
     this.menuService.getUserMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
       this.menu = data;
       const events = this.initCalendarEventsWithDishes();
@@ -49,9 +53,10 @@ export class MenuCalendarComponent implements OnInit {
     const dayMeals: CalendarEvent[] = [];
     let offset = 0;
     for (const meal of day.meals) {
+      const dayDate: Date = new Date(day.date);
       dayMeals.push({
-        start: addHours(startOfDay(new Date(day.date)), offset),
-        end: addHours(startOfDay(new Date(day.date)), offset + 1),
+        start: addHours(dayDate, offset),
+        end: addHours(dayDate, offset + 1),
         title: meal.name
       });
       offset++;
@@ -68,6 +73,12 @@ export class MenuCalendarComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog closed: ${result}`);
       });
+    });
+  }
+
+  createMenu() {
+    this.menuService.createMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
+      this.initMenuAndEvents();
     });
   }
 

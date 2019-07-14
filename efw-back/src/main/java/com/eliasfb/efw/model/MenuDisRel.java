@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -27,9 +26,6 @@ public class MenuDisRel {
 	@EmbeddedId
 	private MenuDisRelId id;
 
-	@Column(name = "dish_date")
-	private String dishDate;
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -39,12 +35,12 @@ public class MenuDisRel {
 			return false;
 
 		MenuDisRel that = (MenuDisRel) o;
-		return id != null ? Objects.equals(id, that.id) && Objects.equals(dishDate, that.dishDate) : false;
+		return id != null ? Objects.equals(id, that.id) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null && dishDate != null ? id.hashCode() + dishDate.hashCode() : 0;
+		return id != null ? id.hashCode() : 0;
 	}
 
 }

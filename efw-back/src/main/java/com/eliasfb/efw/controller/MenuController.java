@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
+import com.eliasfb.efw.dto.CreateMenuDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
 import com.eliasfb.efw.dto.menu.ShoppingListDto;
@@ -27,8 +28,8 @@ public class MenuController {
 	private MenuService service;
 
 	@PostMapping
-	public Menu create(@RequestBody Menu menu) {
-		return service.create(menu);
+	public ResponseDto create(@RequestBody CreateMenuDto dto) {
+		return service.create(dto);
 	}
 
 	@GetMapping(path = { "/{id}" })

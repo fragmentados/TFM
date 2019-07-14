@@ -3,13 +3,14 @@ package com.eliasfb.efw.service;
 import java.util.List;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
+import com.eliasfb.efw.dto.CreateMenuDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
 import com.eliasfb.efw.dto.menu.ShoppingListDto;
 import com.eliasfb.efw.model.Menu;
 
 public interface MenuService {
-	Menu create(Menu menu);
+	ResponseDto create(CreateMenuDto menu);
 
 	Menu delete(int id);
 

@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { addHours } from 'date-fns';
+import { CalendarEvent } from 'calendar-utils';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { WeekViewHourColumn } from '../common/util';
 import { MenuService } from '../../menu/menu.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarWeekViewAddDishComponent } from '../calendar-week-view-add-dish/calendar-week-view-add-dish.component';
 import { AddDishToMenu } from '../../models/menu/addDishToMenu.model';
-import { startOfDay, addHours } from 'date-fns';
 
 @Component({
   selector: 'app-calendar-week-view-hour-segment',
@@ -25,6 +26,14 @@ export class CalendarWeekViewHourSegmentComponent {
 
   @Input() locale: string;
 
+  @Input() menuId: number;
+
+  /**
+   * Called when a dish is added to the menu
+   */
+  @Output()
+  dishAdded = new EventEmitter<CalendarEvent>();
+
   addDishPopup() {
     const dialogRef = this.dialog.open(CalendarWeekViewAddDishComponent, {
       width: '600px',
@@ -35,8 +44,13 @@ export class CalendarWeekViewHourSegmentComponent {
       const addDishToMenu: AddDishToMenu = new AddDishToMenu();
       addDishToMenu.date = this.formatDate(this.segment.date);
       addDishToMenu.dishId = result.id;
-      this.menuService.addDishToMenu(2, addDishToMenu).subscribe(data => {
+      this.menuService.addDishToMenu(this.menuId, addDishToMenu).subscribe(data => {
         console.log(`Dish added to menu: ${data}`);
+        this.dishAdded.emit({
+            start: this.segment.date,
+            end: addHours(this.segment.date, 1),
+            title: result.name
+          });
       });
     });
   }
@@ -44,6 +58,9 @@ export class CalendarWeekViewHourSegmentComponent {
   private formatDate(startDate: Date) {
     return startDate.getFullYear() + '-' +
            ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' +
-           ('0' + startDate.getDate()).slice(-2);
+           ('0' + startDate.getDate()).slice(-2) + ' ' +
+           ('0' + startDate.getHours()).slice(-2) + ':' +
+           ('0' + startDate.getMinutes()).slice(-2) + ':' +
+           ('0' + startDate.getSeconds()).slice(-2);
   }
 }

@@ -1,6 +1,7 @@
 package com.eliasfb.efw.dto.mapper;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,14 +37,15 @@ public abstract class MenuToDtoMapper {
 		menuDisByDate.keySet().forEach(date -> menuDays.add(new MenuDayDto(date, menuDisByDate.get(date))));
 		// We sort the days by date
 		return menuDays.stream()
-				.sorted((d1, d2) -> LocalDate.parse(d1.getDate()).compareTo(LocalDate.parse(d2.getDate())))
+				.sorted((d1, d2) -> LocalDate.parse(d1.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"))
+						.compareTo(LocalDate.parse(d2.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"))))
 				.collect(Collectors.toList());
 	}
 
 	private Map<String, List<MenuDishDto>> groupMenuDisByDate(List<MenuDisRel> menuDisRels) {
 		Map<String, List<MenuDishDto>> menuDisByDate = new HashMap<>();
 		menuDisRels.forEach(menuDis -> {
-			String dishDate = menuDis.getDishDate();
+			String dishDate = menuDis.getId().getDishDate();
 			if (menuDisByDate.containsKey(dishDate)) {
 				menuDisByDate.get(dishDate).add(menuDisToDto(menuDis));
 			} else {

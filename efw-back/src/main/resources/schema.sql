@@ -67,7 +67,7 @@ create table if not exists menu (
 create table if not exists menudisrel (
 	menu_id integer not null, 
 	dish_id integer not null, 
-	dish_date DATE, 
+	dish_date DATETIME, 
 	foreign key fk_menu_dish(menu_id) references menu(id), 
 	foreign key fk_dish_menu(dish_id) references dish(id), 
 	primary key(menu_id, dish_id, dish_date)
