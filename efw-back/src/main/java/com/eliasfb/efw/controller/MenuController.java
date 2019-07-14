@@ -48,6 +48,11 @@ public class MenuController {
 		return service.addDishToMenu(id, dto);
 	}
 
+	@DeleteMapping(path = { "/{id}/dish" })
+	public ResponseDto clearMenu(@PathVariable("id") int id) {
+		return service.clearMenu(id);
+	}
+
 	@DeleteMapping(path = { "/{id}" })
 	public Menu delete(@PathVariable("id") int id) {
 		return service.delete(id);

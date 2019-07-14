@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
@@ -25,6 +26,7 @@ import com.eliasfb.efw.model.MenuDisRel;
 import com.eliasfb.efw.model.MenuDisRelId;
 import com.eliasfb.efw.model.User;
 import com.eliasfb.efw.repository.DishRepository;
+import com.eliasfb.efw.repository.MenuDisRelRepository;
 import com.eliasfb.efw.repository.MenuRepository;
 import com.eliasfb.efw.service.MenuService;
 
@@ -35,6 +37,9 @@ public class MenuServiceImpl implements MenuService {
 
 	@Autowired
 	private DishRepository dishRepository;
+
+	@Autowired
+	private MenuDisRelRepository menuDisRelRepository;
 
 	@Autowired
 	private MenuToDtoMapper mapper;
@@ -62,6 +67,19 @@ public class MenuServiceImpl implements MenuService {
 			repository.delete(menu);
 		}
 		return menu;
+	}
+
+	@Override
+	@Transactional
+	public ResponseDto clearMenu(int id) {
+		Menu menu = findById(id);
+		if (menu != null) {
+			menuDisRelRepository.deleteByMenuId(menu.getId());
+			// menu.getDishes().stream().forEach(mdr -> menuDisRelRepository.delete(mdr));
+			// menu.setDishes(new ArrayList<>());
+			// repository.save(menu);
+		}
+		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been cleared correctly");
 	}
 
 	@Override

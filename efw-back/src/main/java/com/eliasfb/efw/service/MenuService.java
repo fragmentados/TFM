@@ -14,6 +14,8 @@ public interface MenuService {
 
 	Menu delete(int id);
 
+	ResponseDto clearMenu(int id);
+
 	ShoppingListDto getShoppingList(int menuId);
 
 	MenuDto findUserMenu(int userId, String startDate);

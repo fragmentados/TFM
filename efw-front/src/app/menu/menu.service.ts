@@ -1,3 +1,4 @@
+import { Response } from './../models/response.model';
 import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -31,6 +32,10 @@ export class MenuService {
 
   public getShoppingList(menuId: number) {
     return this.http.get<ShoppingList>(this.menuUrl + '/' + menuId + '/shoppingList');
+  }
+
+  public clearMenu(menuId: number) {
+    return this.http.delete<Response>(this.menuUrl + '/' + menuId + '/dish');
   }
 
   public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {
