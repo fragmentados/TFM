@@ -2,7 +2,8 @@ import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Menu } from '../models/menu/menu.model';
-
+import { AddDishToMenu } from '../models/menu/addDishToMenu.model';
+import { ShoppingList } from '../models/menu/shoppingList/shoppingList.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,11 +14,19 @@ export class MenuService {
 
   constructor(private http: HttpClient) {}
 
-  private menuUrl = BACKEND_URL + 'users/';
+  private menuUrl = BACKEND_URL + 'menus';
 
   public getUserMenu(userId: number, startDate: Date) {
-    const params = new HttpParams().set('startDate', this.formatDate(startDate));
-    return this.http.get<Menu[]>(this.menuUrl + userId + '/menus', { params: params });
+    const params = new HttpParams().set('startDate', this.formatDate(startDate)).set('userId', userId.toString());
+    return this.http.get<Menu>(this.menuUrl, { params: params });
+  }
+
+  public getShoppingList(menuId: number) {
+    return this.http.get<ShoppingList>(this.menuUrl + '/' + menuId + '/shoppingList');
+  }
+
+  public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {
+    return this.http.put<Response>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
   }
 
   private formatDate(startDate: Date) {

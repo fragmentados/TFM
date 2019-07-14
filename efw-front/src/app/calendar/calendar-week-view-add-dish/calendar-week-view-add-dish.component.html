@@ -1,0 +1,18 @@
+<div>
+  <h2 mat-dialog-title>Add Dish To Menu</h2>
+<form>
+
+  <div class="form-group">
+    <label for="dishSelect">Select Dish:</label>
+    <div class="form-group">
+      <select [(ngModel)]="selectedDish" #DishSelect="ngModel" name="DishSelect" class="form-control" id="Dishes">
+        <option *ngFor="let dish of dishes" [ngValue]="dish">{{dish.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="selectedDish" cdkFocusInitial>Add</button>
+  </div>
+</form>
+</div>

@@ -2,8 +2,10 @@ package com.eliasfb.efw.service;
 
 import java.util.List;
 
+import com.eliasfb.efw.dto.AddDishToMenuDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
-import com.eliasfb.efw.model.Dish;
+import com.eliasfb.efw.dto.menu.ShoppingListDto;
 import com.eliasfb.efw.model.Menu;
 
 public interface MenuService {
@@ -11,7 +13,9 @@ public interface MenuService {
 
 	Menu delete(int id);
 
-	List<MenuDto> findUserMenu(int userId, String startDate);
+	ShoppingListDto getShoppingList(int menuId);
+
+	MenuDto findUserMenu(int userId, String startDate);
 
 	List<Menu> findAll();
 
@@ -19,5 +23,5 @@ public interface MenuService {
 
 	Menu update(Menu menu);
 
-	Menu addDishToMenu(int menuId, Dish dish);
+	ResponseDto addDishToMenu(int menuId, AddDishToMenuDto dto);
 }

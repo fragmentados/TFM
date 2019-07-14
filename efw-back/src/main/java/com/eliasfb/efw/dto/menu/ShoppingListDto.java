@@ -1,18 +1,16 @@
 package com.eliasfb.efw.dto.menu;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class MenuStatDto implements Serializable {
+public class ShoppingListDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String name;
-	private String value;
+	private List<ShoppingListItemDto> items;
 }

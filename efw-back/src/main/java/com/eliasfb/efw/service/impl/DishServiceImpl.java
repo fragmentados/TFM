@@ -32,7 +32,7 @@ public class DishServiceImpl implements DishService {
 		if (dish != null) {
 			repository.delete(dish);
 		}
-		return new ResponseDto(0, "Dish with name = '" + dish.getName() + "' deleted correctly.");
+		return new ResponseDto(ResponseDto.OK_CODE, "Dish with name = '" + dish.getName() + "' deleted correctly.");
 	}
 
 	@Override
