@@ -1,7 +1,7 @@
 package com.eliasfb.efw.dto.menu;
 
 public enum NutritionalStatEnum {
-	CALORIES("calories"), PROTEINS("proteins"), FATS("fats"), CARBOHYDRATES("carbohydrates");
+	CALORIES("Calories"), PROTEINS("Proteins"), FATS("Fats"), CARBOHYDRATES("Carbohydrates");
 
 	private String name;
 

@@ -8,10 +8,12 @@ import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class MenuDisRelId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,10 +23,6 @@ public class MenuDisRelId implements Serializable {
 
 	@ManyToOne
 	private Dish dish;
-
-	public MenuDisRelId() {
-
-	}
 
 	@Override
 	public boolean equals(Object o) {

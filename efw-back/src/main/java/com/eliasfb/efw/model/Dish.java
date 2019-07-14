@@ -54,19 +54,19 @@ public class Dish {
 		this.ingredients.forEach(x -> x.getDishes().add(this));
 	}
 
-	public int getCalories() {
+	public Integer getCalories() {
 		return this.ingredients.stream().mapToInt(ig -> ig.getCalories()).sum();
 	}
 
-	public int getProteins() {
+	public Integer getProteins() {
 		return this.ingredients.stream().mapToInt(ig -> ig.getProteins()).sum();
 	}
 
-	public int getFats() {
+	public Integer getFats() {
 		return this.ingredients.stream().mapToInt(ig -> ig.getFats()).sum();
 	}
 
-	public int getCarbohydrates() {
+	public Integer getCarbohydrates() {
 		return this.ingredients.stream().mapToInt(ig -> ig.getCarbohydrates()).sum();
 	}
 }

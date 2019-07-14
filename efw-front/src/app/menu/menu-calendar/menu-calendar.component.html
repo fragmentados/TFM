@@ -3,7 +3,11 @@
 [weekStartsOn]=[1]
 [events]="events">
 </app-calendar-week-view>
-
-<app-calendar-week-view-stats
+<br/>
+<div align="center">
+  <button mat-raised-button (click)="generateShoppingList()">Generate Shopping List</button>
+</div>
+<br/>
+<app-calendar-week-view-stats *ngIf="menu && menu.stats"
 [stats]="menu.stats">
 </app-calendar-week-view-stats>

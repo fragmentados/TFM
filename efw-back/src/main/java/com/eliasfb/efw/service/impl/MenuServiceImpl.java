@@ -2,15 +2,27 @@ package com.eliasfb.efw.service.impl;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eliasfb.efw.dto.AddDishToMenuDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.MenuToDtoMapper;
 import com.eliasfb.efw.dto.menu.MenuDto;
+import com.eliasfb.efw.dto.menu.MenuStatDto;
+import com.eliasfb.efw.dto.menu.NutritionalStatEnum;
+import com.eliasfb.efw.dto.menu.ShoppingListDto;
+import com.eliasfb.efw.dto.menu.ShoppingListItemDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
+import com.eliasfb.efw.model.MenuDisRel;
+import com.eliasfb.efw.model.MenuDisRelId;
+import com.eliasfb.efw.repository.DishRepository;
 import com.eliasfb.efw.repository.MenuRepository;
 import com.eliasfb.efw.service.MenuService;
 
@@ -18,6 +30,9 @@ import com.eliasfb.efw.service.MenuService;
 public class MenuServiceImpl implements MenuService {
 	@Autowired
 	private MenuRepository repository;
+
+	@Autowired
+	private DishRepository dishRepository;
 
 	@Autowired
 	private MenuToDtoMapper mapper;
@@ -37,9 +52,48 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public List<MenuDto> findUserMenu(int userId, String startDate) {
-		List<Menu> menus = repository.findByUserIdAndStartDate(userId, getLastWeekStart(startDate));
-		return this.mapper.menuListToMenuDtoList(menus);
+	public MenuDto findUserMenu(int userId, String startDate) {
+		Menu userMenu = repository.findByUserIdAndStartDate(userId, getLastWeekStart(startDate));
+		if (userMenu != null) {
+			List<MenuStatDto> menuStats = getStatList(userMenu.getDishes());
+			MenuDto menuDto = this.mapper.menuToMenuDto(userMenu);
+			menuDto.setStats(menuStats);
+			return menuDto;
+		}
+		return new MenuDto();
+	}
+
+	private List<MenuStatDto> getStatList(List<MenuDisRel> menuDisRels) {
+		List<MenuStatDto> menuStats = new ArrayList<>();
+		menuStats.add(getCaloriesStat(menuDisRels));
+		menuStats.add(getProteinsStat(menuDisRels));
+		menuStats.add(getFatsStat(menuDisRels));
+		menuStats.add(getCarbohydratesStat(menuDisRels));
+		return menuStats;
+	}
+
+	private MenuStatDto getCaloriesStat(List<MenuDisRel> menuDisRels) {
+		Integer calories = menuDisRels.stream().map(md -> md.getId().getDish())
+				.collect(Collectors.summingInt(d -> d.getCalories()));
+		return new MenuStatDto(NutritionalStatEnum.CALORIES.getName(), String.valueOf(calories));
+	}
+
+	private MenuStatDto getProteinsStat(List<MenuDisRel> menuDisRels) {
+		Integer proteins = menuDisRels.stream().map(md -> md.getId().getDish())
+				.collect(Collectors.summingInt(d -> d.getProteins()));
+		return new MenuStatDto(NutritionalStatEnum.PROTEINS.getName(), String.valueOf(proteins));
+	}
+
+	private MenuStatDto getFatsStat(List<MenuDisRel> menuDisRels) {
+		Integer fats = menuDisRels.stream().map(md -> md.getId().getDish())
+				.collect(Collectors.summingInt(d -> d.getFats()));
+		return new MenuStatDto(NutritionalStatEnum.FATS.getName(), String.valueOf(fats));
+	}
+
+	private MenuStatDto getCarbohydratesStat(List<MenuDisRel> menuDisRels) {
+		Integer carbohydrates = menuDisRels.stream().map(md -> md.getId().getDish())
+				.collect(Collectors.summingInt(d -> d.getFats()));
+		return new MenuStatDto(NutritionalStatEnum.CARBOHYDRATES.getName(), String.valueOf(carbohydrates));
 	}
 
 	// Auxiliar method for obtaining the previous Monday from date received
@@ -63,12 +117,26 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public Menu addDishToMenu(int menuId, Dish dish) {
+	public ResponseDto addDishToMenu(int menuId, AddDishToMenuDto dto) {
+		// We find the corresponding entities
 		Menu menu = repository.findOne(menuId);
-		/*
-		 * if (!menu.getDishes().contains(dish)) { // TODO EFB REVIEW //
-		 * menu.getDishes().add(dish); repository.save(menu); }
-		 */
-		return menu;
+		Dish dish = dishRepository.findOne(dto.getDishId());
+		// We join them on the relationship entity
+		MenuDisRelId id = new MenuDisRelId(menu, dish);
+		MenuDisRel menuDisRel = new MenuDisRel(id, dto.getDate());
+		// We persist the changes
+		if (!menu.getDishes().contains(menuDisRel)) {
+			menu.getDishes().add(menuDisRel);
+			repository.save(menu);
+		}
+		return new ResponseDto(ResponseDto.OK_CODE, "Dish added to menu correctly");
+	}
+
+	@Override
+	public ShoppingListDto getShoppingList(int menuId) {
+		Menu menu = repository.findOne(menuId);
+		Map<String, Long> shoppingListItems = menu.getShoppingListItems();
+		return new ShoppingListDto(shoppingListItems.entrySet().stream()
+				.map(si -> new ShoppingListItemDto(si.getKey(), si.getValue())).collect(Collectors.toList()));
 	}
 }

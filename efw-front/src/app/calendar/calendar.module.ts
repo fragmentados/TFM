@@ -1,3 +1,4 @@
+import { DishService } from '../dish/dish.service';
 import { NgModule, Provider, ModuleWithProviders } from '@angular/core';
 import { CalendarWeekViewEventComponent } from './calendar-week-view-event/calendar-week-view-event.component';
 import { CalendarWeekViewHeaderComponent } from './calendar-week-view-header/calendar-week-view-header.component';
@@ -9,18 +10,26 @@ import { CommonModule } from '@angular/common';
 import { CalendarCommonModule, CalendarModuleConfig, CalendarEventTitleFormatter,
   CalendarDateFormatter, CalendarUtils } from './common/calendar-common.module';
 import { CalendarWeekViewStatsComponent } from './calendar-week-view-stats/calendar-week-view-stats.component';
+import { CalendarWeekViewShoppingListComponent } from './calendar-week-view-shopping-list/calendar-week-view-shopping-list.component';
+import { CalendarWeekViewAddDishComponent } from './calendar-week-view-add-dish/calendar-week-view-add-dish.component';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [CalendarWeekViewEventComponent,
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewHourSegmentComponent,
     CalendarWeekViewComponent,
-    CalendarWeekViewStatsComponent],
+    CalendarWeekViewStatsComponent,
+    CalendarWeekViewShoppingListComponent,
+    CalendarWeekViewAddDishComponent],
   imports: [
     CommonModule,
     ResizableModule,
     DragAndDropModule,
-    CalendarCommonModule
+    CalendarCommonModule,
+    FormsModule,
+    MatDialogModule
   ],
   exports : [
     ResizableModule,
@@ -30,7 +39,12 @@ import { CalendarWeekViewStatsComponent } from './calendar-week-view-stats/calen
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewEventComponent,
     CalendarWeekViewHourSegmentComponent,
-    CalendarWeekViewStatsComponent
+    CalendarWeekViewStatsComponent,
+    CalendarWeekViewShoppingListComponent
+  ],
+  entryComponents : [
+    CalendarWeekViewShoppingListComponent,
+    CalendarWeekViewAddDishComponent
   ]
 })
 export class CalendarModule {
@@ -44,7 +58,8 @@ export class CalendarModule {
         dateAdapter,
         config.eventTitleFormatter || CalendarEventTitleFormatter,
         config.dateFormatter || CalendarDateFormatter,
-        config.utils || CalendarUtils
+        config.utils || CalendarUtils,
+        DishService
       ]
     };
   }

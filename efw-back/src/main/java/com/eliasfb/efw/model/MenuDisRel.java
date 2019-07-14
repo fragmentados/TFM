@@ -10,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "menudisrel")
@@ -37,12 +39,12 @@ public class MenuDisRel {
 			return false;
 
 		MenuDisRel that = (MenuDisRel) o;
-		return id != null ? Objects.equals(id, that.id) : false;
+		return id != null ? Objects.equals(id, that.id) && Objects.equals(dishDate, that.dishDate) : false;
 	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
+		return id != null && dishDate != null ? id.hashCode() + dishDate.hashCode() : 0;
 	}
 
 }

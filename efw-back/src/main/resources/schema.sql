@@ -70,7 +70,7 @@ create table if not exists menudisrel (
 	dish_date DATE, 
 	foreign key fk_menu_dish(menu_id) references menu(id), 
 	foreign key fk_dish_menu(dish_id) references dish(id), 
-	primary key(menu_id, dish_id)
+	primary key(menu_id, dish_id, dish_date)
 );
 
 --create table if not exists meal (id integer not null auto_increment, name varchar(255), primary key(id));

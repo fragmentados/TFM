@@ -8,5 +8,8 @@
   <div class="cal-time" *ngIf="isMealLabel">
     {{segment.name}}
   </div>
+  <div *ngIf="!isMealLabel">
+    <button (click)="addDishPopup()">Add dish</button>
+  </div>
 </div>
 

@@ -1,5 +1,5 @@
 {
-  "name": "portal-app",
+  "name": "eat-fit-week",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -12,12 +12,14 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "7.2.10",
+    "@angular/animations": "^7.2.10",
+    "@angular/cdk": "^7.2.10",
     "@angular/common": "7.2.10",
     "@angular/compiler": "7.2.10",
-    "@angular/core": "7.2.10",
+    "@angular/core": "^7.2.10",
     "@angular/forms": "7.2.10",
     "@angular/http": "7.2.10",
+    "@angular/material": "^7.2.10",
     "@angular/platform-browser": "7.2.10",
     "@angular/platform-browser-dynamic": "7.2.10",
     "@angular/router": "7.2.10",
@@ -54,6 +56,6 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "3.2.4"
+    "typescript": "^3.2.4"
   }
 }

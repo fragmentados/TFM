@@ -7,6 +7,7 @@ import { MenuService } from './menu.service';
 import { CalendarModule } from '../calendar/calendar.module';
 import { DateAdapter } from '../calendar/date-adapters/date-adapter';
 import { adapterFactory } from '../calendar/date-adapters/date-fns';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [MenuCalendarComponent],
@@ -17,6 +18,7 @@ import { adapterFactory } from '../calendar/date-adapters/date-fns';
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    MatDialogModule,
     MenuRoutingModule
   ],
   providers: [MenuService]

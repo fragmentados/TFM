@@ -7,7 +7,7 @@
     <input [(ngModel)]="dish.name" placeholder="Name" name="Name" class="form-control" id="Name">
   </div>
 
-  <div class="form-group">
+  <div class="form-group" *ngIf="ingredients">
     <label for="ingredientselect">Ingredients:</label>
     <div class="form-group">
       <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients">
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" *ngIf="selectedIngredients">
     <label for="selectedingredients">Selected ingredients:</label>
     {{selectedIngredients.join(', ')}}
   </div>
