@@ -75,9 +75,6 @@ public class MenuServiceImpl implements MenuService {
 		Menu menu = findById(id);
 		if (menu != null) {
 			menuDisRelRepository.deleteByMenuId(menu.getId());
-			// menu.getDishes().stream().forEach(mdr -> menuDisRelRepository.delete(mdr));
-			// menu.setDishes(new ArrayList<>());
-			// repository.save(menu);
 		}
 		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been cleared correctly");
 	}

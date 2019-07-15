@@ -43,6 +43,12 @@ export class AddDishComponent implements OnInit {
     }
   }
 
+  clearForm(): void {
+    this.dish.name = '';
+    this.selectedIng = null;
+    this.clearIngredients();
+  }
+
   clearIngredients(): void {
     this.dish.ingredients = [];
     this.selectedIngredients = [];
@@ -52,6 +58,7 @@ export class AddDishComponent implements OnInit {
     this.dish.userId = LOGGED_IN_USER;
     this.dishService.createDish(this.dish)
         .subscribe( data => {
+          this.clearForm();
           alert('Dish ' + this.dish.name + ' created successfully.');
         });
   }

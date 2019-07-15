@@ -78,10 +78,10 @@ export class MenuCalendarComponent implements OnInit {
 
   clearMenu() {
     this.menuService.clearMenu(this.menu.id).subscribe(data => {
-      if(data.errorCode === 0) {
+      if (data.errorCode === 0) {
         this.events = [];
       }
-    })
+    });
   }
 
   createMenu() {

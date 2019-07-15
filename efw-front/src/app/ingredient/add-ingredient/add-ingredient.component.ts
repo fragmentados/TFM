@@ -16,10 +16,19 @@ export class AddIngredientComponent {
 
   }
 
+  clearForm() {
+    this.ingredient.name = '';
+    this.ingredient.calories = null;
+    this.ingredient.carbohydrates = null;
+    this.ingredient.proteins = null;
+    this.ingredient.fats = null;
+  }
+
   createIngredient(): void {
     this.ingredient.userId = LOGGED_IN_USER;
     this.ingredientService.createIngredient(this.ingredient)
         .subscribe( data => {
+          this.clearForm();
           alert('Ingredient created successfully.');
         });
 
