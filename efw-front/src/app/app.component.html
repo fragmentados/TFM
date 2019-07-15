@@ -5,29 +5,50 @@
   </h1>
 </div>
 
-<ul>
-  <li>
-    <a routerLink="/users">List Users</a>
+<ul class="horizontal-menu">
+  <li class="horizontal-menu">
+    Users
+    <ul class="list-categories">
+      <li>
+        <a routerLink="/users">List Users</a>
+      </li>
+      <li>
+        <a routerLink="/addUser">Add User</a>
+      </li>
+    </ul>
   </li>
-  <li>
-    <a routerLink="/addUser">Add User</a>
+  <li class="horizontal-menu">
+    Ingredients
+    <ul class="list-categories">
+      <li>
+        <a routerLink="/ingredients">List Ingredients</a>
+      </li>
+      <li>
+        <a routerLink="/ingredients/addIngredient">Add Ingredient</a>
+      </li>
+    </ul>
   </li>
-  <li>
-    <a routerLink="/ingredients">List Ingredients</a>
+  <li class="horizontal-menu">
+    Dishes
+    <ul class="list-categories">
+      <li>
+        <a routerLink="/dishes">List Dishes</a>
+      </li>
+      <li>
+        <a routerLink="/dishes/addDish">Add Dish</a>
+      </li>
+    </ul>
   </li>
-  <li>
-    <a routerLink="/ingredients/addIngredient">Add Ingredient</a>
-  </li>
-  <li>
-    <a routerLink="/dishes">List Dishes</a>
-  </li>
-  <li>
-    <a routerLink="/dishes/addDish">Add Dish</a>
-  </li>
-  <li>
-    <a routerLink="/menu">Menu Calendar</a>
+  <li class="horizontal-menu">
+    Menu
+    <ul class="list-categories">
+      <li>
+        <a routerLink="/menu">Menu Calendar</a>
+      </li>
+    </ul>
   </li>
 </ul>
+
 <h3>Usuario Loggeado : <b>{{user ? user.firstName : ''}}</b></h3>
 
 <br/>
