@@ -3,15 +3,14 @@ package com.eliasfb.efw.dto.mapper;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.eliasfb.efw.dto.CreateDishDto;
 import com.eliasfb.efw.dto.DishDto;
-import com.eliasfb.efw.dto.IngredientDto;
 import com.eliasfb.efw.dto.menu.MenuDishDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
@@ -20,6 +19,9 @@ import com.eliasfb.efw.model.User;
 @Mapper(componentModel = "spring")
 public abstract class DishToDtoMapper {
 
+	@Autowired
+	private IngredientToIngredientDtoMapper ingredientMapper;
+
 	@Mapping(source = "ingredients", target = "ingredients", ignore = true)
 	public abstract DishDto dishToDishDto(Dish dish);
 
@@ -27,14 +29,8 @@ public abstract class DishToDtoMapper {
 
 	DishDto toDto(Dish dish) {
 		DishDto dishDto = dishToDishDto(dish);
-		Set<Ingredient> ingredients = dish.getIngredients();
-		ingredients.forEach(i -> {
-			IngredientDto ingDto = new IngredientDto();
-			ingDto.setName(i.getName());
-			ingDto.setCalories(i.getCalories());
-			ingDto.setFats(i.getFats());
-			ingDto.setProteins(i.getProteins());
-		});
+		dishDto.setIngredients(
+				dish.getIngredients().stream().map(i -> ingredientMapper.toDto(i)).collect(Collectors.toList()));
 		return dishDto;
 	}
 

@@ -16,10 +16,10 @@ import com.eliasfb.efw.dto.CreateMenuDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.MenuToDtoMapper;
 import com.eliasfb.efw.dto.menu.MenuDto;
-import com.eliasfb.efw.dto.menu.MenuStatDto;
-import com.eliasfb.efw.dto.menu.NutritionalStatEnum;
 import com.eliasfb.efw.dto.menu.ShoppingListDto;
 import com.eliasfb.efw.dto.menu.ShoppingListItemDto;
+import com.eliasfb.efw.dto.stat.StatDto;
+import com.eliasfb.efw.dto.stat.NutritionalStatEnum;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.model.MenuDisRel;
@@ -83,7 +83,7 @@ public class MenuServiceImpl implements MenuService {
 	public MenuDto findUserMenu(int userId, String startDate) {
 		Menu userMenu = repository.findByUserIdAndStartDate(userId, getLastWeekStart(startDate));
 		if (userMenu != null) {
-			List<MenuStatDto> menuStats = getStatList(userMenu.getDishes());
+			List<StatDto> menuStats = getStatList(userMenu.getDishes());
 			MenuDto menuDto = this.mapper.menuToMenuDto(userMenu);
 			menuDto.setStats(menuStats);
 			return menuDto;
@@ -91,8 +91,8 @@ public class MenuServiceImpl implements MenuService {
 		return new MenuDto();
 	}
 
-	private List<MenuStatDto> getStatList(List<MenuDisRel> menuDisRels) {
-		List<MenuStatDto> menuStats = new ArrayList<>();
+	private List<StatDto> getStatList(List<MenuDisRel> menuDisRels) {
+		List<StatDto> menuStats = new ArrayList<>();
 		menuStats.add(getCaloriesStat(menuDisRels));
 		menuStats.add(getProteinsStat(menuDisRels));
 		menuStats.add(getFatsStat(menuDisRels));
@@ -100,28 +100,28 @@ public class MenuServiceImpl implements MenuService {
 		return menuStats;
 	}
 
-	private MenuStatDto getCaloriesStat(List<MenuDisRel> menuDisRels) {
+	private StatDto getCaloriesStat(List<MenuDisRel> menuDisRels) {
 		Integer calories = menuDisRels.stream().map(md -> md.getId().getDish())
 				.collect(Collectors.summingInt(d -> d.getCalories()));
-		return new MenuStatDto(NutritionalStatEnum.CALORIES.getName(), String.valueOf(calories));
+		return new StatDto(NutritionalStatEnum.CALORIES.getName(), String.valueOf(calories));
 	}
 
-	private MenuStatDto getProteinsStat(List<MenuDisRel> menuDisRels) {
+	private StatDto getProteinsStat(List<MenuDisRel> menuDisRels) {
 		Integer proteins = menuDisRels.stream().map(md -> md.getId().getDish())
 				.collect(Collectors.summingInt(d -> d.getProteins()));
-		return new MenuStatDto(NutritionalStatEnum.PROTEINS.getName(), String.valueOf(proteins));
+		return new StatDto(NutritionalStatEnum.PROTEINS.getName(), String.valueOf(proteins));
 	}
 
-	private MenuStatDto getFatsStat(List<MenuDisRel> menuDisRels) {
+	private StatDto getFatsStat(List<MenuDisRel> menuDisRels) {
 		Integer fats = menuDisRels.stream().map(md -> md.getId().getDish())
 				.collect(Collectors.summingInt(d -> d.getFats()));
-		return new MenuStatDto(NutritionalStatEnum.FATS.getName(), String.valueOf(fats));
+		return new StatDto(NutritionalStatEnum.FATS.getName(), String.valueOf(fats));
 	}
 
-	private MenuStatDto getCarbohydratesStat(List<MenuDisRel> menuDisRels) {
+	private StatDto getCarbohydratesStat(List<MenuDisRel> menuDisRels) {
 		Integer carbohydrates = menuDisRels.stream().map(md -> md.getId().getDish())
 				.collect(Collectors.summingInt(d -> d.getFats()));
-		return new MenuStatDto(NutritionalStatEnum.CARBOHYDRATES.getName(), String.valueOf(carbohydrates));
+		return new StatDto(NutritionalStatEnum.CARBOHYDRATES.getName(), String.valueOf(carbohydrates));
 	}
 
 	// Auxiliar method for obtaining the previous Monday from date received

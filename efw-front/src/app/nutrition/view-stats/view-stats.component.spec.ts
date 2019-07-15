@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CalendarWeekViewStatsComponent } from './calendar-week-view-stats.component';
+import { ViewStatsComponent } from './view-stats.component';
 
 describe('CalendarWeekViewStatsComponent', () => {
-  let component: CalendarWeekViewStatsComponent;
-  let fixture: ComponentFixture<CalendarWeekViewStatsComponent>;
+  let component: ViewStatsComponent;
+  let fixture: ComponentFixture<ViewStatsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarWeekViewStatsComponent ]
+      declarations: [ ViewStatsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CalendarWeekViewStatsComponent);
+    fixture = TestBed.createComponent(ViewStatsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

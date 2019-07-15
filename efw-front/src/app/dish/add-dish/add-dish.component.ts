@@ -5,7 +5,7 @@ import { AddDish } from '../../models/dish/addDish.model';
 import { Router } from '@angular/router';
 import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '../../ingredient/ingredient.service';
-
+import { Stat } from '../../models/nutrition/Stat.model';
 
 @Component({
   selector: 'app-add-dish',
@@ -16,30 +16,50 @@ export class AddDishComponent implements OnInit {
 
   dish: AddDish = new AddDish();
   ingredients: Ingredient[];
+  selectedIngredients: Ingredient[];
+  dishStats: Stat[];
   selectedIng: Ingredient;
-  selectedIngredients: String[];
 
-  constructor(private router: Router, private dishService: DishService, private ingredientService: IngredientService) {
-
-  }
+  constructor(private router: Router, private dishService: DishService, private ingredientService: IngredientService) {}
 
   ngOnInit() {
     this.ingredientService.getUserIngredients(LOGGED_IN_USER).subscribe(data => this.ingredients = data);
   }
 
-  addIngredient(): void {
+  selectedIngredientsNames(): String[] {
+    return this.selectedIngredients.map(elem => elem.name);
+  }
+
+  addIngredient() {
     if (this.selectedIng != null) {
       if (this.dish.ingredients == null) {
         this.dish.ingredients = [this.selectedIng.id];
-        this.selectedIngredients = [this.selectedIng.name];
+        this.selectedIngredients = [this.selectedIng];
+        this.updateDishStatsWithIngredientStats(this.selectedIng);
       } else if (this.dish.ingredients.indexOf(this.selectedIng.id) === -1) {
         this.dish.ingredients.push(this.selectedIng.id);
-        this.selectedIngredients.push(this.selectedIng.name);
+        this.selectedIngredients.push(this.selectedIng);
+        this.updateDishStatsWithIngredientStats(this.selectedIng);
       } else {
         alert('That ingredient has already been selected');
       }
     } else {
       alert('You must select an ingredient first');
+    }
+  }
+
+  updateDishStatsWithIngredientStats(ingredient: Ingredient) {
+    if (this.dishStats == null) {
+      this.dishStats = [];
+    }
+    for (const ingredientStat of ingredient.stats) {
+      const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
+      if (dishStat == null) {
+        this.dishStats.push(ingredientStat);
+      } else {
+        this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
+        this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value) + parseInt(ingredientStat.value)).toString()));
+      }
     }
   }
 
@@ -52,6 +72,7 @@ export class AddDishComponent implements OnInit {
   clearIngredients(): void {
     this.dish.ingredients = [];
     this.selectedIngredients = [];
+    this.dishStats = null;
   }
 
   createDish(): void {

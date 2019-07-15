@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eliasfb.efw.dto.CreateIngredientDto;
+import com.eliasfb.efw.dto.IngredientDto;
 import com.eliasfb.efw.dto.mapper.IngredientToIngredientDtoMapper;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.repository.IngredientRepository;
@@ -40,14 +41,14 @@ public class IngredientServiceImpl implements IngredientService {
 	}
 
 	@Override
-	public List<Ingredient> findUserIngredients(Integer userId) {
+	public List<IngredientDto> findUserIngredients(Integer userId) {
 		List<Ingredient> ingredients;
 		if (userId != null) {
 			ingredients = repository.findByUserId(userId);
 		} else {
 			ingredients = repository.findAll();
 		}
-		return ingredients;
+		return mapper.ingredientToDtoList(ingredients);
 	}
 
 	@Override

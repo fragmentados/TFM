@@ -14,7 +14,8 @@
     <button (click)="clearMenu()"><b>Clear menu</b></button>
   </div>
   <br/>
-  <app-calendar-week-view-stats *ngIf="menu.stats"
-  [stats]="menu.stats">
-  </app-calendar-week-view-stats>
+  <app-view-stats *ngIf="menu.stats"
+  [stats]="menu.stats"
+  [areMenuStats]="true">
+  </app-view-stats>
 </div>

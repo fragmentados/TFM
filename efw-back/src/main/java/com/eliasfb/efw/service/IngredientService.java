@@ -3,6 +3,7 @@ package com.eliasfb.efw.service;
 import java.util.List;
 
 import com.eliasfb.efw.dto.CreateIngredientDto;
+import com.eliasfb.efw.dto.IngredientDto;
 import com.eliasfb.efw.model.Ingredient;
 
 public interface IngredientService {
@@ -13,7 +14,7 @@ public interface IngredientService {
 
 	List<Ingredient> findAll();
 
-	List<Ingredient> findUserIngredients(Integer userId);
+	List<IngredientDto> findUserIngredients(Integer userId);
 
 	Ingredient findById(int id);
 

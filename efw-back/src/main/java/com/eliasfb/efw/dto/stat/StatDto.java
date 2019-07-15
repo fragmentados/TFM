@@ -1,4 +1,4 @@
-package com.eliasfb.efw.dto.menu;
+package com.eliasfb.efw.dto.stat;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuStatDto implements Serializable {
+public class StatDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

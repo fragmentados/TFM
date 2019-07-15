@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.CreateIngredientDto;
+import com.eliasfb.efw.dto.IngredientDto;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.IngredientService;
 
@@ -47,7 +48,7 @@ public class IngredientController {
 	}
 
 	@GetMapping
-	public List<Ingredient> findUserIngredients(@RequestParam(required = false) Integer userId) {
+	public List<IngredientDto> findUserIngredients(@RequestParam(required = false) Integer userId) {
 		return service.findUserIngredients(userId);
 	}
 }

@@ -3,6 +3,8 @@ package com.eliasfb.efw.dto.menu;
 import java.io.Serializable;
 import java.util.List;
 
+import com.eliasfb.efw.dto.stat.StatDto;
+
 import lombok.Data;
 
 @Data
@@ -12,6 +14,6 @@ public class MenuDto implements Serializable {
 	private Integer id;
 	private String startDate;
 	private List<MenuDayDto> days;
-	private List<MenuStatDto> stats;
+	private List<StatDto> stats;
 
 }

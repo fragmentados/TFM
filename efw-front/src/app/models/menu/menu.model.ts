@@ -1,9 +1,9 @@
 import { MenuDay } from './menuDay.model';
-import { MenuStat } from './menuStat.model';
+import { Stat } from '../nutrition/Stat.model';
 
 export class Menu {
   id: number;
   startDate: string;
   days: MenuDay[];
-  stats: MenuStat[];
+  stats: Stat[];
 }

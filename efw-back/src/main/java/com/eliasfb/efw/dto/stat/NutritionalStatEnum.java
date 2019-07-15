@@ -1,4 +1,4 @@
-package com.eliasfb.efw.dto.menu;
+package com.eliasfb.efw.dto.stat;
 
 public enum NutritionalStatEnum {
 	CALORIES("Calories"), PROTEINS("Proteins"), FATS("Fats"), CARBOHYDRATES("Carbohydrates");

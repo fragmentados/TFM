@@ -9,7 +9,6 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { CommonModule } from '@angular/common';
 import { CalendarCommonModule, CalendarModuleConfig, CalendarEventTitleFormatter,
   CalendarDateFormatter, CalendarUtils } from './common/calendar-common.module';
-import { CalendarWeekViewStatsComponent } from './calendar-week-view-stats/calendar-week-view-stats.component';
 import { CalendarWeekViewShoppingListComponent } from './calendar-week-view-shopping-list/calendar-week-view-shopping-list.component';
 import { CalendarWeekViewAddDishComponent } from './calendar-week-view-add-dish/calendar-week-view-add-dish.component';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +19,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewHourSegmentComponent,
     CalendarWeekViewComponent,
-    CalendarWeekViewStatsComponent,
     CalendarWeekViewShoppingListComponent,
     CalendarWeekViewAddDishComponent],
   imports: [
@@ -39,7 +37,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewEventComponent,
     CalendarWeekViewHourSegmentComponent,
-    CalendarWeekViewStatsComponent,
     CalendarWeekViewShoppingListComponent
   ],
   entryComponents : [
