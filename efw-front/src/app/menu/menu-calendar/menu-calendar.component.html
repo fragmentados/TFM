@@ -6,7 +6,8 @@
   [viewDate]="viewDate"
   [weekStartsOn]=[1]
   [events]="events"
-  [menuId]="menu.id">
+  [menuId]="menu.id"
+  (dishAdded)="updateMenuStatsWithDishStats($event)">
   </app-calendar-week-view>
   <br/>
   <div align="center">

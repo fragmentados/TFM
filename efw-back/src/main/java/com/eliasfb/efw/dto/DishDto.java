@@ -13,6 +13,7 @@ public class DishDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Integer id;
 	private String name;
 	private List<IngredientDto> ingredients;
 	private List<StatDto> stats = new ArrayList<>();

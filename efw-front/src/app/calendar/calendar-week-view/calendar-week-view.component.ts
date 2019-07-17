@@ -12,6 +12,7 @@ import { trackByWeekDayHeaderDate, trackByHourSegment, trackByHour,
   getDefaultEventEnd, validateEvents, getWeekViewPeriod, WeekView, WeekViewHourColumn } from '../common/util';
 import { CalendarEventTimesChangedEvent, DateAdapter, CalendarEventTimesChangedEventType } from '../common/calendar-common.module';
 import { CalendarUtils } from '../common/calendar-utils.provider';
+import { Dish } from '../../models/dish/dish.model';
 
 export interface WeekViewAllDayEventResize {
   originalOffset: number;
@@ -162,6 +163,9 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
   hourSegmentClicked = new EventEmitter<{
     date: Date;
   }>();
+
+  @Output()
+  dishAdded = new EventEmitter<Dish>();
 
   /**
    * @hidden
@@ -825,13 +829,14 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
     return newEventDates;
   }
 
-  addDishEvent(dishEvent: CalendarEvent) {
+  addDishEvent(dishEvent) {
     if (this.events == null) {
-      this.events = [dishEvent];
+      this.events = [dishEvent.event];
     } else {
-      this.events.push(dishEvent);
+      this.events.push(dishEvent.event);
     }
     this.refreshBody();
+    this.dishAdded.emit(dishEvent.dish);
   }
 
 }

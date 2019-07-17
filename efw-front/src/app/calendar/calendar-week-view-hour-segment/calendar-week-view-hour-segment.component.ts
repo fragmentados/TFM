@@ -6,6 +6,7 @@ import { MenuService } from '../../menu/menu.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarWeekViewAddDishComponent } from '../calendar-week-view-add-dish/calendar-week-view-add-dish.component';
 import { AddDishToMenu } from '../../models/menu/addDishToMenu.model';
+import { Dish } from '../../models/dish/dish.model';
 
 @Component({
   selector: 'app-calendar-week-view-hour-segment',
@@ -32,7 +33,10 @@ export class CalendarWeekViewHourSegmentComponent {
    * Called when a dish is added to the menu
    */
   @Output()
-  dishAdded = new EventEmitter<CalendarEvent>();
+  dishAdded = new EventEmitter<{
+    event: CalendarEvent;
+    dish: Dish;
+  }>();
 
   addDishPopup() {
     const dialogRef = this.dialog.open(CalendarWeekViewAddDishComponent, {
@@ -47,10 +51,13 @@ export class CalendarWeekViewHourSegmentComponent {
       this.menuService.addDishToMenu(this.menuId, addDishToMenu).subscribe(data => {
         console.log(`Dish added to menu: ${data}`);
         this.dishAdded.emit({
+          event: {
             start: this.segment.date,
             end: addHours(this.segment.date, 1),
             title: result.name
-          });
+          },
+          dish: result
+        });
       });
     });
   }

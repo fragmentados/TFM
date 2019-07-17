@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.DishToDtoMapper;
 import com.eliasfb.efw.model.Dish;
@@ -36,14 +37,14 @@ public class DishServiceImpl implements DishService {
 	}
 
 	@Override
-	public List<Dish> findUserDishes(Integer userId) {
+	public List<DishDto> findUserDishes(Integer userId) {
 		List<Dish> dishes;
 		if (userId == null) {
 			dishes = repository.findAll();
 		} else {
 			dishes = repository.findUserDishes(userId);
 		}
-		return dishes;
+		return mapper.dishListToDishDtoList(dishes);
 	}
 
 	@Override

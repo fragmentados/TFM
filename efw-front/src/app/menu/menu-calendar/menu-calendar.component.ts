@@ -8,6 +8,8 @@ import { addHours } from 'date-fns';
 import { MenuDay } from '../../models/menu/menuDay.model';
 import { CalendarEvent } from '../../calendar/common/calendar-common.module';
 import {MatDialog} from '@angular/material/dialog';
+import { Dish } from '../../models/dish/dish.model';
+import { Stat } from '../../models/nutrition/stat.model';
 
 @Component({
   selector: 'app-menu-calendar',
@@ -80,6 +82,7 @@ export class MenuCalendarComponent implements OnInit {
     this.menuService.clearMenu(this.menu.id).subscribe(data => {
       if (data.errorCode === 0) {
         this.events = [];
+        this.menu.stats = [];
       }
     });
   }
@@ -106,6 +109,25 @@ export class MenuCalendarComponent implements OnInit {
     mywindow.close();
 
       return true;
+  }
+
+  updateMenuStatsWithDishStats(dish: Dish) {
+    if (this.menu.stats == null) {
+      this.menu.stats = [];
+    }
+    for (const dishStat of dish.stats) {
+      const menuStat: Stat = this.menu.stats.find(element => element.name === dishStat.name);
+      if (menuStat == null) {
+        this.menu.stats.push(dishStat);
+      } else {
+        this.menu.stats = this.menu.stats.filter(element => element.name !== menuStat.name);
+        this.menu.stats.push(new Stat(menuStat.name, (parseInt(menuStat.value) + parseInt(dishStat.value)).toString()));
+      }
+    }
+  }
+
+  dishAdded() {
+
   }
 
 }

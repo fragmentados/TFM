@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
@@ -54,7 +55,7 @@ public class DishController {
 	}
 
 	@GetMapping
-	public List<Dish> findUserDishes(@RequestParam(required = false) Integer userId) {
+	public List<DishDto> findUserDishes(@RequestParam(required = false) Integer userId) {
 		return service.findUserDishes(userId);
 	}
 }

@@ -3,6 +3,7 @@ package com.eliasfb.efw.service;
 import java.util.List;
 
 import com.eliasfb.efw.dto.CreateDishDto;
+import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
@@ -14,7 +15,7 @@ public interface DishService {
 
 	List<Dish> findAll();
 
-	List<Dish> findUserDishes(Integer userId);
+	List<DishDto> findUserDishes(Integer userId);
 
 	Dish findById(int id);
 
