@@ -1,0 +1,24 @@
+<div class="col-md-6">
+    <h2 class="text-center">User Confs</h2>
+  <form>
+    <div *ngIf="userConf">
+      <div class="form-group">
+        <label for="maxCalories">Max Calories per Week:</label>
+        <input type="number" [(ngModel)]="userConf.maxCaloriesPerWeek" placeholder="Max Calories Per Week" name="maxCalories" class="form-control" id="maxCalories">
+      </div>
+      <div class="form-group">
+          <label for="maxProteins">Max Proteins per Week:</label>
+          <input type="number" [(ngModel)]="userConf.maxProteinsPerWeek" placeholder="Max Proteins Per Week" name="maxProteins" class="form-control" id="maxProteins">
+      </div>
+      <div class="form-group">
+          <label for="maxFats">Max Fats per Week:</label>
+          <input type="number" [(ngModel)]="userConf.maxFatsPerWeek" placeholder="Max Fats Per Week" name="maxFats" class="form-control" id="maxFats">
+      </div>
+      <div class="form-group">
+          <label for="maxCarbohydrates">Max Carbohydrates per Week:</label>
+          <input type="number" [(ngModel)]="userConf.maxCarbohydratesPerWeek" placeholder="Max Carbohydrates Per Week" name="maxCarbohydrates" class="form-control" id="maxCarbohydrates">
+      </div>
+    </div>
+    <button class="btn btn-success" (click)="updateConfs()">Update Confs</button>
+  </form>
+  </div>

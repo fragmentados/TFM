@@ -12,6 +12,7 @@
   <div align="center">
     <button mat-raised-button (click)="generateShoppingList()"><b>Shopping List</b></button>
     <button (click)="clearMenu()"><b>Clear menu</b></button>
+    <button (click)="printMenu()"><b>Print menu</b></button>
   </div>
   <br/>
   <app-view-stats *ngIf="menu.stats"

@@ -1,23 +1,26 @@
 <div>
   <h2 mat-dialog-title> Shopping List </h2>
-  <hr>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Ingredient</th>
-      <th>Quantity</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of data.items">
-      <td><b>{{item.ingredientName}}</b></td>
-      <td><b>{{item.quantity}}</b></td>
-    </tr>
-    </tbody>
-  </table>
-  <hr>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onOkClick()">Ok</button>
+  <div id="shopping-list dialog">
+    <hr>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Ingredient</th>
+        <th>Quantity</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of data.items">
+        <td><b>{{item.ingredientName}}</b></td>
+        <td><b>{{item.quantity}}</b></td>
+      </tr>
+      </tbody>
+    </table>
+    <hr>
+  </div>
+  <div mat-dialog-actions class="modal-footer">
+    <button class="btn btn-primary onPrint" (click)="printDialog()">Print</button>
+    <button class="btn btn-success onPrint" mat-button (click)="onOkClick()">Ok</button>
   </div>
 </div>
 

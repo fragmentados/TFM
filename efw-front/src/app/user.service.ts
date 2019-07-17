@@ -1,8 +1,9 @@
-import { BACKEND_URL } from './../models/service';
+import { BACKEND_URL } from './models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { User } from '../models/user.model';
+import { User } from './models/user/user.model';
+import { UserConfs } from './models/user/userConfs.model';
 
 
 const httpOptions = {
@@ -24,11 +25,19 @@ export class UserService {
     return this.http.get<User[]>(this.userUrl);
   }
 
-  public deleteUser(user) {
+  public getUserConfs(userId: number) {
+    return this.http.get<UserConfs>(this.userUrl + '/' + userId + '/conf');
+  }
+
+  public updateUserConfs(userId: number, userConf: UserConfs) {
+    return this.http.post(this.userUrl + '/' + userId + '/conf', userConf);
+  }
+
+  public deleteUser(user: User) {
     return this.http.delete(this.userUrl + '/' + user.id);
   }
 
-  public createUser(user) {
+  public createUser(user: User) {
     return this.http.post<User>(this.userUrl, user);
   }
 

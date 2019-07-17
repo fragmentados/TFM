@@ -3,6 +3,7 @@ package com.eliasfb.efw.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,13 +18,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Table(name = "user")
 @Data
-@ToString(exclude = { "menus", "ingredients" })
-@EqualsAndHashCode(exclude = { "menus", "ingredients" })
+@NoArgsConstructor
+@ToString(exclude = { "menus", "ingredients", "configurations" })
+@EqualsAndHashCode(exclude = { "menus", "ingredients", "configurations" })
 public class User {
 
 	@Id
@@ -45,5 +48,13 @@ public class User {
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Set<Dish> dishes;
+	@OneToMany(mappedBy = "id.user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<UserConfiguration> configurations;
+
+	public User(int id) {
+		super();
+		this.id = id;
+	}
 
 }

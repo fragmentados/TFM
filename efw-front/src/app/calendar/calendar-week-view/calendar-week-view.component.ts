@@ -826,7 +826,11 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   addDishEvent(dishEvent: CalendarEvent) {
-    this.events.push(dishEvent);
+    if (this.events == null) {
+      this.events = [dishEvent];
+    } else {
+      this.events.push(dishEvent);
+    }
     this.refreshBody();
   }
 

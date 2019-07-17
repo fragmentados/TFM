@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { User } from '../models/user.model';
-import { UserService } from './user.service';
+import { User } from '../../models/user/user.model';
+import { UserService } from '../../user.service';
 
 @Component({
-  templateUrl: './add-user.component.html'
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent {
 
   user: User = new User();
 
-  constructor(private router: Router, private userService: UserService) {
-
-  }
+  constructor(private userService: UserService) {}
 
   createUser(): void {
     this.userService.createUser(this.user)

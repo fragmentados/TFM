@@ -4,7 +4,7 @@ import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../menu.service';
 import { Menu } from '../../models/menu/menu.model';
-import { addHours, startOfDay } from 'date-fns';
+import { addHours } from 'date-fns';
 import { MenuDay } from '../../models/menu/menuDay.model';
 import { CalendarEvent } from '../../calendar/common/calendar-common.module';
 import {MatDialog} from '@angular/material/dialog';
@@ -88,6 +88,24 @@ export class MenuCalendarComponent implements OnInit {
     this.menuService.createMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
       this.initMenuAndEvents();
     });
+  }
+
+  printMenu() {
+    const mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    mywindow.document.write('<html><head><title>Menu Calendar</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>Menu Calendar</h1>');
+    mywindow.document.write(document.getElementById('calendar root div').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+
+      return true;
   }
 
 }

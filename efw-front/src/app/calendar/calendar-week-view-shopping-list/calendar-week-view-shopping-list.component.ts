@@ -15,6 +15,24 @@ export class CalendarWeekViewShoppingListComponent implements OnInit {
   ngOnInit() {
   }
 
+  printDialog() {
+      const mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+      mywindow.document.write('<html><head><title>Shopping List</title>');
+      mywindow.document.write('</head><body >');
+      mywindow.document.write('<h1>Shopping List</h1>');
+      mywindow.document.write(document.getElementById('shopping-list dialog').innerHTML);
+      mywindow.document.write('</body></html>');
+
+      mywindow.document.close(); // necessary for IE >= 10
+      mywindow.focus(); // necessary for IE >= 10*/
+
+      mywindow.print();
+      mywindow.close();
+
+      return true;
+  }
+
   onOkClick(): void {
     this.dialogRef.close();
   }

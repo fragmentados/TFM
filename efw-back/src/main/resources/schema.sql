@@ -73,4 +73,12 @@ create table if not exists menudisrel (
 	primary key(menu_id, dish_id, dish_date)
 );
 
+create table if not exists userconfiguration (	
+	user_id integer not null,
+	name varchar(255),
+	value varchar(255), 
+	foreign key fk_configuration_user(user_id) references user(id),
+	primary key(user_id, name)
+);
+
 --create table if not exists meal (id integer not null auto_increment, name varchar(255), primary key(id));

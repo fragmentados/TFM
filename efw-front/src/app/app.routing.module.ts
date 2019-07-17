@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { UserComponent } from './user/user.component';
-import {AddUserComponent} from './user/add-user.component';
-
 const routes: Routes = [
-  { path: 'users', component: UserComponent },
-  { path: 'addUser', component: AddUserComponent },
+  { path: 'users', loadChildren: './user/user.module#UserModule' },
   { path: 'ingredients', loadChildren: './ingredient/ingredient.module#IngredientModule' },
   { path: 'dishes', loadChildren: './dish/dish.module#DishModule' },
   { path: 'menu', loadChildren: './menu/menu.module#MenuModule' },
