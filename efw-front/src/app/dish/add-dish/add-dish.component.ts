@@ -5,7 +5,7 @@ import { AddDish } from '../../models/dish/addDish.model';
 import { Router } from '@angular/router';
 import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '../../ingredient/ingredient.service';
-import { Stat } from '../../models/nutrition/Stat.model';
+import { Stat } from '../../models/nutrition/stat.model';
 
 @Component({
   selector: 'app-add-dish',

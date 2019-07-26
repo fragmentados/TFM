@@ -65,14 +65,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserConfigurationsDto findConfigurations(int id) {
-		Integer maxCaloriesPerWeek = confService.findUserConfigurationByName(id,
-				UserConfigurationEnum.MAX_CALORIES_PER_WEEK.getName(), Integer.class);
-		Integer maxProteinsPerWeek = confService.findUserConfigurationByName(id,
-				UserConfigurationEnum.MAX_PROTEINS_PER_WEEK.getName(), Integer.class);
-		Integer maxFatsPerWeek = confService.findUserConfigurationByName(id,
-				UserConfigurationEnum.MAX_FATS_PER_WEEK.getName(), Integer.class);
-		Integer maxCarbsPerWeek = confService.findUserConfigurationByName(id,
-				UserConfigurationEnum.MAX_CARBOHYDRATES_PER_WEEK.getName(), Integer.class);
+		Integer maxCaloriesPerWeek = confService.findUserConfigurationByNameOrDefault(id,
+				UserConfigurationEnum.MAX_CALORIES_PER_WEEK.getName(), Integer.class, 0);
+		Integer maxProteinsPerWeek = confService.findUserConfigurationByNameOrDefault(id,
+				UserConfigurationEnum.MAX_PROTEINS_PER_WEEK.getName(), Integer.class, 0);
+		Integer maxFatsPerWeek = confService.findUserConfigurationByNameOrDefault(id,
+				UserConfigurationEnum.MAX_FATS_PER_WEEK.getName(), Integer.class, 0);
+		Integer maxCarbsPerWeek = confService.findUserConfigurationByNameOrDefault(id,
+				UserConfigurationEnum.MAX_CARBOHYDRATES_PER_WEEK.getName(), Integer.class, 0);
 		return new UserConfigurationsDto(maxCaloriesPerWeek, maxProteinsPerWeek, maxFatsPerWeek, maxCarbsPerWeek);
 	}
 

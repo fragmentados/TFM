@@ -1,5 +1,5 @@
 import { MenuDay } from './menuDay.model';
-import { Stat } from '../nutrition/Stat.model';
+import { Stat } from '../nutrition/stat.model';
 
 export class Menu {
   id: number;

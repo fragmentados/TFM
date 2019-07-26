@@ -14,9 +14,9 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 	UserConfigurationRepository repository;
 
 	@Override
-	public <T> T findUserConfigurationByName(Integer userId, String name, Class<T> type) {
+	public <T> T findUserConfigurationByNameOrDefault(Integer userId, String name, Class<T> type, T defaultValue) {
 		UserConfiguration conf = repository.findByNameAndUser(name, userId);
-		return this.parseClass(conf.getValue(), type);
+		return conf != null ? this.parseClass(conf.getValue(), type) : defaultValue;
 	}
 
 	public <T> T parseClass(String confValue, Class<T> type) {

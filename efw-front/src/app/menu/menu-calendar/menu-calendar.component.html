@@ -1,7 +1,7 @@
-<div align="center" *ngIf="!(menu && menu.startDate)">
+<div align="center" *ngIf="!menu">
   <button (click)="createMenu()"><b>Create Menu</b></button>
 </div>
-<div *ngIf="(menu && menu.startDate)">
+<div *ngIf="menu">
   <app-calendar-week-view *ngIf="menu.startDate"
   [viewDate]="viewDate"
   [weekStartsOn]=[1]
@@ -16,8 +16,10 @@
     <button (click)="printMenu()"><b>Print menu</b></button>
   </div>
   <br/>
-  <app-view-stats *ngIf="menu.stats"
-  [stats]="menu.stats"
-  [areMenuStats]="true">
-  </app-view-stats>
+  <app-view-stats-dashboard *ngIf="menu"
+  [menu]="menu"
+  [userConfs]="userConfs"
+  [events]="updateStatsSubject"
+  >
+  </app-view-stats-dashboard>
 </div>

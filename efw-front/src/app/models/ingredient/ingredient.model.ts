@@ -1,4 +1,4 @@
-import { Stat } from './../nutrition/stat.model';
+import { Stat } from '../nutrition/stat.model';
 export class Ingredient {
 
   id: number;

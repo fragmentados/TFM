@@ -32,7 +32,7 @@ var DEFAULT_MEAL_NAMES = [
 ];
 
 var DAYS_IN_WEEK = 7;
-var MEALS_IN_DAY = 3;
+var MEALS_IN_DAY = DEFAULT_MEAL_NAMES.length;
 var MINUTES_IN_HOUR = 60;
 export var SECONDS_IN_DAY = 60 * 60 * 24;
 function getExcludedSeconds(dateAdapter, _a) {

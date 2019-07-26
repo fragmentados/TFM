@@ -1,12 +1,15 @@
-import { ViewStatsComponent } from './view-stats/view-stats.component';
+import { FormsModule } from '@angular/forms';
+import { ViewStatsComponent } from './view-stats-dashboard/view-stats/view-stats.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ViewStatsDashboardComponent } from './view-stats-dashboard/view-stats-dashboard.component';
 
 @NgModule({
-  declarations: [ViewStatsComponent],
+  declarations: [ViewStatsComponent, ViewStatsDashboardComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
-  exports: [ViewStatsComponent]
+  exports: [ViewStatsDashboardComponent, ViewStatsComponent]
 })
 export class NutritionModule { }

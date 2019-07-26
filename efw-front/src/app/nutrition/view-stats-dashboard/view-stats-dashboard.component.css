@@ -1,0 +1,13 @@
+.dashboard-header {
+  display: inline-block;
+}
+.dashboard-title {
+  display: inline;
+}
+.dashboard-daily {
+  display: inline-flex;
+}
+button {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}

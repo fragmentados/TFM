@@ -10,6 +10,9 @@ import { CalendarEvent } from '../../calendar/common/calendar-common.module';
 import {MatDialog} from '@angular/material/dialog';
 import { Dish } from '../../models/dish/dish.model';
 import { Stat } from '../../models/nutrition/stat.model';
+import { UserConfs } from '../../models/user/userConfs.model';
+import { UserService } from '../../user.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-menu-calendar',
@@ -21,11 +24,18 @@ export class MenuCalendarComponent implements OnInit {
   viewDate: Date = new Date();
   events: CalendarEvent[];
   menu: Menu;
+  userConfs: UserConfs;
+  private updateStatsSubject: Subject<Menu> = new Subject<Menu>();
 
-  constructor(private menuService: MenuService, public dialog: MatDialog) { }
+  sendUpdateStatsEvent() {
+    this.updateStatsSubject.next(this.menu);
+  }
+
+  constructor(private menuService: MenuService, private userService: UserService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.initMenuAndEvents();
+    this.userService.getUserConfs(LOGGED_IN_USER).subscribe(data => this.userConfs = data);
   }
 
   initMenuAndEvents() {
@@ -53,15 +63,13 @@ export class MenuCalendarComponent implements OnInit {
 
   createCalendarEventsForDay(day: MenuDay) {
     const dayMeals: CalendarEvent[] = [];
-    let offset = 0;
     for (const meal of day.meals) {
-      const dayDate: Date = new Date(day.date);
+      const mealDate: Date = new Date(meal.date);
       dayMeals.push({
-        start: addHours(dayDate, offset),
-        end: addHours(dayDate, offset + 1),
+        start: mealDate,
+        end: addHours(mealDate, 1),
         title: meal.name
       });
-      offset++;
     }
     return dayMeals;
   }
@@ -82,7 +90,7 @@ export class MenuCalendarComponent implements OnInit {
     this.menuService.clearMenu(this.menu.id).subscribe(data => {
       if (data.errorCode === 0) {
         this.events = [];
-        this.menu.stats = [];
+        this.menu = new Menu();
       }
     });
   }
@@ -121,12 +129,13 @@ export class MenuCalendarComponent implements OnInit {
         this.menu.stats.push(dishStat);
       } else {
         this.menu.stats = this.menu.stats.filter(element => element.name !== menuStat.name);
-        this.menu.stats.push(new Stat(menuStat.name, (parseInt(menuStat.value) + parseInt(dishStat.value)).toString()));
+        this.menu.stats.push(new Stat(menuStat.name, (parseInt(menuStat.value, 10) + parseInt(dishStat.value, 10)).toString()));
       }
     }
-  }
-
-  dishAdded() {
+    this.menuService.getUserMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
+      this.menu = data;
+      this.sendUpdateStatsEvent();
+    });
 
   }
 
