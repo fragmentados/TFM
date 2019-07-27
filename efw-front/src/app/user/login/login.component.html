@@ -1,0 +1,16 @@
+<div class="col-md-6">
+    <h2 class="text-center">Login</h2>
+  <form>
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" [(ngModel)]="login.email" placeholder="Email" name="email" class="form-control" id="email">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" [(ngModel)]="login.password" placeholder="Password" name="password" class="form-control" id="password">
+    </div>
+
+    <button class="btn btn-success" (click)="loginAttempt()">Login</button>
+  </form>
+  </div>

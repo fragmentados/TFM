@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DishService } from '../../dish/dish.service';
 import { Dish } from '../../models/dish/dish.model';
-import { LOGGED_IN_USER } from '../../models/service';
+import { UserService } from '../../user.service';
+import { User } from '../../models/user/user.model';
 
 @Component({
   selector: 'app-calendar-week-view-add-dish',
@@ -13,12 +14,15 @@ export class CalendarWeekViewAddDishComponent implements OnInit {
 
   dishes: Dish[];
   selectedDish: Dish;
+  currentUser: User;
 
-  constructor(private dishService: DishService, public dialogRef: MatDialogRef<CalendarWeekViewAddDishComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Date) {}
+  constructor(private userService: UserService, private dishService: DishService,
+    public dialogRef: MatDialogRef<CalendarWeekViewAddDishComponent>, @Inject(MAT_DIALOG_DATA) public data: Date) {
+      this.currentUser = this.userService.currentUserValue;
+    }
 
   ngOnInit() {
-    this.dishService.getUserDishes(LOGGED_IN_USER).subscribe(data => {
+    this.dishService.getUserDishes(this.currentUser.id).subscribe(data => {
       this.dishes = data;
     });
   }

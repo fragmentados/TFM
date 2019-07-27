@@ -1,3 +1,4 @@
+import { UserService } from '../user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IngredientRoutingModule } from './ingredient-routing.module';
@@ -14,6 +15,6 @@ import { IngredientService } from './ingredient.service';
     IngredientRoutingModule
   ],
   exports: [IngredientComponent],
-  providers: [IngredientService]
+  providers: [IngredientService, UserService]
 })
 export class IngredientModule { }

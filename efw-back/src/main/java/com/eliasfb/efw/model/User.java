@@ -37,8 +37,11 @@ public class User {
 	private String firstName;
 	@Column
 	private String lastName;
-	@Column
+	@Column(unique = true)
 	private String email;
+	@Column
+	@JsonIgnore
+	private String password;
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	private List<Menu> menus;

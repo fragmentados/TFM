@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eliasfb.efw.dto.LoginDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UserConfigurationsDto;
 import com.eliasfb.efw.model.User;
@@ -45,6 +46,11 @@ public class UserController {
 	public ResponseDto updateUserConfigurations(@PathVariable("id") int id,
 			@RequestBody UserConfigurationsDto userConfs) {
 		return service.updateUserConfigurations(id, userConfs);
+	}
+
+	@PostMapping(path = { "/login" })
+	public ResponseDto login(@RequestBody LoginDto loginDto) {
+		return service.login(loginDto);
 	}
 
 	@PutMapping(path = { "/{id}" })

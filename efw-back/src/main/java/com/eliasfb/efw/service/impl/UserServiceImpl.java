@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eliasfb.efw.dto.LoginDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UserConfigurationsDto;
+import com.eliasfb.efw.dto.UserDto;
 import com.eliasfb.efw.dto.mapper.UserConfigurationToDtoMapper;
 import com.eliasfb.efw.enums.UserConfigurationEnum;
 import com.eliasfb.efw.model.User;
@@ -74,6 +76,20 @@ public class UserServiceImpl implements UserService {
 		Integer maxCarbsPerWeek = confService.findUserConfigurationByNameOrDefault(id,
 				UserConfigurationEnum.MAX_CARBOHYDRATES_PER_WEEK.getName(), Integer.class, 0);
 		return new UserConfigurationsDto(maxCaloriesPerWeek, maxProteinsPerWeek, maxFatsPerWeek, maxCarbsPerWeek);
+	}
+
+	@Override
+	public ResponseDto login(LoginDto login) {
+		ResponseDto response;
+		User user = this.repository.findByEmail(login.getEmail());
+		if (user == null) {
+			response = new ResponseDto(-1, "User not found");
+		} else if (user.getPassword().equals(login.getPassword())) {
+			response = new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
+		} else {
+			response = new ResponseDto(-1, "Wrong password");
+		}
+		return response;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.eliasfb.efw.service;
 
 import java.util.List;
 
+import com.eliasfb.efw.dto.LoginDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UserConfigurationsDto;
 import com.eliasfb.efw.model.User;
@@ -21,4 +22,6 @@ public interface UserService {
 	UserConfigurationsDto findConfigurations(int id);
 
 	User update(User user);
+
+	ResponseDto login(LoginDto login);
 }

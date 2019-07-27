@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { UserConfsComponent } from './user-confs/user-confs.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'userConfs',
     component: UserConfsComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

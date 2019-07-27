@@ -9,6 +9,7 @@ import { DateAdapter } from '../calendar/date-adapters/date-adapter';
 import { adapterFactory } from '../calendar/date-adapters/date-fns';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NutritionModule } from '../nutrition/nutrition.module';
+import { UserService } from '../user.service';
 
 @NgModule({
   declarations: [MenuCalendarComponent],
@@ -23,6 +24,6 @@ import { NutritionModule } from '../nutrition/nutrition.module';
     MenuRoutingModule,
     NutritionModule
   ],
-  providers: [MenuService]
+  providers: [MenuService, UserService]
 })
 export class MenuModule { }

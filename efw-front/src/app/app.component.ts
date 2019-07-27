@@ -1,7 +1,7 @@
 import { UserService } from './user.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user/user.model';
-import { LOGGED_IN_USER } from './models/service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +10,19 @@ import { LOGGED_IN_USER } from './models/service';
 })
 export class AppComponent implements OnInit {
   title = 'Eat Fit Week';
-  user: User;
+  currentUser: User;
 
-  constructor(private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService) {
+    this.userService.currentUser.subscribe(x => {
+      this.currentUser = x;
+    });
+  }
 
   ngOnInit() {
-    this.userService.getUser(LOGGED_IN_USER).subscribe(
-      data =>
-      this.user = data);
   }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/users/login']);
+}
 }

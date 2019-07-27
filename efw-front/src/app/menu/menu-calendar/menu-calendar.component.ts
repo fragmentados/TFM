@@ -1,6 +1,5 @@
 // tslint:disable-next-line:max-line-length
 import { CalendarWeekViewShoppingListComponent } from './../../calendar/calendar-week-view-shopping-list/calendar-week-view-shopping-list.component';
-import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../menu.service';
 import { Menu } from '../../models/menu/menu.model';
@@ -13,6 +12,7 @@ import { Stat } from '../../models/nutrition/stat.model';
 import { UserConfs } from '../../models/user/userConfs.model';
 import { UserService } from '../../user.service';
 import { Subject } from 'rxjs';
+import { User } from '../../models/user/user.model';
 
 @Component({
   selector: 'app-menu-calendar',
@@ -26,20 +26,23 @@ export class MenuCalendarComponent implements OnInit {
   menu: Menu;
   userConfs: UserConfs;
   private updateStatsSubject: Subject<Menu> = new Subject<Menu>();
+  currentUser: User;
 
   sendUpdateStatsEvent() {
     this.updateStatsSubject.next(this.menu);
   }
 
-  constructor(private menuService: MenuService, private userService: UserService, public dialog: MatDialog) { }
+  constructor(private userService: UserService, private menuService: MenuService, public dialog: MatDialog) {
+    this.currentUser = this.userService.currentUserValue;
+  }
 
   ngOnInit() {
     this.initMenuAndEvents();
-    this.userService.getUserConfs(LOGGED_IN_USER).subscribe(data => this.userConfs = data);
+    this.userService.getUserConfs(this.currentUser.id).subscribe(data => this.userConfs = data);
   }
 
   initMenuAndEvents() {
-    this.menuService.getUserMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
+    this.menuService.getUserMenu(this.currentUser.id, this.viewDate).subscribe(data => {
       this.menu = data;
       const events = this.initCalendarEventsWithDishes();
       this.events = events;
@@ -96,7 +99,7 @@ export class MenuCalendarComponent implements OnInit {
   }
 
   createMenu() {
-    this.menuService.createMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
+    this.menuService.createMenu(this.currentUser.id, this.viewDate).subscribe(data => {
       this.initMenuAndEvents();
     });
   }
@@ -132,7 +135,7 @@ export class MenuCalendarComponent implements OnInit {
         this.menu.stats.push(new Stat(menuStat.name, (parseInt(menuStat.value, 10) + parseInt(dishStat.value, 10)).toString()));
       }
     }
-    this.menuService.getUserMenu(LOGGED_IN_USER, this.viewDate).subscribe(data => {
+    this.menuService.getUserMenu(this.currentUser.id, this.viewDate).subscribe(data => {
       this.menu = data;
       this.sendUpdateStatsEvent();
     });

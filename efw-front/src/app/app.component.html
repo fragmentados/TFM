@@ -6,6 +6,22 @@
 </div>
 
 <ul class="horizontal-menu">
+  <li class="horizontal-menu" *ngIf="!currentUser">
+      Sign up / Login
+      <ul class="list-categories">
+        <li>
+          <a routerLink="/users/login">Login</a>
+        </li>
+      </ul>
+  </li>
+  <li class="horizontal-menu" *ngIf="currentUser">
+    Logout
+    <ul class="list-categories">
+      <li>
+        <a (click)="logout()">Logout</a>
+      </li>
+    </ul>
+</li>
   <li class="horizontal-menu">
     Users
     <ul class="list-categories">
@@ -20,7 +36,7 @@
         </li>
     </ul>
   </li>
-  <li class="horizontal-menu">
+  <li class="horizontal-menu" *ngIf="currentUser">
     Ingredients
     <ul class="list-categories">
       <li>
@@ -31,7 +47,7 @@
       </li>
     </ul>
   </li>
-  <li class="horizontal-menu">
+  <li class="horizontal-menu" *ngIf="currentUser">
     Dishes
     <ul class="list-categories">
       <li>
@@ -42,7 +58,7 @@
       </li>
     </ul>
   </li>
-  <li class="horizontal-menu">
+  <li class="horizontal-menu" *ngIf="currentUser">
     Menu
     <ul class="list-categories">
       <li>
@@ -52,7 +68,7 @@
   </li>
 </ul>
 
-<h3>Usuario Loggeado : <b>{{user ? user.firstName : ''}}</b></h3>
+<h3 *ngIf="currentUser">Usuario Loggeado : <b>{{currentUser.firstName}}</b></h3>
 
 <br/>
 <router-outlet></router-outlet>

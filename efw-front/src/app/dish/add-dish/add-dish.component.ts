@@ -1,11 +1,11 @@
-import { LOGGED_IN_USER } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { DishService } from '../dish.service';
 import { AddDish } from '../../models/dish/addDish.model';
-import { Router } from '@angular/router';
 import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '../../ingredient/ingredient.service';
 import { Stat } from '../../models/nutrition/stat.model';
+import { User } from '../../models/user/user.model';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-add-dish',
@@ -19,11 +19,14 @@ export class AddDishComponent implements OnInit {
   selectedIngredients: Ingredient[];
   dishStats: Stat[];
   selectedIng: Ingredient;
+  currentUser: User;
 
-  constructor(private router: Router, private dishService: DishService, private ingredientService: IngredientService) {}
+  constructor(private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
+    this.currentUser = this.userService.currentUserValue;
+  }
 
   ngOnInit() {
-    this.ingredientService.getUserIngredients(LOGGED_IN_USER).subscribe(data => this.ingredients = data);
+    this.ingredientService.getUserIngredients(this.currentUser.id).subscribe(data => this.ingredients = data);
   }
 
   selectedIngredientsNames(): String[] {
@@ -58,7 +61,7 @@ export class AddDishComponent implements OnInit {
         this.dishStats.push(ingredientStat);
       } else {
         this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
-        this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value) + parseInt(ingredientStat.value)).toString()));
+        this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value, 10) + parseInt(ingredientStat.value, 10)).toString()));
       }
     }
   }
@@ -76,7 +79,7 @@ export class AddDishComponent implements OnInit {
   }
 
   createDish(): void {
-    this.dish.userId = LOGGED_IN_USER;
+    this.dish.userId = this.currentUser.id;
     this.dishService.createDish(this.dish)
         .subscribe( data => {
           this.clearForm();
