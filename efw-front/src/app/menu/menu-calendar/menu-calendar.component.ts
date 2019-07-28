@@ -132,7 +132,7 @@ export class MenuCalendarComponent implements OnInit {
         this.menu.stats.push(dishStat);
       } else {
         this.menu.stats = this.menu.stats.filter(element => element.name !== menuStat.name);
-        this.menu.stats.push(new Stat(menuStat.name, (parseInt(menuStat.value, 10) + parseInt(dishStat.value, 10)).toString()));
+        this.menu.stats.push(new Stat(menuStat.name, (parseFloat(menuStat.value) + parseFloat(dishStat.value)).toString()));
       }
     }
     this.menuService.getUserMenu(this.currentUser.id, this.viewDate).subscribe(data => {

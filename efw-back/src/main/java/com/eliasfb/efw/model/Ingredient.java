@@ -34,13 +34,13 @@ public class Ingredient {
 	@Column
 	private String name;
 	@Column
-	private int calories;
+	private Double calories;
 	@Column
-	private int proteins;
+	private Double proteins;
 	@Column
-	private int fats;
+	private Double fats;
 	@Column
-	private int carbohydrates;
+	private Double carbohydrates;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inguserel", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))

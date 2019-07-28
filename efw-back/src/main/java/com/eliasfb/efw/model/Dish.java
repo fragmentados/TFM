@@ -46,22 +46,23 @@ public class Dish {
 	@JsonIgnore
 	private Set<User> users;
 
-	public Integer getCalories() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getId().getIngredient().getCalories() * ig.getQuantity())
+	public Double getCalories() {
+		return this.ingredients.stream().mapToDouble(ig -> ig.getId().getIngredient().getCalories() * ig.getQuantity())
 				.sum();
 	}
 
-	public Integer getProteins() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getId().getIngredient().getProteins() * ig.getQuantity())
+	public Double getProteins() {
+		return this.ingredients.stream().mapToDouble(ig -> ig.getId().getIngredient().getProteins() * ig.getQuantity())
 				.sum();
 	}
 
-	public Integer getFats() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getId().getIngredient().getFats() * ig.getQuantity()).sum();
+	public Double getFats() {
+		return this.ingredients.stream().mapToDouble(ig -> ig.getId().getIngredient().getFats() * ig.getQuantity())
+				.sum();
 	}
 
-	public Integer getCarbohydrates() {
+	public Double getCarbohydrates() {
 		return this.ingredients.stream()
-				.mapToInt(ig -> ig.getId().getIngredient().getCarbohydrates() * ig.getQuantity()).sum();
+				.mapToDouble(ig -> ig.getId().getIngredient().getCarbohydrates() * ig.getQuantity()).sum();
 	}
 }

@@ -22,6 +22,8 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 	public <T> T parseClass(String confValue, Class<T> type) {
 		if (type.equals(Integer.class)) {
 			return (T) Integer.valueOf(confValue);
+		} else if (type.equals(Double.class)) {
+			return (T) Double.valueOf(confValue);
 		}
 		return null;
 	}

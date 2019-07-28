@@ -13,8 +13,8 @@ public class UserConfigurationsDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer maxCaloriesPerWeek;
-	private Integer maxProteinsPerWeek;
-	private Integer maxFatsPerWeek;
-	private Integer maxCarbohydratesPerWeek;
+	private Double maxCaloriesPerWeek;
+	private Double maxProteinsPerWeek;
+	private Double maxFatsPerWeek;
+	private Double maxCarbohydratesPerWeek;
 }

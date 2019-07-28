@@ -27,7 +27,7 @@ public abstract class UserConfigurationToDtoMapper {
 		return confs;
 	}
 
-	private UserConfiguration createUserConfiguration(Integer userId, String confName, Integer value) {
+	private UserConfiguration createUserConfiguration(Integer userId, String confName, Double value) {
 		UserConfiguration conf = new UserConfiguration();
 		UserConfigurationId id = new UserConfigurationId(confName, new User(userId));
 		conf.setId(id);

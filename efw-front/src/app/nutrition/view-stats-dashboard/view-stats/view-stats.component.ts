@@ -20,13 +20,13 @@ export class ViewStatsComponent {
   isStatOverLimit(stat: Stat): boolean {
     let evaluation = false;
     if (stat.name === 'Calories') {
-      evaluation = parseInt(stat.value, 10) > this.userConfs.maxCaloriesPerWeek;
+      evaluation = parseFloat(stat.value) > this.userConfs.maxCaloriesPerWeek;
     } else if (stat.name === 'Proteins') {
-      evaluation = parseInt(stat.value, 10) > this.userConfs.maxProteinsPerWeek;
+      evaluation = parseFloat(stat.value) > this.userConfs.maxProteinsPerWeek;
     } else if (stat.name === 'Fats') {
-      evaluation = evaluation = parseInt(stat.value, 10) > this.userConfs.maxFatsPerWeek;
+      evaluation = evaluation = parseFloat(stat.value) > this.userConfs.maxFatsPerWeek;
     } else {
-      evaluation = evaluation = parseInt(stat.value, 10) > this.userConfs.maxCaloriesPerWeek;
+      evaluation = evaluation = parseFloat(stat.value) > this.userConfs.maxCaloriesPerWeek;
     }
     return evaluation;
   }

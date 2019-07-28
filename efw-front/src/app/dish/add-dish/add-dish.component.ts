@@ -73,8 +73,8 @@ export class AddDishComponent implements OnInit {
     for (const ingredientStat of ingredient.ingredient.stats) {
       const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
       this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
-      this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value, 10) -
-          (parseInt(ingredientStat.value, 10) * ingredient.quantity)).toString()));
+      this.dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) -
+          (parseFloat(ingredientStat.value) * ingredient.quantity)).toString()));
     }
   }
 
@@ -85,11 +85,11 @@ export class AddDishComponent implements OnInit {
     for (const ingredientStat of ingredient.stats) {
       const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
       if (dishStat == null) {
-        this.dishStats.push(new Stat(ingredientStat.name, (parseInt(ingredientStat.value, 10) * this.ingredientQuantity).toString()));
+        this.dishStats.push(new Stat(ingredientStat.name, (parseFloat(ingredientStat.value) * this.ingredientQuantity).toString()));
       } else {
         this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
-        this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value, 10) +
-          (parseInt(ingredientStat.value, 10) * this.ingredientQuantity)).toString()));
+        this.dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) +
+          (parseFloat(ingredientStat.value) * this.ingredientQuantity)).toString()));
       }
     }
   }

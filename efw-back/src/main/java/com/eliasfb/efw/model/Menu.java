@@ -45,23 +45,23 @@ public class Menu {
 	private List<MenuDisRel> dishes;
 
 	@JsonIgnore
-	public int getCalories() {
-		return this.dishes.stream().mapToInt(di -> di.getId().getDish().getCalories()).sum();
+	public Double getCalories() {
+		return this.dishes.stream().mapToDouble(di -> di.getId().getDish().getCalories()).sum();
 	}
 
 	@JsonIgnore
-	public int getProteins() {
-		return this.dishes.stream().mapToInt(di -> di.getId().getDish().getProteins()).sum();
+	public Double getProteins() {
+		return this.dishes.stream().mapToDouble(di -> di.getId().getDish().getProteins()).sum();
 	}
 
 	@JsonIgnore
-	public int getFats() {
-		return this.dishes.stream().mapToInt(di -> di.getId().getDish().getFats()).sum();
+	public Double getFats() {
+		return this.dishes.stream().mapToDouble(di -> di.getId().getDish().getFats()).sum();
 	}
 
 	@JsonIgnore
-	public int getCarbohydrates() {
-		return this.dishes.stream().mapToInt(di -> di.getId().getDish().getCarbohydrates()).sum();
+	public Double getCarbohydrates() {
+		return this.dishes.stream().mapToDouble(di -> di.getId().getDish().getCarbohydrates()).sum();
 	}
 
 	@JsonIgnore
