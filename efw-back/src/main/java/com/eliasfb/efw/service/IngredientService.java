@@ -2,13 +2,14 @@ package com.eliasfb.efw.service;
 
 import java.util.List;
 
-import com.eliasfb.efw.dto.CreateIngredientDto;
+import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.Ingredient;
 
 public interface IngredientService {
 
-	Ingredient create(CreateIngredientDto createIngredient);
+	Ingredient create(CreateOrUpdateIngredientDto createIngredient);
 
 	Ingredient delete(int id);
 
@@ -16,7 +17,7 @@ public interface IngredientService {
 
 	List<IngredientDto> findUserIngredients(Integer userId);
 
-	Ingredient findById(int id);
+	IngredientDto findById(int id);
 
-	Ingredient update(Ingredient ingredient);
+	ResponseDto update(Integer ingredientId, CreateOrUpdateIngredientDto updateIngredient);
 }

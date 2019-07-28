@@ -1,0 +1,6 @@
+.horizontal-div {
+  display: flex;
+}
+.margin-left-label {
+  margin-left: 10px;
+}

@@ -1,0 +1,58 @@
+<div class="col-md-6">
+    <h2 class="text-center">Update Dish</h2>
+  <form>
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input [(ngModel)]="dish.name" placeholder="Name" name="Name" class="form-control" id="Name">
+    </div>
+
+
+    <div class="form-group" *ngIf="ingredients">
+      <div class="form-group">
+        <label for="ingredientselect">Ingredients:</label>
+      </div>
+      <div class="row">
+        <div class="form-group" style="display:flex;">
+          <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients" >
+            <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">{{ingredient.name}}</option>
+          </select>
+          <input [(ngModel)]="ingredientQuantity" type="number" placeholder="0" name="Quantity" class="form-control" id="Quantity">
+          <button class="btn btn-success" (click)="addIngredient()">Add Ingredient</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="selectedIngredients">
+        <label for="selectedingredients">Selected ingredients:</label>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden">Id</th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ingredient of selectedIngredients">
+              <td>{{ingredient.ingredient.name}}</td>
+              <td>{{ingredient.quantity}}</td>
+              <td><button class="btn btn-danger" (click)="removeIngredient(ingredient)">Delete</button></td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+    <div class="form-group" *ngIf="dishStats">
+      <app-view-stats
+      [stats]="dishStats"
+      [areMenuStats]="false"
+      [viewageType]="Dish">
+      </app-view-stats>
+    </div>
+    <div class="form-group" style="display:flex;">
+      <button class="btn btn-danger" (click)="clearIngredients()">Clear ingredients</button>
+      <button class="btn btn-success" (click)="updateDish()">Update Dish</button>
+    </div>
+  </form>
+  </div>

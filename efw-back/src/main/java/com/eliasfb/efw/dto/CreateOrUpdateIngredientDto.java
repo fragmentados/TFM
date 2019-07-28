@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class CreateIngredientDto implements Serializable {
+public class CreateOrUpdateIngredientDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

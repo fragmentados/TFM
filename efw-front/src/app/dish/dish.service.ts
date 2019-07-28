@@ -21,6 +21,10 @@ export class DishService {
     return this.http.get<Dish[]>(this.dishUrl, {params : params});
   }
 
+  public getDish(dishId: number) {
+    return this.http.get<Dish>(this.dishUrl + '/' + dishId);
+  }
+
   public getDishes() {
     return this.http.get<Dish[]>(this.dishUrl);
   }
@@ -31,6 +35,10 @@ export class DishService {
 
   public createDish(dish: AddDish) {
     return this.http.post<Dish>(this.dishUrl, dish);
+  }
+
+  public updateDish(dishId: number, dish: AddDish) {
+    return this.http.put<Dish>(this.dishUrl + '/' + dishId, dish);
   }
 
 }

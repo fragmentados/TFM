@@ -3,6 +3,7 @@ import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Ingredient } from '../models/ingredient/ingredient.model';
+import { UpdateIngredient } from '../models/ingredient/updateIngredient.model';
 
 
 const httpOptions = {
@@ -19,6 +20,14 @@ export class IngredientService {
   public getUserIngredients(userId: number) {
     const params = new HttpParams().set('userId', userId.toString());
     return this.http.get<Ingredient[]>(this.ingredientUrl, { params: params });
+  }
+
+  public getIngredient(ingredientId: number) {
+    return this.http.get<Ingredient>(this.ingredientUrl + '/' + ingredientId);
+  }
+
+  public updateIngredient(id: number, ingredient: UpdateIngredient) {
+    return this.http.put(this.ingredientUrl + '/' + id, ingredient);
   }
 
   public deleteIngredient(ingredient) {

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eliasfb.efw.dto.CreateIngredientDto;
+import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.IngredientService;
 
@@ -27,19 +28,18 @@ public class IngredientController {
 	private IngredientService service;
 
 	@PostMapping
-	public Ingredient create(@RequestBody CreateIngredientDto createIngredient) {
+	public Ingredient create(@RequestBody CreateOrUpdateIngredientDto createIngredient) {
 		return service.create(createIngredient);
 	}
 
 	@GetMapping(path = { "/{id}" })
-	public Ingredient findOne(@PathVariable("id") int id) {
+	public IngredientDto findOne(@PathVariable("id") int id) {
 		return service.findById(id);
 	}
 
 	@PutMapping(path = { "/{id}" })
-	public Ingredient update(@PathVariable("id") int id, @RequestBody Ingredient ingredient) {
-		ingredient.setId(id);
-		return service.update(ingredient);
+	public ResponseDto update(@PathVariable("id") int id, @RequestBody CreateOrUpdateIngredientDto dto) {
+		return service.update(id, dto);
 	}
 
 	@DeleteMapping(path = { "/{id}" })

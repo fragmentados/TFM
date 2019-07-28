@@ -17,9 +17,9 @@ public interface DishService {
 
 	List<DishDto> findUserDishes(Integer userId);
 
-	Dish findById(int id);
+	DishDto findById(int id);
 
-	Dish update(Dish dish);
+	ResponseDto update(Integer dishId, CreateDishDto dto);
 
 	Dish addIngredientToDish(int dishId, Ingredient ingredient);
 }

@@ -14,6 +14,7 @@ public class ResponseDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final Integer OK_CODE = 0;
+	public static final Integer ERROR_CODE = -1;
 
 	private Integer errorCode;
 	private String message;

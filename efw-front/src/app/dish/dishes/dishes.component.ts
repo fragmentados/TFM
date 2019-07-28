@@ -3,6 +3,7 @@ import { DishService } from '../dish.service';
 import { Dish } from '../../models/dish/dish.model';
 import { UserService } from '../../user.service';
 import { User } from '../../models/user/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dishes',
@@ -14,7 +15,7 @@ export class DishesComponent implements OnInit {
   dishes: Dish[];
   currentUser: User;
 
-  constructor(private userService: UserService, private dishService: DishService) {
+  constructor(private router: Router, private userService: UserService, private dishService: DishService) {
     this.currentUser = this.userService.currentUserValue;
   }
 
@@ -23,6 +24,10 @@ export class DishesComponent implements OnInit {
       .subscribe( data => {
         this.dishes = data;
       });
+  }
+
+  updateDish(dish: Dish): void {
+    this.router.navigate(['/dishes/updateDish', dish.id]);
   }
 
   deleteDish(dish: Dish): void {

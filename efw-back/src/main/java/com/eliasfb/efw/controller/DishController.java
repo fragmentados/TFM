@@ -34,14 +34,13 @@ public class DishController {
 	}
 
 	@GetMapping(path = { "/{id}" })
-	public Dish findOne(@PathVariable("id") int id) {
+	public DishDto findOne(@PathVariable("id") int id) {
 		return service.findById(id);
 	}
 
 	@PutMapping(path = { "/{id}" })
-	public Dish update(@PathVariable("id") int id, @RequestBody Dish dish) {
-		dish.setId(id);
-		return service.update(dish);
+	public ResponseDto update(@PathVariable("id") int id, @RequestBody CreateDishDto dto) {
+		return service.update(id, dto);
 	}
 
 	@PutMapping(path = { "/{id}/ingredient" })

@@ -1,10 +1,10 @@
-import { Ingredient } from '../ingredient/ingredient.model';
 import { Stat } from '../nutrition/stat.model';
+import { DishIngredient } from './dishIngredient.model';
 
 export class Dish {
 
   id: string;
   name: string;
-  ingredients: Ingredient[];
+  ingredients: DishIngredient[];
   stats: Stat[];
 }

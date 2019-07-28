@@ -33,11 +33,11 @@ public abstract class DishToDtoMapper {
 	}
 
 	@Mapping(source = "ingredients", target = "ingredients", ignore = true)
-	public abstract DishDto dishToDishDto(Dish dish);
+	protected abstract DishDto dishToDishDto(Dish dish);
 
 	public abstract MenuDishDto dishToMenuDishDto(Dish dish);
 
-	DishDto toDto(Dish dish) {
+	public DishDto toDto(Dish dish) {
 		DishDto dishDto = dishToDishDto(dish);
 		dishDto.setIngredients(dish.getIngredients().stream()
 				.map(i -> new DishIngredientDto(ingredientMapper.toDto(i.getId().getIngredient()), i.getQuantity()))
@@ -51,7 +51,7 @@ public abstract class DishToDtoMapper {
 	}
 
 	@Mapping(source = "ingredients", target = "ingredients", ignore = true)
-	public abstract Dish createDishDtoToDish(CreateDishDto createDish);
+	protected abstract Dish createDishDtoToDish(CreateDishDto createDish);
 
 	public Dish toEntity(CreateDishDto dto) {
 		Dish dish = createDishDtoToDish(dto);

@@ -1,6 +1,6 @@
 import { UserService } from '../../user.service';
 import { AddIngredient } from '../../models/ingredient/addIngredient.model';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IngredientService } from '.././ingredient.service';
 import { User } from '../../models/user/user.model';

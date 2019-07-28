@@ -7,9 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { DishRoutingModule } from './dish-routing.module';
 import { DishService } from './dish.service';
 import { IngredientService } from '../ingredient/ingredient.service';
+import { UpdateDishComponent } from './update-dish/update-dish.component';
 
 @NgModule({
-  declarations: [AddDishComponent, DishesComponent],
+  declarations: [AddDishComponent, DishesComponent, UpdateDishComponent],
   imports: [
     CommonModule,
     FormsModule,

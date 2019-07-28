@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eliasfb.efw.dto.CreateIngredientDto;
+import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
+import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.IngredientToIngredientDtoMapper;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.repository.IngredientRepository;
@@ -22,13 +23,13 @@ public class IngredientServiceImpl implements IngredientService {
 	private IngredientToIngredientDtoMapper mapper;
 
 	@Override
-	public Ingredient create(CreateIngredientDto createIngredient) {
-		return repository.save(mapper.toEntity(createIngredient));
+	public Ingredient create(CreateOrUpdateIngredientDto createIngredient) {
+		return repository.save(mapper.createToEntity(createIngredient));
 	}
 
 	@Override
 	public Ingredient delete(int id) {
-		Ingredient ingredient = findById(id);
+		Ingredient ingredient = this.repository.findOne(id);
 		if (ingredient != null) {
 			repository.delete(ingredient);
 		}
@@ -52,12 +53,23 @@ public class IngredientServiceImpl implements IngredientService {
 	}
 
 	@Override
-	public Ingredient findById(int id) {
-		return repository.findOne(id);
+	public IngredientDto findById(int id) {
+		return this.mapper.toDto(repository.findOne(id));
 	}
 
 	@Override
-	public Ingredient update(Ingredient ingredient) {
-		return repository.save(ingredient);
+	public ResponseDto update(Integer ingredientId, CreateOrUpdateIngredientDto dto) {
+		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "Ingredient updated successfully");
+		Ingredient ingredient = this.repository.findOne(ingredientId);
+		if (ingredient != null) {
+			// All fields should be updated except users
+			Ingredient updateIngredient = mapper.createToEntity(dto);
+			updateIngredient.setUsers(ingredient.getUsers());
+			updateIngredient.setId(ingredientId);
+			repository.save(updateIngredient);
+		} else {
+			response = new ResponseDto(ResponseDto.ERROR_CODE, "Ingredient not found");
+		}
+		return response;
 	}
 }

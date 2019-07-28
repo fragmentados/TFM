@@ -1,0 +1,44 @@
+<div class="col-md-6">
+    <h2 class="text-center">Update Ingredient</h2>
+  <form>
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input [(ngModel)]="ingredient.name" placeholder="Name" name="Name" class="form-control" id="Name">
+    </div>
+
+    <div class="form-group">
+      <label for="proteins">Proteins:</label>
+      <div class="horizontal-div">
+        <input type="proteins" [(ngModel)]="ingredient.proteins" type="number" placeholder="Proteins" name="proteins" class="form-control" id="proteins">
+        <label class="margin-left-label"> / 100 grams</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="calories">Calories:</label>
+      <div class="horizontal-div">
+        <input [(ngModel)]="ingredient.calories" type="number" placeholder="Calories" name="calories" class="form-control" id="calories">
+        <label class="margin-left-label"> / 100 grams</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label for="fats">Fats:</label>
+        <div class="horizontal-div">
+          <input [(ngModel)]="ingredient.fats" type="number" placeholder="Fats" name="fats" class="form-control" id="fats">
+          <label class="margin-left-label"> / 100 grams</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fats">Carbohydrates:</label>
+      <div class="horizontal-div">
+        <input [(ngModel)]="ingredient.carbohydrates" type="number" placeholder="Carbohydrates" name="carbohydrates" class="form-control" id="carbohydrates">
+        <label class="margin-left-label"> / 100 grams</label>
+      </div>
+    </div>
+
+    <button class="btn btn-success" (click)="updateIngredient()">Update</button>
+  </form>
+  </div>

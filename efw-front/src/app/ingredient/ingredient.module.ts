@@ -6,9 +6,10 @@ import { IngredientComponent } from './ingredient/ingredient.component';
 import { AddIngredientComponent } from './add-ingredient/add-ingredient.component';
 import { FormsModule } from '@angular/forms';
 import { IngredientService } from './ingredient.service';
+import { UpdateIngredientComponent } from './update-ingredient/update-ingredient.component';
 
 @NgModule({
-  declarations: [IngredientComponent, AddIngredientComponent],
+  declarations: [IngredientComponent, AddIngredientComponent, UpdateIngredientComponent],
   imports: [
     CommonModule,
     FormsModule,

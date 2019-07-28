@@ -26,12 +26,12 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	public DishDto create(CreateDishDto createDish) {
-		return mapper.dishToDishDto(repository.save(mapper.toEntity(createDish)));
+		return mapper.toDto(repository.save(mapper.toEntity(createDish)));
 	}
 
 	@Override
 	public ResponseDto delete(int id) {
-		Dish dish = findById(id);
+		Dish dish = this.repository.findOne(id);
 		if (dish != null) {
 			repository.delete(dish);
 		}
@@ -55,13 +55,24 @@ public class DishServiceImpl implements DishService {
 	}
 
 	@Override
-	public Dish findById(int id) {
-		return repository.findOne(id);
+	public DishDto findById(int id) {
+		return mapper.toDto(repository.findOne(id));
 	}
 
 	@Override
-	public Dish update(Dish dish) {
-		return repository.save(dish);
+	public ResponseDto update(Integer dishId, CreateDishDto dto) {
+		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "Dish updated successfully");
+		Dish dish = this.repository.findOne(dishId);
+		if (dish != null) {
+			// All fields should be updated except users
+			Dish updateDish = mapper.toEntity(dto);
+			updateDish.setUsers(dish.getUsers());
+			updateDish.setId(dishId);
+			repository.save(updateDish);
+		} else {
+			response = new ResponseDto(ResponseDto.ERROR_CODE, "Dish not found");
+		}
+		return response;
 	}
 
 	@Override

@@ -1,3 +1,4 @@
+import { UpdateIngredientComponent } from './update-ingredient/update-ingredient.component';
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'addIngredient',
     component: AddIngredientComponent
+  },
+  {
+    path: 'updateIngredient/:id',
+    component: UpdateIngredientComponent
   }
 ];
 

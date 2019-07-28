@@ -25,7 +25,23 @@
 
   <div class="form-group" *ngIf="selectedIngredients">
     <label for="selectedingredients">Selected ingredients:</label>
-    {{selectedIngredientsNames().join(', ')}}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="hidden">Id</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ingredient of selectedIngredients">
+          <td>{{ingredient.ingredient.name}}</td>
+          <td>{{ingredient.quantity}}</td>
+          <td><button class="btn btn-danger" (click)="removeIngredient(ingredient)">Delete</button></td>
+        </tr>
+        </tbody>
+      </table>
   </div>
   <div class="form-group" *ngIf="dishStats">
     <app-view-stats
