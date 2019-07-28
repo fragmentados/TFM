@@ -13,17 +13,12 @@
       <label for="ingredientselect">Ingredients:</label>
     </div>
     <div class="row">
-      <div class="col-xs-6">
-        <div class="form-group">
-          <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients" (ngModelChange)="addIngredient()" >
-            <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">{{ingredient.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-xs-6">
-        <div class="form-group">
-          <button class="btn btn-danger" (click)="clearIngredients()">Clear ingredients</button>
-        </div>
+      <div class="form-group" style="display:flex;">
+        <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients" >
+          <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">{{ingredient.name}}</option>
+        </select>
+        <input [(ngModel)]="ingredientQuantity" type="number" placeholder="0" name="Quantity" class="form-control" id="Quantity">
+        <button class="btn btn-success" (click)="addIngredient()">Add Ingredient</button>
       </div>
     </div>
   </div>
@@ -39,7 +34,8 @@
     [viewageType]="Dish">
     </app-view-stats>
   </div>
-  <div class="form-group">
+  <div class="form-group" style="display:flex;">
+    <button class="btn btn-danger" (click)="clearIngredients()">Clear ingredients</button>
     <button class="btn btn-success" (click)="createDish()">Create Dish</button>
   </div>
 </form>

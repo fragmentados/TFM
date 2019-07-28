@@ -6,7 +6,8 @@ import { IngredientService } from '.././ingredient.service';
 import { User } from '../../models/user/user.model';
 
 @Component({
-  templateUrl: './add-ingredient.component.html'
+  templateUrl: './add-ingredient.component.html',
+  styleUrls: ['./add-ingredient.component.css']
 })
 export class AddIngredientComponent {
 

@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.eliasfb.efw.dto.CreateDishDto;
 import com.eliasfb.efw.dto.DishDto;
+import com.eliasfb.efw.dto.DishIngredientDto;
 import com.eliasfb.efw.dto.menu.MenuDishDto;
 import com.eliasfb.efw.dto.stat.NutritionalStatEnum;
 import com.eliasfb.efw.dto.stat.StatDto;
 import com.eliasfb.efw.model.Dish;
+import com.eliasfb.efw.model.IngDisRel;
+import com.eliasfb.efw.model.IngDisRelId;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.model.User;
 
@@ -36,8 +39,9 @@ public abstract class DishToDtoMapper {
 
 	DishDto toDto(Dish dish) {
 		DishDto dishDto = dishToDishDto(dish);
-		dishDto.setIngredients(
-				dish.getIngredients().stream().map(i -> ingredientMapper.toDto(i)).collect(Collectors.toList()));
+		dishDto.setIngredients(dish.getIngredients().stream()
+				.map(i -> new DishIngredientDto(ingredientMapper.toDto(i.getId().getIngredient()), i.getQuantity()))
+				.collect(Collectors.toList()));
 		dishDto.setStats(getDishStats(dish));
 		return dishDto;
 	}
@@ -56,7 +60,9 @@ public abstract class DishToDtoMapper {
 			user.setId(dto.getUserId());
 			dish.setUsers(new HashSet<>(Arrays.asList(user)));
 		}
-		dish.setIngredients(dto.getIngredients().stream().map(ig -> new Ingredient(ig)).collect(Collectors.toSet()));
+		dish.setIngredients(dto.getIngredients().stream()
+				.map(ig -> new IngDisRel(new IngDisRelId(dish, new Ingredient(ig.getId())), ig.getQuantity()))
+				.collect(Collectors.toList()));
 		return dish;
 	}
 

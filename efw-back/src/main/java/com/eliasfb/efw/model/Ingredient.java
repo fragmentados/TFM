@@ -23,8 +23,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "ingredient")
 @Data
-@ToString(exclude = { "dishes", "users" })
-@EqualsAndHashCode(exclude = { "dishes", "users" })
+@ToString(exclude = { "users" })
+@EqualsAndHashCode(exclude = { "users" })
 @NoArgsConstructor
 public class Ingredient {
 	@Id
@@ -46,10 +46,6 @@ public class Ingredient {
 	@JoinTable(name = "inguserel", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
 	private Set<User> users;
-
-	@ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private Set<Dish> dishes;
 
 	public Ingredient(int id) {
 		super();

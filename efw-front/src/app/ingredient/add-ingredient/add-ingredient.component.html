@@ -9,22 +9,34 @@
 
   <div class="form-group">
     <label for="proteins">Proteins:</label>
-    <input type="proteins" [(ngModel)]="ingredient.proteins" placeholder="Proteins" name="proteins" class="form-control" id="proteins">
+    <div class="horizontal-div">
+      <input type="proteins" [(ngModel)]="ingredient.proteins" type="number" placeholder="Proteins" name="proteins" class="form-control" id="proteins">
+      <label class="margin-left-label"> / 100 grams</label>
+    </div>
   </div>
 
   <div class="form-group">
     <label for="calories">Calories:</label>
-    <input [(ngModel)]="ingredient.calories" placeholder="Last name" name="calories" class="form-control" id="calories">
+    <div class="horizontal-div">
+      <input [(ngModel)]="ingredient.calories" type="number" placeholder="Calories" name="calories" class="form-control" id="calories">
+      <label class="margin-left-label"> / 100 grams</label>
+    </div>
   </div>
 
   <div class="form-group">
       <label for="fats">Fats:</label>
-      <input [(ngModel)]="ingredient.fats" placeholder="Fats" name="fats" class="form-control" id="fats">
+      <div class="horizontal-div">
+        <input [(ngModel)]="ingredient.fats" type="number" placeholder="Fats" name="fats" class="form-control" id="fats">
+        <label class="margin-left-label"> / 100 grams</label>
+      </div>
   </div>
 
   <div class="form-group">
     <label for="fats">Carbohydrates:</label>
-    <input [(ngModel)]="ingredient.carbohydrates" placeholder="Carbohydrates" name="carbohydrates" class="form-control" id="carbohydrates">
+    <div class="horizontal-div">
+      <input [(ngModel)]="ingredient.carbohydrates" type="number" placeholder="Carbohydrates" name="carbohydrates" class="form-control" id="carbohydrates">
+      <label class="margin-left-label"> / 100 grams</label>
+    </div>
   </div>
 
   <button class="btn btn-success" (click)="createIngredient()">Create</button>

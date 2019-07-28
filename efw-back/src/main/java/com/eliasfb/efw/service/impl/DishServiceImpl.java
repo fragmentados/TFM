@@ -10,6 +10,8 @@ import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.DishToDtoMapper;
 import com.eliasfb.efw.model.Dish;
+import com.eliasfb.efw.model.IngDisRel;
+import com.eliasfb.efw.model.IngDisRelId;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.repository.DishRepository;
 import com.eliasfb.efw.service.DishService;
@@ -23,8 +25,8 @@ public class DishServiceImpl implements DishService {
 	private DishToDtoMapper mapper;
 
 	@Override
-	public Dish create(CreateDishDto createDish) {
-		return repository.save(mapper.toEntity(createDish));
+	public DishDto create(CreateDishDto createDish) {
+		return mapper.dishToDishDto(repository.save(mapper.toEntity(createDish)));
 	}
 
 	@Override
@@ -65,10 +67,13 @@ public class DishServiceImpl implements DishService {
 	@Override
 	public Dish addIngredientToDish(int dishId, Ingredient ingredient) {
 		Dish dish = repository.findOne(dishId);
-		if (!dish.getIngredients().contains(ingredient)) {
-			dish.getIngredients().add(ingredient);
+		IngDisRelId id = new IngDisRelId(dish, ingredient);
+		IngDisRel ingDisRel = new IngDisRel(id, 0);
+		if (!dish.getIngredients().contains(ingDisRel)) {
+			dish.getIngredients().add(ingDisRel);
 			repository.save(dish);
 		}
+
 		return dish;
 	}
 

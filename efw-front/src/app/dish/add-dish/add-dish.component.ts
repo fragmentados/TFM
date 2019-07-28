@@ -6,6 +6,7 @@ import { IngredientService } from '../../ingredient/ingredient.service';
 import { Stat } from '../../models/nutrition/stat.model';
 import { User } from '../../models/user/user.model';
 import { UserService } from '../../user.service';
+import { AddDishIngredient } from '../../models/dish/addDishIngredient.model';
 
 @Component({
   selector: 'app-add-dish',
@@ -19,6 +20,7 @@ export class AddDishComponent implements OnInit {
   selectedIngredients: Ingredient[];
   dishStats: Stat[];
   selectedIng: Ingredient;
+  ingredientQuantity: number;
   currentUser: User;
 
   constructor(private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
@@ -36,11 +38,11 @@ export class AddDishComponent implements OnInit {
   addIngredient() {
     if (this.selectedIng != null) {
       if (this.dish.ingredients == null) {
-        this.dish.ingredients = [this.selectedIng.id];
+        this.dish.ingredients = [new AddDishIngredient(this.selectedIng.id, this.ingredientQuantity)];
         this.selectedIngredients = [this.selectedIng];
         this.updateDishStatsWithIngredientStats(this.selectedIng);
-      } else if (this.dish.ingredients.indexOf(this.selectedIng.id) === -1) {
-        this.dish.ingredients.push(this.selectedIng.id);
+      } else if (this.dish.ingredients.indexOf(new AddDishIngredient(this.selectedIng.id, this.ingredientQuantity)) === -1) {
+        this.dish.ingredients.push(new AddDishIngredient(this.selectedIng.id, this.ingredientQuantity));
         this.selectedIngredients.push(this.selectedIng);
         this.updateDishStatsWithIngredientStats(this.selectedIng);
       } else {
@@ -58,10 +60,11 @@ export class AddDishComponent implements OnInit {
     for (const ingredientStat of ingredient.stats) {
       const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
       if (dishStat == null) {
-        this.dishStats.push(ingredientStat);
+        this.dishStats.push(new Stat(ingredientStat.name, (parseInt(ingredientStat.value, 10) * this.ingredientQuantity).toString()));
       } else {
         this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
-        this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value, 10) + parseInt(ingredientStat.value, 10)).toString()));
+        this.dishStats.push(new Stat(dishStat.name, (parseInt(dishStat.value, 10) +
+          (parseInt(ingredientStat.value, 10) * this.ingredientQuantity)).toString()));
       }
     }
   }
@@ -76,6 +79,7 @@ export class AddDishComponent implements OnInit {
     this.dish.ingredients = [];
     this.selectedIngredients = [];
     this.dishStats = null;
+    this.ingredientQuantity = 0;
   }
 
   createDish(): void {

@@ -6,6 +6,10 @@
       <tr>
         <th class="hidden">Id</th>
         <th>Name</th>
+        <th>Calories</th>
+        <th>Fats</th>
+        <th>Proteins</th>
+        <th>Carbohydrates</th>
         <th>Action</th>
       </tr>
       </thead>
@@ -13,6 +17,7 @@
       <tr *ngFor="let dish of dishes">
         <td class="hidden">{{dish.id}}</td>
         <td>{{dish.name}}</td>
+        <td *ngFor="let stat of dish.stats">{{stat.value}}</td>
         <td><button class="btn btn-danger" (click)="deleteDish(dish)"> Delete Dish</button></td>
       </tr>
       </tbody>

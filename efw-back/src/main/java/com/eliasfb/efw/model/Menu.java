@@ -67,7 +67,8 @@ public class Menu {
 	@JsonIgnore
 	public Map<String, Long> getShoppingListItems() {
 		List<Ingredient> ingredientList = this.dishes.stream()
-				.flatMap(di -> di.getId().getDish().getIngredients().stream()).collect(Collectors.toList());
+				.flatMap(di -> di.getId().getDish().getIngredients().stream()).map(igdi -> igdi.getId().getIngredient())
+				.collect(Collectors.toList());
 		List<String> ingredientNames = ingredientList.stream().map(i -> i.getName()).collect(Collectors.toList());
 		return ingredientNames.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 	}

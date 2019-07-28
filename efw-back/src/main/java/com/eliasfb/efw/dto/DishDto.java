@@ -15,6 +15,6 @@ public class DishDto implements Serializable {
 
 	private Integer id;
 	private String name;
-	private List<IngredientDto> ingredients;
+	private List<DishIngredientDto> ingredients;
 	private List<StatDto> stats = new ArrayList<>();
 }

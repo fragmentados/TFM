@@ -1,9 +1,9 @@
 package com.eliasfb.efw.model;
 
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,10 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,35 +38,30 @@ public class Dish {
 	@Column
 	private String name;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ingdisrel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-	@JsonIgnoreProperties("dishes")
-	private Set<Ingredient> ingredients;
+	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
+	private List<IngDisRel> ingredients;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "disuserel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
 	private Set<User> users;
 
-	public Dish(String name, Ingredient... ingredients) {
-		this.name = name;
-		this.ingredients = Stream.of(ingredients).collect(Collectors.toSet());
-		this.ingredients.forEach(x -> x.getDishes().add(this));
-	}
-
 	public Integer getCalories() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getCalories()).sum();
+		return this.ingredients.stream().mapToInt(ig -> ig.getId().getIngredient().getCalories() * ig.getQuantity())
+				.sum();
 	}
 
 	public Integer getProteins() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getProteins()).sum();
+		return this.ingredients.stream().mapToInt(ig -> ig.getId().getIngredient().getProteins() * ig.getQuantity())
+				.sum();
 	}
 
 	public Integer getFats() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getFats()).sum();
+		return this.ingredients.stream().mapToInt(ig -> ig.getId().getIngredient().getFats() * ig.getQuantity()).sum();
 	}
 
 	public Integer getCarbohydrates() {
-		return this.ingredients.stream().mapToInt(ig -> ig.getCarbohydrates()).sum();
+		return this.ingredients.stream()
+				.mapToInt(ig -> ig.getId().getIngredient().getCarbohydrates() * ig.getQuantity()).sum();
 	}
 }
