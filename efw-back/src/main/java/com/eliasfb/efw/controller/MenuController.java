@@ -49,6 +49,11 @@ public class MenuController {
 	}
 
 	@DeleteMapping(path = { "/{id}/dish" })
+	public ResponseDto removeDishFromMenu(@PathVariable("id") int id, @RequestBody AddDishToMenuDto dto) {
+		return service.removeDishFromMenu(id, dto);
+	}
+
+	@DeleteMapping(path = { "/{id}/clearMenu" })
 	public ResponseDto clearMenu(@PathVariable("id") int id) {
 		return service.clearMenu(id);
 	}

@@ -123,6 +123,23 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
+	@Transactional
+	public ResponseDto removeDishFromMenu(int menuId, AddDishToMenuDto dto) {
+		// We find the corresponding entities
+		Menu menu = repository.findOne(menuId);
+		Dish dish = dishRepository.findOne(dto.getDishId());
+		// We join them on the relationship entity
+		MenuDisRelId id = new MenuDisRelId(menu, dish, dto.getDate());
+		MenuDisRel menuDisRel = new MenuDisRel(id);
+		// We remove it from the list and persist the changes
+		if (menu.getDishes().contains(menuDisRel)) {
+			menuDisRelRepository.deleteOne(menuId, dto.getDate(), dto.getDishId());
+		}
+
+		return new ResponseDto(ResponseDto.OK_CODE, "Dish removed from menu correctly");
+	}
+
+	@Override
 	public ShoppingListDto getShoppingList(int menuId) {
 		Menu menu = repository.findOne(menuId);
 		Map<String, Long> shoppingListItems = menu.getShoppingListItems();

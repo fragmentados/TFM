@@ -27,4 +27,6 @@ public interface MenuService {
 	Menu update(Menu menu);
 
 	ResponseDto addDishToMenu(int menuId, AddDishToMenuDto dto);
+
+	ResponseDto removeDishFromMenu(int menuId, AddDishToMenuDto dto);
 }

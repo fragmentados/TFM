@@ -34,7 +34,7 @@ public class Dish {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Column
 	private String name;
 

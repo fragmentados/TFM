@@ -35,7 +35,7 @@ export class MenuService {
   }
 
   public clearMenu(menuId: number) {
-    return this.http.delete<Response>(this.menuUrl + '/' + menuId + '/dish');
+    return this.http.delete<Response>(this.menuUrl + '/' + menuId + '/clearMenu');
   }
 
   public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {
