@@ -25,8 +25,10 @@ public class DishServiceImpl implements DishService {
 	private DishToDtoMapper mapper;
 
 	@Override
-	public DishDto create(CreateDishDto createDish) {
-		return mapper.toDto(repository.save(mapper.toEntity(createDish)));
+	public ResponseDto create(CreateDishDto createDish) {
+		Dish dishToCreate = mapper.toEntity(createDish);
+		repository.save(dishToCreate);
+		return new ResponseDto(ResponseDto.OK_CODE, "Dish created successfully");
 	}
 
 	@Override

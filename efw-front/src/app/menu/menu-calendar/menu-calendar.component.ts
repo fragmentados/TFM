@@ -93,7 +93,9 @@ export class MenuCalendarComponent implements OnInit {
     this.menuService.clearMenu(this.menu.id).subscribe(data => {
       if (data.errorCode === 0) {
         this.events = [];
-        this.menu = new Menu();
+        this.menu.days = [];
+        this.menu.stats  = [];
+        this.sendUpdateStatsEvent();
       }
     });
   }

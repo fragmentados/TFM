@@ -38,7 +38,8 @@ public class Dish {
 	@Column
 	private String name;
 
-	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
+	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE,
+			CascadeType.REMOVE })
 	private List<IngDisRel> ingredients;
 
 	@ManyToMany(fetch = FetchType.LAZY)

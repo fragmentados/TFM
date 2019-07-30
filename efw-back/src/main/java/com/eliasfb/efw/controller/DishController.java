@@ -29,7 +29,7 @@ public class DishController {
 	private DishService service;
 
 	@PostMapping
-	public DishDto create(@RequestBody CreateDishDto dish) {
+	public ResponseDto create(@RequestBody CreateDishDto dish) {
 		return service.create(dish);
 	}
 

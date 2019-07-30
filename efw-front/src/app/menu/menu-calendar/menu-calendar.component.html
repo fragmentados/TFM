@@ -2,7 +2,7 @@
   <button (click)="createMenu()"><b>Create Menu</b></button>
 </div>
 <div *ngIf="menu">
-  <app-calendar-week-view *ngIf="menu.startDate"
+  <app-calendar-week-view
   [viewDate]="viewDate"
   [weekStartsOn]=[1]
   [events]="events"

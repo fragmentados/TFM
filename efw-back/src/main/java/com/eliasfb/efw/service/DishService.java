@@ -9,7 +9,7 @@ import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Ingredient;
 
 public interface DishService {
-	DishDto create(CreateDishDto dish);
+	ResponseDto create(CreateDishDto dish);
 
 	ResponseDto delete(int id);
 
