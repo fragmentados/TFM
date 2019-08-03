@@ -7,14 +7,25 @@ import org.springframework.stereotype.Service;
 
 import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
+import com.eliasfb.efw.dto.NutritionEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.mapper.IngredientToIngredientDtoMapper;
+import com.eliasfb.efw.model.FoodCategory;
 import com.eliasfb.efw.model.Ingredient;
+import com.eliasfb.efw.repository.FoodCategoryRepository;
 import com.eliasfb.efw.repository.IngredientRepository;
 import com.eliasfb.efw.service.IngredientService;
+import com.eliasfb.efw.service.rest.IngredientRestService;
+import com.eliasfb.efw.service.rest.response.NutritionData;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
+
+	@Autowired
+	private IngredientRestService restService;
+
+	@Autowired
+	private FoodCategoryRepository categoryRepository;
 
 	@Autowired
 	private IngredientRepository repository;
@@ -71,5 +82,18 @@ public class IngredientServiceImpl implements IngredientService {
 			response = new ResponseDto(ResponseDto.ERROR_CODE, "Ingredient not found");
 		}
 		return response;
+	}
+
+	@Override
+	public NutritionEstimateDto getNutritionEstimate(String ingrName) {
+		// We call the external nutrition WS
+		NutritionData nutritionData = restService.callNutritionService(ingrName);
+		// We map it to the right dto
+		return mapper.nutritionResponseToDto(nutritionData);
+	}
+
+	@Override
+	public List<FoodCategory> getFoodCategories() {
+		return this.categoryRepository.findAll();
 	}
 }

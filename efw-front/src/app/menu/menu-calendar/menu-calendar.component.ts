@@ -1,3 +1,4 @@
+import { AddDishToMenu } from './../../models/menu/addDishToMenu.model';
 // tslint:disable-next-line:max-line-length
 import { CalendarWeekViewShoppingListComponent } from './../../calendar/calendar-week-view-shopping-list/calendar-week-view-shopping-list.component';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,7 @@ import { MenuService } from '../menu.service';
 import { Menu } from '../../models/menu/menu.model';
 import { addHours } from 'date-fns';
 import { MenuDay } from '../../models/menu/menuDay.model';
-import { CalendarEvent } from '../../calendar/common/calendar-common.module';
+import { CalendarEvent, CalendarEventTimesChangedEvent } from '../../calendar/common/calendar-common.module';
 import {MatDialog} from '@angular/material/dialog';
 import { Dish } from '../../models/dish/dish.model';
 import { Stat } from '../../models/nutrition/stat.model';
@@ -13,6 +14,8 @@ import { UserConfs } from '../../models/user/userConfs.model';
 import { UserService } from '../../user.service';
 import { Subject } from 'rxjs';
 import { User } from '../../models/user/user.model';
+import { MenuDish } from '../../models/menu/menuDish.model';
+import { UpdateDishOnMenu } from '../../models/menu/updateDishOnMenu.model';
 
 @Component({
   selector: 'app-menu-calendar',
@@ -27,6 +30,7 @@ export class MenuCalendarComponent implements OnInit {
   userConfs: UserConfs;
   private updateStatsSubject: Subject<Menu> = new Subject<Menu>();
   currentUser: User;
+  refresh: Subject<any> = new Subject();
 
   sendUpdateStatsEvent() {
     this.updateStatsSubject.next(this.menu);
@@ -71,7 +75,8 @@ export class MenuCalendarComponent implements OnInit {
       dayMeals.push({
         start: mealDate,
         end: addHours(mealDate, 1),
-        title: meal.name
+        title: meal.name,
+        draggable: true
       });
     }
     return dayMeals;
@@ -141,7 +146,50 @@ export class MenuCalendarComponent implements OnInit {
       this.menu = data;
       this.sendUpdateStatsEvent();
     });
+  }
 
+  updateMenuStatsWithoutDishStats(dish: MenuDish) {
+    for (const dishStat of dish.stats) {
+      const menuStat: Stat = this.menu.stats.find(element => element.name === dishStat.name);
+      this.menu.stats = this.menu.stats.filter(element => element.name !== menuStat.name);
+      if (parseFloat(menuStat.value) - parseFloat(dishStat.value) !== 0) {
+        this.menu.stats.push(new Stat(menuStat.name, (parseFloat(menuStat.value) - parseFloat(dishStat.value)).toString()));
+      }
+    }
+    this.sendUpdateStatsEvent();
+  }
+
+  deleteDishFromCalendar(clickEvent) {
+    const dateWithHour: string = this.menuService.formatDateWithHour(clickEvent.event.start);
+    const dishSelected:  MenuDish = this.getDishIdFromUnformattedDate(clickEvent.event.start);
+    const addDishToMenu: AddDishToMenu = new AddDishToMenu();
+    addDishToMenu.date = dateWithHour;
+    addDishToMenu.dishId = dishSelected.id;
+    this.menuService.removeDishFromMenu(this.menu.id, addDishToMenu).subscribe(data => {
+      if (data.errorCode === 0) {
+        this.updateMenuStatsWithoutDishStats(dishSelected);
+      }
+    });
+  }
+
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd
+  }: CalendarEventTimesChangedEvent): void {
+    this.menuService.updateDishDateOnMenu(this.menu.id,
+      new UpdateDishOnMenu(this.getDishIdFromUnformattedDate(event.start).id,
+      this.menuService.formatDateWithHour(event.start),
+      this.menuService.formatDateWithHour((newStart)))).subscribe(data => this.menu = data);
+      event.start = newStart;
+      event.end = newEnd;
+      this.refresh.next();
+  }
+
+  getDishIdFromUnformattedDate(start): MenuDish {
+    const date: string = this.menuService.formatDate(start);
+    const dateWithHour: string = this.menuService.formatDateWithHour(start);
+    return this.menu.days.filter(day => day.date === date)[0].meals.filter(meal => meal.date === dateWithHour)[0];
   }
 
 }

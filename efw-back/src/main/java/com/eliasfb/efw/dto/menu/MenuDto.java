@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.eliasfb.efw.dto.stat.NutritionalStatEnum;
 import com.eliasfb.efw.dto.stat.StatDto;
+import com.eliasfb.efw.enums.NutritionalStatEnum;
 
 import lombok.Data;
 

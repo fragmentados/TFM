@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
 import com.eliasfb.efw.dto.ResponseDto;
+import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
 import com.eliasfb.efw.dto.mapper.MenuToDtoMapper;
 import com.eliasfb.efw.dto.menu.MenuDto;
 import com.eliasfb.efw.dto.menu.ShoppingListDto;
@@ -107,6 +108,7 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
+	@Transactional
 	public ResponseDto addDishToMenu(int menuId, AddDishToMenuDto dto) {
 		// We find the corresponding entities
 		Menu menu = repository.findOne(menuId);
@@ -120,6 +122,31 @@ public class MenuServiceImpl implements MenuService {
 			repository.save(menu);
 		}
 		return new ResponseDto(ResponseDto.OK_CODE, "Dish added to menu correctly");
+	}
+
+	@Override
+	@Transactional
+	public MenuDto updateDishDateOnMenu(int menuId, UpdateDishOnMenuDto dto) {
+		MenuDto menuDto = null;
+		// We find the corresponding entities
+		Menu menu = repository.findOne(menuId);
+		Dish dish = dishRepository.findOne(dto.getDishId());
+		// We create both of the relationships : the old one and the new one
+		MenuDisRelId oldId = new MenuDisRelId(menu, dish, dto.getOldDate());
+		MenuDisRel oldMenuDisRel = new MenuDisRel(oldId);
+		MenuDisRelId newId = new MenuDisRelId(menu, dish, dto.getNewDate());
+		MenuDisRel newMenuDisRel = new MenuDisRel(newId);
+
+		if (menu.getDishes().contains(oldMenuDisRel)) {
+			// We remove the old relationship
+			menu.getDishes().remove(oldMenuDisRel);
+			menuDisRelRepository.deleteOne(menuId, dto.getOldDate(), dto.getDishId());
+			// We add the new one
+			menu.getDishes().add(newMenuDisRel);
+			repository.save(menu);
+			menuDto = this.mapper.menuToMenuDto(menu);
+		}
+		return menuDto;
 	}
 
 	@Override

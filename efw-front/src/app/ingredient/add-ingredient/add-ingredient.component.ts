@@ -1,21 +1,38 @@
+import { FoodCategory } from './../../models/ingredient/foodCategory.model';
 import { UserService } from '../../user.service';
 import { AddIngredient } from '../../models/ingredient/addIngredient.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IngredientService } from '.././ingredient.service';
 import { User } from '../../models/user/user.model';
+import { Stat } from '../../models/nutrition/stat.model';
 
 @Component({
   templateUrl: './add-ingredient.component.html',
   styleUrls: ['./add-ingredient.component.css']
 })
-export class AddIngredientComponent {
+export class AddIngredientComponent implements OnInit {
 
   ingredient: AddIngredient = new AddIngredient();
+  categories: FoodCategory[];
   currentUser: User;
 
   constructor(private userService: UserService, private router: Router, private ingredientService: IngredientService) {
     this.currentUser = this.userService.currentUserValue;
+  }
+
+  ngOnInit(): void {
+    this.ingredientService.foodCategories().subscribe(data => this.categories = data);
+  }
+
+  estimateNutrition() {
+    this.ingredientService.nutritionEstimate(this.ingredient.name).subscribe(data => this.fillIngredientWithStats(data.stats));
+  }
+
+  fillIngredientWithStats(stats: Stat[]) {
+    this.ingredient.calories = stats.filter(s => s.name === 'Calories')[0].value;
+    this.ingredient.fats = stats.filter(s => s.name === 'Fats')[0].value;
+    this.ingredient.proteins = stats.filter(s => s.name === 'Proteins')[0].value;
   }
 
   clearForm() {
@@ -33,7 +50,6 @@ export class AddIngredientComponent {
           this.clearForm();
           alert('Ingredient created successfully.');
         });
-
   }
 
 }

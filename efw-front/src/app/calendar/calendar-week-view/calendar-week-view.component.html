@@ -89,7 +89,7 @@
           [customTemplate]="eventTemplate"
           [eventTitleTemplate]="eventTitleTemplate"
           [eventActionsTemplate]="eventActionsTemplate"
-          (eventClicked)="eventClicked.emit({ event: allDayEvent.event })"
+          (eventClicked)="dishEventClicked(allDayEvent.event)"
         >
         </app-calendar-week-view-event>
         <div
@@ -214,7 +214,7 @@
             [customTemplate]="eventTemplate"
             [eventTitleTemplate]="eventTitleTemplate"
             [eventActionsTemplate]="eventActionsTemplate"
-            (eventClicked)="eventClicked.emit({ event: timeEvent.event })"
+            (eventClicked)="dishEventClicked(timeEvent.event)"
           >
           </app-calendar-week-view-event>
           <div

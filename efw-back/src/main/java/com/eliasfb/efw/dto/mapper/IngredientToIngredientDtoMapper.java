@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
-import com.eliasfb.efw.dto.stat.NutritionalStatEnum;
+import com.eliasfb.efw.dto.NutritionEstimateDto;
 import com.eliasfb.efw.dto.stat.StatDto;
+import com.eliasfb.efw.enums.NutritionalStatEnum;
+import com.eliasfb.efw.model.FoodCategory;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.model.User;
+import com.eliasfb.efw.service.rest.response.NutritionData;
 
 @Mapper(componentModel = "spring")
 public abstract class IngredientToIngredientDtoMapper {
@@ -27,6 +31,9 @@ public abstract class IngredientToIngredientDtoMapper {
 			user.setId(dto.getUserId());
 			ingredient.setUsers(new HashSet<>(Arrays.asList(user)));
 		}
+		if (dto.getCategoryId() != null) {
+			ingredient.setCategory(new FoodCategory(dto.getCategoryId()));
+		}
 		return ingredient;
 	}
 
@@ -34,12 +41,35 @@ public abstract class IngredientToIngredientDtoMapper {
 		return ingredient.stream().map(i -> this.toDto(i)).collect(Collectors.toList());
 	}
 
+	@Mapping(source = "category.name", target = "category")
 	protected abstract IngredientDto ingredientToDto(Ingredient ingredient);
 
 	public IngredientDto toDto(Ingredient ing) {
 		IngredientDto dto = ingredientToDto(ing);
 		dto.setStats(getIngredientStats(ing));
 		return dto;
+	}
+
+	public NutritionEstimateDto nutritionResponseToDto(NutritionData nutritionData) {
+		return new NutritionEstimateDto(getNutritionDataStats(nutritionData));
+	}
+
+	public List<StatDto> getNutritionDataStats(NutritionData nutritionData) {
+		List<StatDto> stats = new ArrayList<>();
+		stats.add(new StatDto(NutritionalStatEnum.CALORIES.getName(),
+				getStatQuantityFromNutritionData(nutritionData, NutritionData.CALORIES_MAP_KEY)));
+		stats.add(new StatDto(NutritionalStatEnum.FATS.getName(),
+				getStatQuantityFromNutritionData(nutritionData, NutritionData.FAT_MAP_KEY)));
+		stats.add(new StatDto(NutritionalStatEnum.PROTEINS.getName(),
+				getStatQuantityFromNutritionData(nutritionData, NutritionData.PROTEINS_MAP_KEY)));
+		return stats;
+	}
+
+	private String getStatQuantityFromNutritionData(NutritionData nutritionData, String key) {
+		Float quantityResponse = nutritionData.getTotalNutrients().get(key).getQuantity();
+		// Turn to quantity / 100 gr
+		quantityResponse = quantityResponse / nutritionData.getTotalWeight() * 100;
+		return String.valueOf(quantityResponse);
 	}
 
 	public List<StatDto> getIngredientStats(Ingredient ingredient) {

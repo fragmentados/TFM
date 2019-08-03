@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,8 +24,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "ingredient")
 @Data
-@ToString(exclude = { "users" })
-@EqualsAndHashCode(exclude = { "users" })
+@ToString(exclude = { "users", "category" })
+@EqualsAndHashCode(exclude = { "users", "category" })
 @NoArgsConstructor
 public class Ingredient {
 	@Id
@@ -46,6 +47,9 @@ public class Ingredient {
 	@JoinTable(name = "inguserel", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
 	private Set<User> users;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private FoodCategory category;
 
 	public Ingredient(int id) {
 		super();

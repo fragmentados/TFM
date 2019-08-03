@@ -6,16 +6,14 @@ import java.util.List;
 
 import com.eliasfb.efw.dto.stat.StatDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class IngredientDto implements Serializable {
+@AllArgsConstructor
+public class NutritionEstimateDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-	private String name;
-	private String category;
 	private List<StatDto> stats = new ArrayList<>();
-
 }

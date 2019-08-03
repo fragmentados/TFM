@@ -11,6 +11,7 @@ public class CreateOrUpdateIngredientDto implements Serializable {
 
 	private Integer userId;
 	private String name;
+	private Integer categoryId;
 	private Double calories;
 	private Double proteins;
 	private Double fats;

@@ -6,10 +6,7 @@ import { Menu } from '../models/menu/menu.model';
 import { AddDishToMenu } from '../models/menu/addDishToMenu.model';
 import { ShoppingList } from '../models/menu/shoppingList/shoppingList.model';
 import { AddMenu } from '../models/menu/addMenu.model';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { UpdateDishOnMenu } from '../models/menu/updateDishOnMenu.model';
 
 @Injectable()
 export class MenuService {
@@ -39,13 +36,33 @@ export class MenuService {
   }
 
   public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {
-    return this.http.put<Response>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
+    return this.http.post<Response>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
   }
 
-  private formatDate(startDate: Date) {
+  public updateDishDateOnMenu(menuId: number, updateDishOnMenu: UpdateDishOnMenu) {
+    return this.http.put<Menu>(this.menuUrl + '/' + menuId + '/dish', updateDishOnMenu);
+  }
+
+  public removeDishFromMenu(menuId: number, addDishToMenu: AddDishToMenu) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: addDishToMenu
+    };
+    return this.http.delete<Response>(this.menuUrl + '/' + menuId + '/dish', httpOptions);
+  }
+
+  public formatDate(startDate: Date) {
     return startDate.getFullYear() + '-' +
            ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' +
            ('0' + startDate.getDate()).slice(-2);
+  }
+
+  public formatDateWithHour(startDate: Date) {
+    return startDate.getFullYear() + '-' +
+           ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' +
+           ('0' + startDate.getDate()).slice(-2) + ' ' +
+           ('0' + startDate.getHours()).slice(-2) + ':' +
+           ('0' + startDate.getMinutes()).slice(-2) + ':' +
+           ('0' + startDate.getSeconds()).slice(-2) + '.' + '0';
   }
 
 }

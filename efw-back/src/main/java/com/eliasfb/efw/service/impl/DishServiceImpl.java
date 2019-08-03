@@ -26,8 +26,8 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	public ResponseDto create(CreateDishDto createDish) {
-		Dish dishToCreate = mapper.toEntity(createDish);
-		repository.save(dishToCreate);
+		Dish dishToCreate = this.mapper.toEntity(createDish);
+		this.repository.save(dishToCreate);
 		return new ResponseDto(ResponseDto.OK_CODE, "Dish created successfully");
 	}
 
@@ -35,7 +35,7 @@ public class DishServiceImpl implements DishService {
 	public ResponseDto delete(int id) {
 		Dish dish = this.repository.findOne(id);
 		if (dish != null) {
-			repository.delete(dish);
+			this.repository.delete(dish);
 		}
 		return new ResponseDto(ResponseDto.OK_CODE, "Dish with name = '" + dish.getName() + "' deleted correctly.");
 	}
@@ -44,21 +44,21 @@ public class DishServiceImpl implements DishService {
 	public List<DishDto> findUserDishes(Integer userId) {
 		List<Dish> dishes;
 		if (userId == null) {
-			dishes = repository.findAll();
+			dishes = this.repository.findAll();
 		} else {
-			dishes = repository.findUserDishes(userId);
+			dishes = this.repository.findUserDishes(userId);
 		}
-		return mapper.dishListToDishDtoList(dishes);
+		return this.mapper.dishListToDishDtoList(dishes);
 	}
 
 	@Override
 	public List<Dish> findAll() {
-		return repository.findAll();
+		return this.repository.findAll();
 	}
 
 	@Override
 	public DishDto findById(int id) {
-		return mapper.toDto(repository.findOne(id));
+		return this.mapper.toDto(this.repository.findOne(id));
 	}
 
 	@Override
@@ -67,10 +67,10 @@ public class DishServiceImpl implements DishService {
 		Dish dish = this.repository.findOne(dishId);
 		if (dish != null) {
 			// All fields should be updated except users
-			Dish updateDish = mapper.toEntity(dto);
+			Dish updateDish = this.mapper.toEntity(dto);
 			updateDish.setUsers(dish.getUsers());
 			updateDish.setId(dishId);
-			repository.save(updateDish);
+			this.repository.save(updateDish);
 		} else {
 			response = new ResponseDto(ResponseDto.ERROR_CODE, "Dish not found");
 		}
@@ -79,12 +79,12 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	public Dish addIngredientToDish(int dishId, Ingredient ingredient) {
-		Dish dish = repository.findOne(dishId);
+		Dish dish = this.repository.findOne(dishId);
 		IngDisRelId id = new IngDisRelId(dish, ingredient);
 		IngDisRel ingDisRel = new IngDisRel(id, 0);
 		if (!dish.getIngredients().contains(ingDisRel)) {
 			dish.getIngredients().add(ingDisRel);
-			repository.save(dish);
+			this.repository.save(dish);
 		}
 
 		return dish;

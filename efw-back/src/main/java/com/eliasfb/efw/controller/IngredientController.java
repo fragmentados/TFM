@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
+import com.eliasfb.efw.dto.NutritionEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
+import com.eliasfb.efw.model.FoodCategory;
 import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.IngredientService;
 
@@ -24,6 +26,7 @@ import com.eliasfb.efw.service.IngredientService;
 @RestController
 @RequestMapping({ "/ingredients" })
 public class IngredientController {
+
 	@Autowired
 	private IngredientService service;
 
@@ -35,6 +38,16 @@ public class IngredientController {
 	@GetMapping(path = { "/{id}" })
 	public IngredientDto findOne(@PathVariable("id") int id) {
 		return service.findById(id);
+	}
+
+	@GetMapping(path = { "/nutrition-estimate" })
+	public NutritionEstimateDto getNutritionEstimate(@RequestParam("ingr") String ingrName) {
+		return service.getNutritionEstimate(ingrName);
+	}
+
+	@GetMapping(path = { "/categories" })
+	public List<FoodCategory> getFoodCategories() {
+		return service.getFoodCategories();
 	}
 
 	@PutMapping(path = { "/{id}" })

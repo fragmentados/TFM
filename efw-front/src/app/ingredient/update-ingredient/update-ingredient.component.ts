@@ -3,6 +3,7 @@ import { Ingredient } from './../../models/ingredient/ingredient.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IngredientService } from '.././ingredient.service';
+import { FoodCategory } from '../../models/ingredient/foodCategory.model';
 
 @Component({
   templateUrl: './update-ingredient.component.html',
@@ -11,6 +12,7 @@ import { IngredientService } from '.././ingredient.service';
 export class UpdateIngredientComponent implements OnInit {
 
   ingredient: UpdateIngredient = new UpdateIngredient();
+  categories: FoodCategory[];
   ingredientId: number;
 
   constructor(private route: ActivatedRoute, private ingredientService: IngredientService) {
@@ -18,6 +20,7 @@ export class UpdateIngredientComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ingredientService.foodCategories().subscribe(data => this.categories = data);
     this.ingredientService.getIngredient(this.ingredientId)
       .subscribe( data => this.ingredient = this.ingredientToUpdateIngredient(data));
   }
@@ -29,6 +32,7 @@ export class UpdateIngredientComponent implements OnInit {
     updateIngredient.proteins = ingredient.stats.filter(stat => stat.name === 'Proteins')[0].value;
     updateIngredient.fats = ingredient.stats.filter(stat => stat.name === 'Fats')[0].value;
     updateIngredient.carbohydrates = ingredient.stats.filter(stat => stat.name === 'Carbohydrates')[0].value;
+    updateIngredient.categoryId = this.categories.filter(cat => cat.name === ingredient.category)[0].id;
     return updateIngredient;
   }
 

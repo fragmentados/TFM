@@ -19,6 +19,7 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 		return conf != null ? this.parseClass(conf.getValue(), type) : defaultValue;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T parseClass(String confValue, Class<T> type) {
 		if (type.equals(Integer.class)) {
 			return (T) Integer.valueOf(confValue);

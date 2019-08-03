@@ -4,7 +4,17 @@
 
   <div class="form-group">
     <label for="name">Name:</label>
-    <input [(ngModel)]="ingredient.name" placeholder="Name" name="Name" class="form-control" id="Name">
+    <div style="display:flex;">
+      <input [(ngModel)]="ingredient.name" placeholder="Name" name="Name" class="form-control" id="Name">
+      <button style="margin-left: 10px;" class="btn btn-success" (click)="estimateNutrition()">Estimate Stats</button>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="categories">
+    <label for="categorySelect">Categories:</label>
+    <select [(ngModel)]="ingredient.categoryId" #CategoriesSelect="ngModel" name="CategoriesSelect" class="form-control" id="Categories" >
+      <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+    </select>
   </div>
 
   <div class="form-group">

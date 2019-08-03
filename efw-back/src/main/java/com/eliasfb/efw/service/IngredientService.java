@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
 import com.eliasfb.efw.dto.IngredientDto;
+import com.eliasfb.efw.dto.NutritionEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
+import com.eliasfb.efw.model.FoodCategory;
 import com.eliasfb.efw.model.Ingredient;
 
 public interface IngredientService {
@@ -20,4 +22,8 @@ public interface IngredientService {
 	IngredientDto findById(int id);
 
 	ResponseDto update(Integer ingredientId, CreateOrUpdateIngredientDto updateIngredient);
+
+	NutritionEstimateDto getNutritionEstimate(String ingrName);
+
+	List<FoodCategory> getFoodCategories();
 }

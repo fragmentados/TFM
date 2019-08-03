@@ -46,7 +46,7 @@ export class CalendarWeekViewHourSegmentComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog closed: ${result}`);
       const addDishToMenu: AddDishToMenu = new AddDishToMenu();
-      addDishToMenu.date = this.formatDate(this.segment.date);
+      addDishToMenu.date = this.menuService.formatDateWithHour(this.segment.date);
       addDishToMenu.dishId = result.id;
       this.menuService.addDishToMenu(this.menuId, addDishToMenu).subscribe(data => {
         console.log(`Dish added to menu: ${data}`);
@@ -54,20 +54,12 @@ export class CalendarWeekViewHourSegmentComponent {
           event: {
             start: this.segment.date,
             end: addHours(this.segment.date, 1),
-            title: result.name
+            title: result.name,
+            draggable: true
           },
           dish: result
         });
       });
     });
-  }
-
-  private formatDate(startDate: Date) {
-    return startDate.getFullYear() + '-' +
-           ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' +
-           ('0' + startDate.getDate()).slice(-2) + ' ' +
-           ('0' + startDate.getHours()).slice(-2) + ':' +
-           ('0' + startDate.getMinutes()).slice(-2) + ':' +
-           ('0' + startDate.getSeconds()).slice(-2);
   }
 }

@@ -1,4 +1,4 @@
-package com.eliasfb.efw.dto.stat;
+package com.eliasfb.efw.enums;
 
 public enum NutritionalStatEnum {
 

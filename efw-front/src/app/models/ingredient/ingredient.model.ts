@@ -3,5 +3,6 @@ export class Ingredient {
 
   id: number;
   name: string;
+  category: string;
   stats: Stat[];
 }
