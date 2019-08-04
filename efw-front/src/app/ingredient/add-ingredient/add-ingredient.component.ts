@@ -15,7 +15,9 @@ export class AddIngredientComponent implements OnInit {
 
   ingredient: AddIngredient = new AddIngredient();
   categories: FoodCategory[];
+  bannedCategories: FoodCategory[];
   currentUser: User;
+  categorySelectedBanned: boolean = false;
 
   constructor(private userService: UserService, private router: Router, private ingredientService: IngredientService) {
     this.currentUser = this.userService.currentUserValue;
@@ -23,6 +25,7 @@ export class AddIngredientComponent implements OnInit {
 
   ngOnInit(): void {
     this.ingredientService.foodCategories().subscribe(data => this.categories = data);
+    this.userService.getUserConfs(this.currentUser.id).subscribe(data => this.bannedCategories = data.bannedCategories);
   }
 
   estimateNutrition() {
@@ -33,6 +36,10 @@ export class AddIngredientComponent implements OnInit {
     this.ingredient.calories = stats.filter(s => s.name === 'Calories')[0].value;
     this.ingredient.fats = stats.filter(s => s.name === 'Fats')[0].value;
     this.ingredient.proteins = stats.filter(s => s.name === 'Proteins')[0].value;
+  }
+
+  checkBannedCategory() {
+    this.categorySelectedBanned = (this.bannedCategories.filter(bc => bc.id === this.ingredient.categoryId).length > 0);
   }
 
   clearForm() {

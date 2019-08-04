@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import com.eliasfb.efw.dto.CreateOrUpdateIngredientDto;
+import com.eliasfb.efw.dto.FoodCategoryDto;
 import com.eliasfb.efw.dto.IngredientDto;
 import com.eliasfb.efw.dto.NutritionEstimateDto;
 import com.eliasfb.efw.dto.stat.StatDto;
@@ -41,7 +41,6 @@ public abstract class IngredientToIngredientDtoMapper {
 		return ingredient.stream().map(i -> this.toDto(i)).collect(Collectors.toList());
 	}
 
-	@Mapping(source = "category.name", target = "category")
 	protected abstract IngredientDto ingredientToDto(Ingredient ingredient);
 
 	public IngredientDto toDto(Ingredient ing) {
@@ -81,5 +80,7 @@ public abstract class IngredientToIngredientDtoMapper {
 				String.valueOf(ingredient.getCarbohydrates())));
 		return stats;
 	}
+
+	public abstract List<FoodCategoryDto> foodCategoryListToDto(List<FoodCategory> categories);
 
 }

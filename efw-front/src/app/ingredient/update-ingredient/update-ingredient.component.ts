@@ -32,7 +32,7 @@ export class UpdateIngredientComponent implements OnInit {
     updateIngredient.proteins = ingredient.stats.filter(stat => stat.name === 'Proteins')[0].value;
     updateIngredient.fats = ingredient.stats.filter(stat => stat.name === 'Fats')[0].value;
     updateIngredient.carbohydrates = ingredient.stats.filter(stat => stat.name === 'Carbohydrates')[0].value;
-    updateIngredient.categoryId = this.categories.filter(cat => cat.name === ingredient.category)[0].id;
+    updateIngredient.categoryId = ingredient.category.id;
     return updateIngredient;
   }
 

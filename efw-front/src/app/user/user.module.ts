@@ -1,3 +1,4 @@
+import { IngredientService } from './../ingredient/ingredient.service';
 import { UserService } from './../user.service';
 import { UserRoutingModule } from './user-routing.module';
 import { AddUserComponent } from './add-user/add-user.component';
@@ -17,6 +18,6 @@ import { LoginComponent } from './login/login.component';
     UserRoutingModule
   ],
   exports: [UserComponent, AddUserComponent],
-  providers: [UserService]
+  providers: [UserService, IngredientService]
 })
 export class UserModule { }

@@ -18,6 +18,33 @@
           <label for="maxCarbohydrates">Max Carbohydrates per Week:</label>
           <input type="number" [(ngModel)]="userConf.maxCarbohydratesPerWeek" placeholder="Max Carbohydrates Per Week" name="maxCarbohydrates" class="form-control" id="maxCarbohydrates">
       </div>
+      <div class="form-group" *ngIf="categories">
+        <label for="categorySelect">Ban a category:</label>
+        <div style="display:flex;">
+          <select [(ngModel)]="selectedCategory" #CategoriesSelect="ngModel" name="CategoriesSelect" class="form-control" id="Categories" >
+            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+          </select>
+          <button class="btn btn-danger" style="margin-left: 10px;" (click)="banCategory()">Ban Category</button>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="bannedCategories">
+        <label for="categorySelect">Banned Categories:</label>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden">Id</th>
+              <th>Name</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let category of bannedCategories">
+              <td>{{category.name}}</td>
+              <td><button class="btn btn-danger" (click)="unBanCategory(category)">Unban</button></td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
     </div>
     <button class="btn btn-success" (click)="updateConfs()">Update Confs</button>
   </form>

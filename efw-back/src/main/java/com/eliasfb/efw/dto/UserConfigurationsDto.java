@@ -1,6 +1,7 @@
 package com.eliasfb.efw.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +18,5 @@ public class UserConfigurationsDto implements Serializable {
 	private Double maxProteinsPerWeek;
 	private Double maxFatsPerWeek;
 	private Double maxCarbohydratesPerWeek;
+	private List<FoodCategoryDto> bannedCategories;
 }

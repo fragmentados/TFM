@@ -1,5 +1,9 @@
 package com.eliasfb.efw.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,18 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 	public <T> T findUserConfigurationByNameOrDefault(Integer userId, String name, Class<T> type, T defaultValue) {
 		UserConfiguration conf = repository.findByNameAndUser(name, userId);
 		return conf != null ? this.parseClass(conf.getValue(), type) : defaultValue;
+	}
+
+	@Override
+	public <T> List<T> findUserConfigurationListByNameOrDefault(Integer userId, String name, Class<T> type,
+			List<T> defaultValue) {
+		List<T> result = defaultValue;
+		UserConfiguration conf = repository.findByNameAndUser(name, userId);
+		if (conf != null) {
+			String[] confValuesSplitted = conf.getValue().split(", ");
+			result = Stream.of(confValuesSplitted).map(c -> parseClass(c, type)).collect(Collectors.toList());
+		}
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")

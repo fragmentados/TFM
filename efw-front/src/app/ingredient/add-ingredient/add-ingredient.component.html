@@ -12,7 +12,7 @@
 
   <div class="form-group" *ngIf="categories">
     <label for="categorySelect">Categories:</label>
-    <select [(ngModel)]="ingredient.categoryId" #CategoriesSelect="ngModel" name="CategoriesSelect" class="form-control" id="Categories" >
+    <select [(ngModel)]="ingredient.categoryId" #CategoriesSelect="ngModel" name="CategoriesSelect" class="form-control" id="Categories" (ngModelChange)="checkBannedCategory()" >
       <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
     </select>
   </div>
@@ -48,7 +48,9 @@
       <label class="margin-left-label"> / 100 grams</label>
     </div>
   </div>
-
+  <div *ngIf="categorySelectedBanned">
+      <label><font color="red">The Food Category you have selected is currently banned by you!!!</font></label>
+  </div>
   <button class="btn btn-success" (click)="createIngredient()">Create</button>
 </form>
 </div>

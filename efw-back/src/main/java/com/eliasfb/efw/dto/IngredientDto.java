@@ -15,7 +15,7 @@ public class IngredientDto implements Serializable {
 
 	private Integer id;
 	private String name;
-	private String category;
+	private FoodCategoryDto category;
 	private List<StatDto> stats = new ArrayList<>();
 
 }
