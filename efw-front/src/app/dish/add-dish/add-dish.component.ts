@@ -27,7 +27,7 @@ export class AddDishComponent implements OnInit {
 
   dish: AddDish = new AddDish();
   ingredients: Ingredient[];
-  selectedIngredients: IngredientNameAndQuantity[];
+  selectedIngredients: IngredientNameAndQuantity[] = [];
   dishStats: Stat[];
   selectedIng: Ingredient;
   ingredientQuantity: number;
@@ -39,18 +39,16 @@ export class AddDishComponent implements OnInit {
 
   ngOnInit() {
     this.ingredientService.getUserIngredients(this.currentUser.id).subscribe(data => this.ingredients = data);
+    this.dish.ingredients = [];
   }
 
   addIngredient() {
     if (this.selectedIng != null) {
-      if (this.dish.ingredients == null) {
-        this.dish.ingredients = [new AddDishIngredient(this.selectedIng.id, this.ingredientQuantity)];
-        this.selectedIngredients = [new IngredientNameAndQuantity(this.selectedIng, this.ingredientQuantity)];
-        this.updateDishStatsWithIngredientStats(this.selectedIng);
-      } else if (this.dish.ingredients.filter(ing => ing.id === this.selectedIng.id).length === 0) {
+      if (this.dish.ingredients.filter(ing => ing.id === this.selectedIng.id).length === 0) {
         this.dish.ingredients.push(new AddDishIngredient(this.selectedIng.id, this.ingredientQuantity));
         this.selectedIngredients.push(new IngredientNameAndQuantity(this.selectedIng, this.ingredientQuantity));
         this.updateDishStatsWithIngredientStats(this.selectedIng);
+        this.autoFillDishName(this.selectedIng.name);
       } else {
         alert('That ingredient has already been selected');
       }
@@ -114,6 +112,18 @@ export class AddDishComponent implements OnInit {
           this.clearForm();
           alert('Dish ' + this.dish.name + ' created successfully.');
         });
+  }
+
+  autoFillDishName(ingrName: string) {
+    if (this.dish.name == null || this.dish.name === '') {
+      this.dish.name = ingrName;
+    } else {
+      if (this.dish.name.includes('con')) {
+        this.dish.name = this.dish.name + ' y ' + ingrName;
+      } else {
+        this.dish.name = this.dish.name + ' con ' + ingrName;
+      }
+    }
   }
 
 }

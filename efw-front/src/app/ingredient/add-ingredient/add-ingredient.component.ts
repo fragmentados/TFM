@@ -17,7 +17,7 @@ export class AddIngredientComponent implements OnInit {
   categories: FoodCategory[];
   bannedCategories: FoodCategory[];
   currentUser: User;
-  categorySelectedBanned: boolean = false;
+  categorySelectedBanned = false;
 
   constructor(private userService: UserService, private router: Router, private ingredientService: IngredientService) {
     this.currentUser = this.userService.currentUserValue;
