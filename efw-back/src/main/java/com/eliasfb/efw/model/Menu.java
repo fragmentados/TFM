@@ -1,8 +1,8 @@
 package com.eliasfb.efw.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -64,12 +65,29 @@ public class Menu {
 		return this.dishes.stream().mapToDouble(di -> di.getId().getDish().getCarbohydrates()).sum();
 	}
 
-	@JsonIgnore
-	public Map<String, Long> getShoppingListItems() {
-		List<Ingredient> ingredientList = this.dishes.stream()
-				.flatMap(di -> di.getId().getDish().getIngredients().stream()).map(igdi -> igdi.getId().getIngredient())
+	public Map<String, UnitAndQuantity> getShoppingListItems() {
+		List<IngredientWithQuantity> ingredientList = this.dishes.stream()
+				.flatMap(di -> di.getId().getDish().getIngredients().stream())
+				.map(igdi -> new IngredientWithQuantity(igdi.getId().getIngredient().getName(), igdi.getQuantity()))
 				.collect(Collectors.toList());
-		List<String> ingredientNames = ingredientList.stream().map(i -> i.getName()).collect(Collectors.toList());
-		return ingredientNames.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		Map<String, Long> ingredientCounts = ingredientList.stream()
+				.collect(Collectors.groupingBy(IngredientWithQuantity::getName, Collectors.counting()));
+		Map<String, Double> ingredientQuantities = ingredientList.stream().collect(Collectors.groupingBy(
+				IngredientWithQuantity::getName, Collectors.summingDouble(IngredientWithQuantity::getQuantity)));
+		Map<String, UnitAndQuantity> returnMap = new HashMap<>();
+		ingredientCounts.entrySet().stream().forEach(es -> returnMap.put(es.getKey(),
+				new UnitAndQuantity(es.getValue(), ingredientQuantities.get(es.getKey()))));
+		return returnMap;
+	}
+
+	public boolean containsDish(Dish d) {
+		return this.dishes.stream().filter(dishRel -> dishRel.getId().getDish().equals(d)).findFirst().isPresent();
+	}
+
+	@Data
+	@AllArgsConstructor
+	class IngredientWithQuantity {
+		private String name;
+		private Double quantity;
 	}
 }

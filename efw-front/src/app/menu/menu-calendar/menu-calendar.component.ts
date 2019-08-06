@@ -24,6 +24,7 @@ import { UpdateDishOnMenu } from '../../models/menu/updateDishOnMenu.model';
 })
 export class MenuCalendarComponent implements OnInit {
 
+  view = 'week';
   viewDate: Date = new Date();
   events: CalendarEvent[];
   menu: Menu;
@@ -47,22 +48,22 @@ export class MenuCalendarComponent implements OnInit {
 
   initMenuAndEvents() {
     this.menuService.getUserMenu(this.currentUser.id, this.viewDate).subscribe(data => {
-      this.menu = data;
-      const events = this.initCalendarEventsWithDishes();
-      this.events = events;
-      console.log(events);
+      if (data.id === null) {
+        this.menu = null;
+      } else {
+        this.menu = data;
+        this.events = this.initCalendarEventsWithDishes();
+        this.sendUpdateStatsEvent();
+      }
     });
   }
 
   initCalendarEventsWithDishes() {
+    this.events = [];
     for (const day of this.menu.days) {
       const dayEvents = this.createCalendarEventsForDay(day);
       for (const event of dayEvents) {
-        if (!this.events) {
-          this.events = [event];
-        } else {
           this.events.push(event);
-        }
       }
     }
     return this.events;
@@ -102,6 +103,24 @@ export class MenuCalendarComponent implements OnInit {
         this.menu.stats  = [];
         this.sendUpdateStatsEvent();
       }
+    });
+  }
+
+  randomMenu() {
+    this.menuService.randomGenerateMenu(this.menu.id, this.currentUser.id).subscribe(data => {
+      this.menu.days = data.days;
+      this.menu.stats = data.stats;
+      this.sendUpdateStatsEvent();
+      this.initCalendarEventsWithDishes();
+    });
+  }
+
+  validMenu() {
+    this.menuService.generateValidMenu(this.menu.id, this.currentUser.id).subscribe(data => {
+      this.menu.days = data.days;
+      this.menu.stats = data.stats;
+      this.sendUpdateStatsEvent();
+      this.initCalendarEventsWithDishes();
     });
   }
 
@@ -190,6 +209,10 @@ export class MenuCalendarComponent implements OnInit {
     const date: string = this.menuService.formatDate(start);
     const dateWithHour: string = this.menuService.formatDateWithHour(start);
     return this.menu.days.filter(day => day.date === date)[0].meals.filter(meal => meal.date === dateWithHour)[0];
+  }
+
+  updateMenuWithNewMenu() {
+    this.initMenuAndEvents();
   }
 
 }

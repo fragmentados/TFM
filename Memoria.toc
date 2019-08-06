@@ -1,0 +1,88 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}INTRODUCCI\IeC {\'O}N}{15}{chapter.1}
+\contentsline {section}{\numberline {1.1}Determinaci\IeC {\'o}n de la situaci\IeC {\'o}n actual}{15}{section.1.1}
+\contentsline {section}{\numberline {1.2}Alcance y objetivos}{15}{section.1.2}
+\contentsline {chapter}{\numberline {2}BASE TECN\IeC {\'O}LOGICA}{17}{chapter.2}
+\contentsline {section}{\numberline {2.1}Lenguajes}{18}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Java SE 8}{18}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}HTML}{18}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}CSS}{18}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}Frameworks y librer\IeC {\'\i }as}{18}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Core}{18}{subsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.1.1}Spring}{18}{subsubsection.2.2.1.1}
+\contentsline {subsubsection}{\numberline {2.2.1.2}Hibernate}{18}{subsubsection.2.2.1.2}
+\contentsline {section}{\numberline {2.3}Web}{18}{section.2.3}
+\contentsline {subsubsection}{\numberline {2.3.0.1}Angular JS}{18}{subsubsection.2.3.0.1}
+\contentsline {subsubsection}{\numberline {2.3.0.2}Bootstrap}{18}{subsubsection.2.3.0.2}
+\contentsline {subsection}{\numberline {2.3.1}Pruebas}{18}{subsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.1.1}JUnit}{18}{subsubsection.2.3.1.1}
+\contentsline {subsubsection}{\numberline {2.3.1.2}Spring Test Context}{18}{subsubsection.2.3.1.2}
+\contentsline {subsubsection}{\numberline {2.3.1.3}Eclemma}{18}{subsubsection.2.3.1.3}
+\contentsline {subsection}{\numberline {2.3.2}Protocolos}{18}{subsection.2.3.2}
+\contentsline {section}{\numberline {2.4}Hypertext Transfer Protocol o HTTP}{18}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Herramientas de Desarrollo}{18}{subsection.2.4.1}
+\contentsline {section}{\numberline {2.5}Maven}{18}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Servidores de Aplicaciones}{18}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Sistemas de Gesti\IeC {\'o}n de Bases de Datos}{18}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Herramientas de apoyo}{18}{subsection.2.5.3}
+\contentsline {chapter}{\numberline {3}INTRODUCCI\IeC {\'O}N AL DESARROLLO REALIZADO}{19}{chapter.3}
+\contentsline {section}{\numberline {3.1}Introducci\IeC {\'o}n}{19}{section.3.1}
+\contentsline {section}{\numberline {3.2}Tecnolog\IeC {\'\i }as}{19}{section.3.2}
+\contentsline {section}{\numberline {3.3}Metodolog\IeC {\'\i }a e Iteraciones}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Proceso Unificado}{19}{subsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.1.1}Fases del proceso unificado}{19}{subsubsection.3.3.1.1}
+\contentsline {subsubsection}{\numberline {3.3.1.2}Fase de Inicio}{19}{subsubsection.3.3.1.2}
+\contentsline {subsection}{\numberline {3.3.2}Iteraciones}{19}{subsection.3.3.2}
+\contentsline {chapter}{\numberline {4}PLANIFICACI\IeC {\'O}N Y AN\IeC {\'A}LISIS DE COSTES}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}An\IeC {\'a}lisis de viabilidad}{21}{section.4.1}
+\contentsline {section}{\numberline {4.2}Planificaci\IeC {\'o}n}{21}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Planificaci\IeC {\'o}n previa}{21}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Iteraciones}{21}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Diagrama de Gantt}{21}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}REQUISITOS DEL SISTEMA}{23}{chapter.5}
+\contentsline {section}{\numberline {5.1}Introducci\IeC {\'o}n}{23}{section.5.1}
+\contentsline {section}{\numberline {5.2}Actores}{23}{section.5.2}
+\contentsline {section}{\numberline {5.3}Casos de Uso}{23}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Casos de uso comunes}{23}{subsection.5.3.1}
+\contentsline {section}{\numberline {5.4}Modelo de Casos de uso}{23}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Casos de uso comunes}{23}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Casos de uso usuario}{23}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}Casos de uso administrador}{23}{subsection.5.4.3}
+\contentsline {chapter}{\numberline {6}DISE\IeC {\~N}O DE LA APLICACI\IeC {\'O}N}{25}{chapter.6}
+\contentsline {section}{\numberline {6.1}Introducci\IeC {\'o}n y Objetivos}{26}{section.6.1}
+\contentsline {section}{\numberline {6.2}Resumen de Patrones usados\cite {Patrones}}{26}{section.6.2}
+\contentsline {section}{\numberline {6.3}Arquitectura general}{26}{section.6.3}
+\contentsline {section}{\numberline {6.4}SUBSISTEMA POJO-MODELUTIL}{26}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Objetivos}{26}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Utilidades}{26}{subsection.6.4.2}
+\contentsline {subsubsection}{\numberline {6.4.2.1}Excepciones}{26}{subsubsection.6.4.2.1}
+\contentsline {subsubsection}{\numberline {6.4.2.2}DAO Gen\IeC {\'e}rico}{26}{subsubsection.6.4.2.2}
+\contentsline {section}{\numberline {6.5}SUBSISTEMA APLICACI\IeC {\'O}N}{26}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}Arquitectura}{26}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}Modelo del dominio}{26}{subsection.6.5.2}
+\contentsline {subsubsection}{\numberline {6.5.2.1}Diagrama de Entidades}{26}{subsubsection.6.5.2.1}
+\contentsline {subsubsection}{\numberline {6.5.2.2}Modelo de Datos}{26}{subsubsection.6.5.2.2}
+\contentsline {subsubsection}{\numberline {6.5.2.3}Diagrama de Entidad Relaci\IeC {\'o}n}{26}{subsubsection.6.5.2.3}
+\contentsline {subsubsection}{\numberline {6.5.2.4}Consideraciones Adicionales de Modelado de Datos}{26}{subsubsection.6.5.2.4}
+\contentsline {subsection}{\numberline {6.5.3}Capa de Acceso a Datos}{26}{subsection.6.5.3}
+\contentsline {subsection}{\numberline {6.5.4}Capa Servicios del Modelo}{26}{subsection.6.5.4}
+\contentsline {subsection}{\numberline {6.5.5}Capa Web}{26}{subsection.6.5.5}
+\contentsline {subsubsection}{\numberline {6.5.5.1}Sistema de autenticaci\IeC {\'o}n}{26}{subsubsection.6.5.5.1}
+\contentsline {subsubsection}{\numberline {6.5.5.2}Elementos empleados en las p\IeC {\'a}ginas}{27}{subsubsection.6.5.5.2}
+\contentsline {subsubsection}{\numberline {6.5.5.3}Estructura de pantallas}{27}{subsubsection.6.5.5.3}
+\contentsline {chapter}{\numberline {7}IMPLEMENTACI\IeC {\'O}N}{29}{chapter.7}
+\contentsline {section}{\numberline {7.1}Software requerido}{29}{section.7.1}
+\contentsline {section}{\numberline {7.2}Estructura}{29}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Instrucciones de compilaci\IeC {\'o}n}{29}{subsection.7.2.1}
+\contentsline {chapter}{\numberline {8}PRUEBAS}{31}{chapter.8}
+\contentsline {section}{\numberline {8.1}Introducci\IeC {\'o}n}{31}{section.8.1}
+\contentsline {section}{\numberline {8.2}Pruebas Unitarias}{31}{section.8.2}
+\contentsline {section}{\numberline {8.3}Pruebas de Integraci\IeC {\'o}n}{31}{section.8.3}
+\contentsline {chapter}{\numberline {9}CONCLUSIONES Y FUTURAS L\IeC {\'I}NEAS DE TRABAJO}{33}{chapter.9}
+\contentsline {section}{\numberline {9.1}Conclusiones}{33}{section.9.1}
+\contentsline {section}{\numberline {9.2}Futuras L\IeC {\'\i }neas de Trabajo}{33}{section.9.2}
+\contentsline {chapter}{\numberline {10}ACR\IeC {\'O}NIMOS}{37}{chapter.10}
+\contentsline {chapter}{\numberline {A}AP\IeC {\'E}NDICE}{39}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Instalaci\IeC {\'o}n del Software}{39}{section.Alph1.1}
+\contentsline {section}{\numberline {A.2}Contenido del CD}{39}{section.Alph1.2}
+\contentsline {section}{\numberline {A.3}Manual de Usuario}{39}{section.Alph1.3}

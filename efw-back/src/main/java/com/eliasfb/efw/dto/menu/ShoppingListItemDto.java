@@ -12,5 +12,6 @@ public class ShoppingListItemDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String ingredientName;
-	private Long quantity;
+	private Long units;
+	private Double quantity;
 }

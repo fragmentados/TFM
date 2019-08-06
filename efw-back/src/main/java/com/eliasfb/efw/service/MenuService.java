@@ -32,4 +32,8 @@ public interface MenuService {
 	MenuDto updateDishDateOnMenu(int menuId, UpdateDishOnMenuDto dto);
 
 	ResponseDto removeDishFromMenu(int menuId, AddDishToMenuDto dto);
+
+	MenuDto randomGenerateMenu(Integer menuId, Integer userId);
+
+	MenuDto generateValidMenu(Integer menuId, Integer userId);
 }

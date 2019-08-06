@@ -37,6 +37,8 @@ public class Dish {
 	private Integer id;
 	@Column
 	private String name;
+	@Column
+	private String recipe;
 
 	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE,
 			CascadeType.REMOVE })

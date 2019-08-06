@@ -12,5 +12,5 @@ public class DishIngredientDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private IngredientDto ingredient;
-	private Integer quantity;
+	private Double quantity;
 }

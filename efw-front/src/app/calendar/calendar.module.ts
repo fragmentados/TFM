@@ -13,6 +13,7 @@ import { CalendarWeekViewShoppingListComponent } from './calendar-week-view-shop
 import { CalendarWeekViewAddDishComponent } from './calendar-week-view-add-dish/calendar-week-view-add-dish.component';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
 
 @NgModule({
   declarations: [CalendarWeekViewEventComponent,
@@ -20,7 +21,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CalendarWeekViewHourSegmentComponent,
     CalendarWeekViewComponent,
     CalendarWeekViewShoppingListComponent,
-    CalendarWeekViewAddDishComponent],
+    CalendarWeekViewAddDishComponent,
+    CalendarHeaderComponent],
   imports: [
     CommonModule,
     ResizableModule,
@@ -37,7 +39,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CalendarWeekViewHeaderComponent,
     CalendarWeekViewEventComponent,
     CalendarWeekViewHourSegmentComponent,
-    CalendarWeekViewShoppingListComponent
+    CalendarWeekViewShoppingListComponent,
+    CalendarHeaderComponent
   ],
   entryComponents : [
     CalendarWeekViewShoppingListComponent,

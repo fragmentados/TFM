@@ -81,7 +81,7 @@ public class DishServiceImpl implements DishService {
 	public Dish addIngredientToDish(int dishId, Ingredient ingredient) {
 		Dish dish = this.repository.findOne(dishId);
 		IngDisRelId id = new IngDisRelId(dish, ingredient);
-		IngDisRel ingDisRel = new IngDisRel(id, 0);
+		IngDisRel ingDisRel = new IngDisRel(id, 0d);
 		if (!dish.getIngredients().contains(ingDisRel)) {
 			dish.getIngredients().add(ingDisRel);
 			this.repository.save(dish);

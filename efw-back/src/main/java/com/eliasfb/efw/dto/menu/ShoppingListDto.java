@@ -3,6 +3,8 @@ package com.eliasfb.efw.dto.menu;
 import java.io.Serializable;
 import java.util.List;
 
+import com.eliasfb.efw.dto.PriceEstimateDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,4 +15,5 @@ public class ShoppingListDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<ShoppingListItemDto> items;
+	private PriceEstimateDto priceEstimation;
 }

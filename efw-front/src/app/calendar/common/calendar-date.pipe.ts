@@ -21,7 +21,7 @@ export class CalendarDatePipe implements PipeTransform {
     date: Date,
     method: string,
     locale: string = this.locale,
-    weekStartsOn: number = 0,
+    weekStartsOn: number = 1,
     excludeDays: number[] = [],
     daysInWeek?: number
   ): string {

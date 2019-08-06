@@ -1,3 +1,8 @@
+<app-calendar-header
+  [(view)]="view"
+  [(viewDate)]="viewDate"
+  (viewDateChange)="updateMenuWithNewMenu()">
+</app-calendar-header>
 <div align="center" *ngIf="!menu">
   <button (click)="createMenu()"><b>Create Menu</b></button>
 </div>
@@ -16,6 +21,8 @@
   <div align="center">
     <button mat-raised-button (click)="generateShoppingList()"><b>Shopping List</b></button>
     <button (click)="clearMenu()"><b>Clear menu</b></button>
+    <button (click)="randomMenu()"><b>Random menu</b></button>
+    <button (click)="validMenu()"><b>Valid menu</b></button>
     <button (click)="printMenu()"><b>Print menu</b></button>
   </div>
   <br/>

@@ -6,17 +6,22 @@
       <thead>
       <tr>
         <th>Ingredient</th>
+        <th>Units</th>
         <th>Quantity</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of data.items">
         <td><b>{{item.ingredientName}}</b></td>
+        <td><b>{{item.units}}</b></td>
         <td><b>{{item.quantity}}</b></td>
       </tr>
       </tbody>
     </table>
     <hr>
+    <div>
+      <label>Price Estimation: {{data.priceEstimation.price}}</label>
+    </div>
   </div>
   <div mat-dialog-actions class="modal-footer">
     <button class="btn btn-primary onPrint" (click)="printDialog()">Print</button>

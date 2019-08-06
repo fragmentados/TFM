@@ -5,6 +5,7 @@ export class Dish {
 
   id: string;
   name: string;
+  recipe: string;
   ingredients: DishIngredient[];
   stats: Stat[];
 }

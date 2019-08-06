@@ -12,6 +12,7 @@ public class CreateDishDto implements Serializable {
 
 	private Integer userId;
 	private String name;
+	private String recipe;
 	private List<CreateIngredientDishDto> ingredients;
 
 }

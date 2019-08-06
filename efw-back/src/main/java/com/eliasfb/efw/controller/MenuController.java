@@ -44,9 +44,29 @@ public class MenuController {
 		return service.update(menu);
 	}
 
+	@GetMapping(path = { "/{id}/shoppingList" })
+	public ShoppingListDto getShoppingList(@PathVariable("id") int menuId) {
+		return service.getShoppingList(menuId);
+	}
+
+	@GetMapping
+	public MenuDto findUserMenu(@RequestParam("userId") int userId, @RequestParam("startDate") String startDate) {
+		return service.findUserMenu(userId, startDate);
+	}
+
 	@PostMapping(path = { "/{id}/dish" })
 	public ResponseDto addDishToMenu(@PathVariable("id") int id, @RequestBody AddDishToMenuDto dto) {
 		return service.addDishToMenu(id, dto);
+	}
+
+	@PostMapping(path = { "/{id}/random" })
+	public MenuDto randomGenerate(@PathVariable("id") int menuId, @RequestParam("userId") Integer userId) {
+		return service.randomGenerateMenu(menuId, userId);
+	}
+
+	@PostMapping(path = { "/{id}/valid" })
+	public MenuDto generateValidMenu(@PathVariable("id") int menuId, @RequestParam("userId") Integer userId) {
+		return service.generateValidMenu(menuId, userId);
 	}
 
 	@PutMapping(path = { "/{id}/dish" })
@@ -67,16 +87,6 @@ public class MenuController {
 	@DeleteMapping(path = { "/{id}" })
 	public Menu delete(@PathVariable("id") int id) {
 		return service.delete(id);
-	}
-
-	@GetMapping(path = { "/{id}/shoppingList" })
-	public ShoppingListDto getShoppingList(@PathVariable("id") int menuId) {
-		return service.getShoppingList(menuId);
-	}
-
-	@GetMapping
-	public MenuDto findUserMenu(@RequestParam("userId") int userId, @RequestParam("startDate") String startDate) {
-		return service.findUserMenu(userId, startDate);
 	}
 
 }

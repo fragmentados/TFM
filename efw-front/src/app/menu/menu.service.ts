@@ -39,6 +39,16 @@ export class MenuService {
     return this.http.post<Response>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
   }
 
+  public randomGenerateMenu(menuId: number, userId: number) {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.post<Menu>(this.menuUrl + '/' + menuId + '/random', {}, { params: params });
+  }
+
+  public generateValidMenu(menuId: number, userId: number) {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.post<Menu>(this.menuUrl + '/' + menuId + '/valid', {}, { params: params });
+  }
+
   public updateDishDateOnMenu(menuId: number, updateDishOnMenu: UpdateDishOnMenu) {
     return this.http.put<Menu>(this.menuUrl + '/' + menuId + '/dish', updateDishOnMenu);
   }

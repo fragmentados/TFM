@@ -26,7 +26,7 @@ public class IngDisRel {
 	@EmbeddedId
 	private IngDisRelId id;
 
-	private Integer quantity;
+	private Double quantity;
 
 	@Override
 	public boolean equals(Object o) {

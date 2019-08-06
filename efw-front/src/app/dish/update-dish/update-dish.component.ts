@@ -49,6 +49,7 @@ export class UpdateDishComponent implements OnInit {
   dishToAddDish(dish: Dish): AddDish {
     const updateDish: AddDish = new AddDish();
     updateDish.name = dish.name;
+    updateDish.recipe = dish.recipe;
     updateDish.ingredients = [];
     this.selectedIngredients = [];
     dish.ingredients.forEach(ingredient => {
