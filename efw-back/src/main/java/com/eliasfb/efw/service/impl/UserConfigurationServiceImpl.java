@@ -42,7 +42,8 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 		} else if (type.equals(Double.class)) {
 			return (T) Double.valueOf(confValue);
 		}
-		return null;
+		// Fallback to String
+		return (T) confValue;
 	}
 
 }

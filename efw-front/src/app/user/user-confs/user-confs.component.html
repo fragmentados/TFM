@@ -45,6 +45,10 @@
             </tbody>
           </table>
       </div>
+      <div class="form-group">
+          <label for="meals">Meals Per Week:</label>
+          <input type="string" [(ngModel)]="mealsAsString" placeholder="Meals" name="meals" class="form-control" id="meals">
+        </div>
     </div>
     <button class="btn btn-success" (click)="updateConfs()">Update Confs</button>
   </form>

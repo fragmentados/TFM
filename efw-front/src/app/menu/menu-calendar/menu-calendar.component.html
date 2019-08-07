@@ -7,12 +7,13 @@
   <button (click)="createMenu()"><b>Create Menu</b></button>
 </div>
 <div *ngIf="menu">
-  <app-calendar-week-view
+  <app-calendar-week-view *ngIf="mealsInWeek"
   [viewDate]="viewDate"
   [weekStartsOn]=[1]
   [events]="events"
   [menuId]="menu.id"
   [refresh]="refresh"
+  [mealsInWeek]="mealsInWeek"
   (eventTimesChanged)="eventTimesChanged($event)"
   (dishAdded)="updateMenuStatsWithDishStats($event)"
   (eventClicked)="deleteDishFromCalendar($event)">

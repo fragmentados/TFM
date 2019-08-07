@@ -17,6 +17,7 @@ export class UserConfsComponent implements OnInit {
   categories: FoodCategory[];
   bannedCategories: FoodCategory[] = [];
   selectedCategory: FoodCategory;
+  mealsAsString: string;
 
   constructor(private userService: UserService, private ingredientService: IngredientService) {
     this.currentUser = this.userService.currentUserValue;
@@ -31,11 +32,13 @@ export class UserConfsComponent implements OnInit {
     this.userService.getUserConfs(this.currentUser.id).subscribe(data => {
       this.userConf = data;
       this.bannedCategories = data.bannedCategories;
+      this.mealsAsString = data.meals.join(', ');
     });
   }
 
   updateConfs() {
     this.userConf.bannedCategories = this.bannedCategories;
+    this.userConf.meals = this.mealsAsString.split(', ');
     this.userService.updateUserConfs(this.currentUser.id, this.userConf).subscribe(data => {
       this.refreshConfs();
     });

@@ -6,4 +6,5 @@ export class UserConfs {
   maxFatsPerWeek: number;
   maxCarbohydratesPerWeek: number;
   bannedCategories: FoodCategory[];
+  meals: string[];
 }

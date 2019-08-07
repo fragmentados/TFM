@@ -6,7 +6,8 @@ public enum UserConfigurationEnum {
 	MAX_PROTEINS_PER_WEEK("maxProteinsPerWeek"),
 	MAX_FATS_PER_WEEK("maxFatsPerWeek"),
 	MAX_CARBOHYDRATES_PER_WEEK("maxCarbohydratesPerWeek"),
-	BANNED_CATEGORIES("bannedCategories");
+	BANNED_CATEGORIES("bannedCategories"),
+	MEALS_ON_WEEK("mealsOnWeek");
 	//@formatter:on
 
 	private String name;

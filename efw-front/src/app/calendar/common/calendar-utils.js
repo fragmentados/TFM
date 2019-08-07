@@ -23,16 +23,16 @@ var DEFAULT_WEEKEND_DAYS = [
   DAYS_OF_WEEK.SUNDAY,
   DAYS_OF_WEEK.SATURDAY
 ];
-var DEFAULT_MEAL_NAMES = [
-  "DESAYUNO",
+/*var DEFAULT_MEAL_NAMES = [*/
+  /*"DESAYUNO",*/
   /*"MEDIA MAÑANA",*/
-  "COMIDA",
+  /*"COMIDA",*/
   /*"MERIENDA",*/
-  "CENA"
-];
+  /*"CENA"*/
+/*];*/
 
 var DAYS_IN_WEEK = 7;
-var MEALS_IN_DAY = DEFAULT_MEAL_NAMES.length;
+/*var MEALS_IN_DAY = DEFAULT_MEAL_NAMES.length;*/
 var MINUTES_IN_HOUR = 60;
 export var SECONDS_IN_DAY = 60 * 60 * 24;
 function getExcludedSeconds(dateAdapter, _a) {
@@ -281,12 +281,13 @@ function getAllDayWeekEvents(dateAdapter, _a) {
   return allDayEventRows;
 }
 function getWeekViewHourGrid(dateAdapter, _a) {
-  var events = _a.events, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, weekStartsOn = _a.weekStartsOn, excluded = _a.excluded, weekendDays = _a.weekendDays, segmentHeight = _a.segmentHeight, viewStart = _a.viewStart, viewEnd = _a.viewEnd;
+  var events = _a.events, viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, weekStartsOn = _a.weekStartsOn, excluded = _a.excluded, weekendDays = _a.weekendDays, segmentHeight = _a.segmentHeight, viewStart = _a.viewStart, viewEnd = _a.viewEnd, mealsInWeek = _a.mealsInWeek;
   var dayViewHourGrid = getDayViewHourGrid(dateAdapter, {
       viewDate: viewDate,
       hourSegments: hourSegments,
       dayStart: dayStart,
-      dayEnd: dayEnd
+      dayEnd: dayEnd,
+      mealsInWeek: mealsInWeek
   });
   var weekDays = getWeekViewHeader(dateAdapter, {
       viewDate: viewDate,
@@ -348,6 +349,7 @@ function getWeekViewHourGrid(dateAdapter, _a) {
 }
 export function getWeekView(dateAdapter, _a) {
   var _b = _a.events, events = _b === void 0 ? [] : _b, viewDate = _a.viewDate, weekStartsOn = _a.weekStartsOn, _c = _a.excluded, excluded = _c === void 0 ? [] : _c, _d = _a.precision, precision = _d === void 0 ? 'days' : _d, _e = _a.absolutePositionedEvents, absolutePositionedEvents = _e === void 0 ? false : _e, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd, weekendDays = _a.weekendDays, segmentHeight = _a.segmentHeight, _f = _a.viewStart, viewStart = _f === void 0 ? dateAdapter.startOfWeek(viewDate, { weekStartsOn: weekStartsOn }) : _f, _g = _a.viewEnd, viewEnd = _g === void 0 ? dateAdapter.endOfWeek(viewDate, { weekStartsOn: weekStartsOn }) : _g;
+  var mealsInWeek = _a.mealsInWeek;
   if (!events) {
       events = [];
   }
@@ -393,7 +395,8 @@ export function getWeekView(dateAdapter, _a) {
           weekendDays: weekendDays,
           segmentHeight: segmentHeight,
           viewStart: viewStart,
-          viewEnd: viewEnd
+          viewEnd: viewEnd,
+          mealsInWeek: mealsInWeek
       })
   };
 }
@@ -495,6 +498,8 @@ function sanitiseMinutes(minutes) {
 }
 export function getDayViewHourGrid(dateAdapter, _a) {
   var viewDate = _a.viewDate, hourSegments = _a.hourSegments, dayStart = _a.dayStart, dayEnd = _a.dayEnd;
+  var DEFAULT_MEAL_NAMES = _a.mealsInWeek;
+  var MEALS_IN_DAY = DEFAULT_MEAL_NAMES.length;
   var setMinutes = dateAdapter.setMinutes, setHours = dateAdapter.setHours, startOfDay = dateAdapter.startOfDay, startOfMinute = dateAdapter.startOfMinute, endOfDay = dateAdapter.endOfDay, addMinutes = dateAdapter.addMinutes, addHours = dateAdapter.addHours;
   var hours = [];
   var startOfView = setMinutes(setHours(startOfDay(viewDate), sanitiseHours(dayStart.hour)), sanitiseMinutes(dayStart.minute));

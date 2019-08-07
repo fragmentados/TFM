@@ -19,4 +19,5 @@ public class UserConfigurationsDto implements Serializable {
 	private Double maxFatsPerWeek;
 	private Double maxCarbohydratesPerWeek;
 	private List<FoodCategoryDto> bannedCategories;
+	private List<String> meals;
 }

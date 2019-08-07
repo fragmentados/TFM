@@ -127,6 +127,8 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
    */
   @Input() daysInWeek: number;
 
+  @Input() mealsInWeek: string[];
+
   /**
    * Called when a header week day is clicked. Adding a `cssClass` property on `$event.day` will add that class to the header element
    */
@@ -649,7 +651,8 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
         this.weekStartsOn,
         this.daysInWeek
       ),
-      segmentHeight: this.hourSegmentHeight
+      segmentHeight: this.hourSegmentHeight,
+      mealsInWeek: this.mealsInWeek
     });
   }
 

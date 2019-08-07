@@ -4,7 +4,7 @@ import { CalendarEvent } from "./calendar-common.module";
 
 export declare function getWeekView(dateAdapter: DateAdapter,
   { events, viewDate, weekStartsOn, absolutePositionedEvents,
-    hourSegments, dayStart, dayEnd, weekendDays, segmentHeight, viewStart, viewEnd }: GetWeekViewArgs): WeekView;
+    hourSegments, dayStart, dayEnd, weekendDays, segmentHeight, viewStart, viewEnd, mealsInWeek }: GetWeekViewArgs): WeekView;
 
 export interface GetWeekViewArgs {
   events?: CalendarEvent[];
@@ -18,6 +18,7 @@ export interface GetWeekViewArgs {
   segmentHeight: number;
   viewStart?: Date;
   viewEnd?: Date;
+  mealsInWeek: string[];
 }
 
 interface Time {

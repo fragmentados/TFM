@@ -29,6 +29,7 @@ export class MenuCalendarComponent implements OnInit {
   events: CalendarEvent[];
   menu: Menu;
   userConfs: UserConfs;
+  mealsInWeek: string[];
   private updateStatsSubject: Subject<Menu> = new Subject<Menu>();
   currentUser: User;
   refresh: Subject<any> = new Subject();
@@ -43,7 +44,10 @@ export class MenuCalendarComponent implements OnInit {
 
   ngOnInit() {
     this.initMenuAndEvents();
-    this.userService.getUserConfs(this.currentUser.id).subscribe(data => this.userConfs = data);
+    this.userService.getUserConfs(this.currentUser.id).subscribe(data => {
+      this.userConfs = data;
+      this.mealsInWeek = this.userConfs.meals;
+    });
   }
 
   initMenuAndEvents() {

@@ -1,6 +1,7 @@
 package com.eliasfb.efw.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,8 +98,13 @@ public class UserServiceImpl implements UserService {
 			bannedCategories = categoryRepository.findByIds(bannedCategoriesIds);
 		}
 
+		// Meals
+		List<String> meals = confService.findUserConfigurationListByNameOrDefault(id,
+				UserConfigurationEnum.MEALS_ON_WEEK.getName(), String.class,
+				Arrays.asList("DESAYUNO", "COMIDA", "CENA"));
+
 		return new UserConfigurationsDto(maxCaloriesPerWeek, maxProteinsPerWeek, maxFatsPerWeek, maxCarbsPerWeek,
-				ingMapper.foodCategoryListToDto(bannedCategories));
+				ingMapper.foodCategoryListToDto(bannedCategories), meals);
 	}
 
 	@Override
