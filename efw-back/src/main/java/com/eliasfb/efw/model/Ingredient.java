@@ -1,7 +1,9 @@
 package com.eliasfb.efw.model;
 
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,13 +38,13 @@ public class Ingredient {
 	@Column
 	private String name;
 	@Column
-	private Double calories;
+	private double calories;
 	@Column
-	private Double proteins;
+	private double proteins;
 	@Column
-	private Double fats;
+	private double fats;
 	@Column
-	private Double carbohydrates;
+	private double carbohydrates;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "inguserel", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -50,6 +53,9 @@ public class Ingredient {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private FoodCategory category;
+
+	@OneToMany(mappedBy = "id.ingredient", cascade = CascadeType.REMOVE)
+	private List<IngDisRel> dishes;
 
 	public Ingredient(int id) {
 		super();

@@ -13,7 +13,7 @@ public interface IngredientService {
 
 	Ingredient create(CreateOrUpdateIngredientDto createIngredient);
 
-	Ingredient delete(int id);
+	ResponseDto delete(int id);
 
 	List<Ingredient> findAll();
 

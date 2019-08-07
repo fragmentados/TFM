@@ -20,7 +20,7 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 	@Override
 	public <T> T findUserConfigurationByNameOrDefault(Integer userId, String name, Class<T> type, T defaultValue) {
 		UserConfiguration conf = repository.findByNameAndUser(name, userId);
-		return conf != null ? this.parseClass(conf.getValue(), type) : defaultValue;
+		return (conf != null && !conf.getValue().isEmpty()) ? this.parseClass(conf.getValue(), type) : defaultValue;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 			List<T> defaultValue) {
 		List<T> result = defaultValue;
 		UserConfiguration conf = repository.findByNameAndUser(name, userId);
-		if (conf != null) {
+		if (conf != null && !conf.getValue().isEmpty()) {
 			String[] confValuesSplitted = conf.getValue().split(", ");
 			result = Stream.of(confValuesSplitted).map(c -> parseClass(c, type)).collect(Collectors.toList());
 		}

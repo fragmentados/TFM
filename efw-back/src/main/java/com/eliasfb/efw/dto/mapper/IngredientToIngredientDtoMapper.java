@@ -65,9 +65,11 @@ public abstract class IngredientToIngredientDtoMapper {
 	}
 
 	private String getStatQuantityFromNutritionData(NutritionData nutritionData, String key) {
-		Float quantityResponse = nutritionData.getTotalNutrients().get(key).getQuantity();
+		Double quantityResponse = nutritionData.getTotalNutrients().get(key).getQuantity();
 		// Turn to quantity / 100 gr
 		quantityResponse = quantityResponse / nutritionData.getTotalWeight() * 100;
+		// Round to two decimals
+		quantityResponse = Math.round(quantityResponse * 100.0) / 100.0;
 		return String.valueOf(quantityResponse);
 	}
 

@@ -72,7 +72,7 @@ export class AddDishComponent implements OnInit {
       const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
       this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
       this.dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) -
-          (parseFloat(ingredientStat.value) * ingredient.quantity)).toString()));
+          (parseFloat(ingredientStat.value) * ingredient.quantity / 100)).toString()));
     }
   }
 
@@ -83,11 +83,11 @@ export class AddDishComponent implements OnInit {
     for (const ingredientStat of ingredient.stats) {
       const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
       if (dishStat == null) {
-        this.dishStats.push(new Stat(ingredientStat.name, (parseFloat(ingredientStat.value) * this.ingredientQuantity).toString()));
+        this.dishStats.push(new Stat(ingredientStat.name, (parseFloat(ingredientStat.value) * this.ingredientQuantity / 100).toString()));
       } else {
         this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
         this.dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) +
-          (parseFloat(ingredientStat.value) * this.ingredientQuantity)).toString()));
+          (parseFloat(ingredientStat.value) * this.ingredientQuantity / 100)).toString()));
       }
     }
   }

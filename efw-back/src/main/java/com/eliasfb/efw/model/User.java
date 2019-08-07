@@ -40,15 +40,14 @@ public class User {
 	@Column(unique = true)
 	private String email;
 	@Column
-	@JsonIgnore
 	private String password;
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	private List<Menu> menus;
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Ingredient> ingredients;
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Dish> dishes;
 	@OneToMany(mappedBy = "id.user", cascade = CascadeType.ALL)

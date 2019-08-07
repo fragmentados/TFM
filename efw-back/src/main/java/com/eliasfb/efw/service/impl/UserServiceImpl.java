@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User delete(int id) {
 		User user = findById(id);
 		if (user != null) {
@@ -91,7 +92,10 @@ public class UserServiceImpl implements UserService {
 		// Banned Categories Confs
 		List<Integer> bannedCategoriesIds = confService.findUserConfigurationListByNameOrDefault(id,
 				UserConfigurationEnum.BANNED_CATEGORIES.getName(), Integer.class, new ArrayList<Integer>());
-		List<FoodCategory> bannedCategories = categoryRepository.findByIds(bannedCategoriesIds);
+		List<FoodCategory> bannedCategories = new ArrayList<>();
+		if (!bannedCategoriesIds.isEmpty()) {
+			bannedCategories = categoryRepository.findByIds(bannedCategoriesIds);
+		}
 
 		return new UserConfigurationsDto(maxCaloriesPerWeek, maxProteinsPerWeek, maxFatsPerWeek, maxCarbsPerWeek,
 				ingMapper.foodCategoryListToDto(bannedCategories));

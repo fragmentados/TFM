@@ -56,7 +56,7 @@ public class IngredientController {
 	}
 
 	@DeleteMapping(path = { "/{id}" })
-	public Ingredient delete(@PathVariable("id") int id) {
+	public ResponseDto delete(@PathVariable("id") int id) {
 		return service.delete(id);
 	}
 

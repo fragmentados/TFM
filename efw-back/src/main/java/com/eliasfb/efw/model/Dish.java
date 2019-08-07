@@ -44,28 +44,31 @@ public class Dish {
 			CascadeType.REMOVE })
 	private List<IngDisRel> ingredients;
 
+	@OneToMany(mappedBy = "id.dish", cascade = CascadeType.REMOVE)
+	private List<MenuDisRel> menus;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "disuserel", joinColumns = @JoinColumn(name = "dish_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
 	private Set<User> users;
 
 	public Double getCalories() {
-		return this.ingredients.stream().mapToDouble(ig -> ig.getId().getIngredient().getCalories() * ig.getQuantity())
-				.sum();
+		return this.ingredients.stream()
+				.mapToDouble(ig -> ig.getId().getIngredient().getCalories() * ig.getQuantity() / 100).sum();
 	}
 
 	public Double getProteins() {
-		return this.ingredients.stream().mapToDouble(ig -> ig.getId().getIngredient().getProteins() * ig.getQuantity())
-				.sum();
+		return this.ingredients.stream()
+				.mapToDouble(ig -> ig.getId().getIngredient().getProteins() * ig.getQuantity() / 100).sum();
 	}
 
 	public Double getFats() {
-		return this.ingredients.stream().mapToDouble(ig -> ig.getId().getIngredient().getFats() * ig.getQuantity())
-				.sum();
+		return this.ingredients.stream()
+				.mapToDouble(ig -> ig.getId().getIngredient().getFats() * ig.getQuantity() / 100).sum();
 	}
 
 	public Double getCarbohydrates() {
 		return this.ingredients.stream()
-				.mapToDouble(ig -> ig.getId().getIngredient().getCarbohydrates() * ig.getQuantity()).sum();
+				.mapToDouble(ig -> ig.getId().getIngredient().getCarbohydrates() * ig.getQuantity() / 100).sum();
 	}
 }

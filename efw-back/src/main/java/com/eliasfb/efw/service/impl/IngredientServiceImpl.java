@@ -39,12 +39,12 @@ public class IngredientServiceImpl implements IngredientService {
 	}
 
 	@Override
-	public Ingredient delete(int id) {
+	public ResponseDto delete(int id) {
 		Ingredient ingredient = this.repository.findOne(id);
 		if (ingredient != null) {
 			repository.delete(ingredient);
 		}
-		return ingredient;
+		return new ResponseDto(ResponseDto.OK_CODE, "The ingredient has been successfully removed");
 	}
 
 	@Override
