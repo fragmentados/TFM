@@ -1,4 +1,5 @@
 import { FoodCategory } from './../ingredient/foodCategory.model';
+import { Meal } from '../dish/meal.model';
 export class UserConfs {
 
   maxCaloriesPerWeek: number;
@@ -6,5 +7,5 @@ export class UserConfs {
   maxFatsPerWeek: number;
   maxCarbohydratesPerWeek: number;
   bannedCategories: FoodCategory[];
-  meals: string[];
+  meals: Meal[];
 }

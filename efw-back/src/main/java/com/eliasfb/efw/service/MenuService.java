@@ -36,4 +36,6 @@ public interface MenuService {
 	MenuDto randomGenerateMenu(Integer menuId, Integer userId);
 
 	MenuDto generateValidMenu(Integer menuId, Integer userId);
+
+	ResponseDto addDishToFirstValidSpotOnMenu(int userId, AddDishToMenuDto dto);
 }

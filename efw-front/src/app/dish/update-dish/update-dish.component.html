@@ -3,41 +3,39 @@
   <form>
 
     <div class="form-group" *ngIf="ingredients">
-      <div class="form-group">
-        <label for="ingredientselect">Ingredients:</label>
-      </div>
-      <div class="row">
-        <div class="form-group" style="display:flex;">
-          <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients" >
-            <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">{{ingredient.name}}</option>
-          </select>
-          <input [(ngModel)]="ingredientQuantity" type="number" placeholder="0" name="Quantity" class="form-control" id="Quantity">
-          <button class="btn btn-success" (click)="addIngredient()">Add</button>
-          <button class="btn btn-danger" (click)="clearForm()">Clear</button>
-        </div>
+      <label for="ingredientselect">Ingredients:</label>
+      <div class="form-group" style="display:flex;">
+        <select [(ngModel)]="selectedIng" #IngredientsSelect="ngModel" name="IngredientsSelect" class="form-control" id="Ingredients" >
+          <option *ngFor="let ingredient of ingredients" [ngValue]="ingredient">{{ingredient.name}}</option>
+        </select>
+        <input [(ngModel)]="ingredientQuantity" type="number" placeholder="0" name="Quantity" class="form-control" id="Quantity">
+        <button class="btn btn-success" (click)="addIngredient()">Add</button>
+        <button class="btn btn-danger" (click)="clearForm()">Clear</button>
       </div>
     </div>
 
-    <div class="form-group" *ngIf="selectedIngredients">
-        <label for="selectedingredients">Selected ingredients:</label>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-              <th class="hidden">Id</th>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let ingredient of selectedIngredients">
-              <td>{{ingredient.ingredient.name}}</td>
-              <td>{{ingredient.quantity}}</td>
-              <td><button class="btn btn-danger" (click)="removeIngredient(ingredient)">Delete</button></td>
-            </tr>
-            </tbody>
-          </table>
-      </div>
+    <div class="form-group" *ngIf="selectedIngredients.length > 0">
+      <label for="selectedingredients">Selected ingredients:</label>
+      <table class="table table-striped">
+          <thead>
+          <tr>
+            <th class="hidden">Id</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let ingredient of selectedIngredients">
+            <td>{{ingredient.ingredient.name}}</td>
+            <td>{{ingredient.quantity}}</td>
+            <td><button class="btn btn-danger" (click)="removeIngredient(ingredient)">Delete</button></td>
+          </tr>
+          </tbody>
+        </table>
+
+    </div>
+
     <div class="form-group">
         <label for="recipe">Recipe:</label>
         <br/>
@@ -47,7 +45,16 @@
       <label for="name">Name:</label>
       <div class="form-group" style="display:flex;">
         <input [(ngModel)]="dish.name" placeholder="Name" name="Name" class="form-control" id="Name">
-        <button class="btn btn-success" (click)="updateDish()">Update Dish</button>
+        <button style="margin-left: 10px" class="btn btn-success" (click)="updateDish()">Update Dish</button>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="allowedMeals">
+      <label for="allowedMeals">Allowed Meals:</label>
+      <div class="form-group">
+          <label *ngFor="let meal of allowedMeals;let i = index;" style="text-align: center;">
+            {{meal.name}}<br>
+            <input id="{{ 'selectedMeals' + i }}" [(ngModel)]="selectedMeals[i]" #MealSelect="ngModel" name="{{'MealSelect' + i}}" type="checkbox">
+          </label>
       </div>
     </div>
     <div class="form-group" *ngIf="dishStats">

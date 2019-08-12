@@ -13,13 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.eliasfb.efw.dto.CreateDishDto;
 import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.DishIngredientDto;
+import com.eliasfb.efw.dto.MealDto;
 import com.eliasfb.efw.dto.menu.MenuDishDto;
 import com.eliasfb.efw.dto.stat.StatDto;
 import com.eliasfb.efw.enums.NutritionalStatEnum;
+import com.eliasfb.efw.model.DisMealRel;
+import com.eliasfb.efw.model.DisMealRelId;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.IngDisRel;
 import com.eliasfb.efw.model.IngDisRelId;
 import com.eliasfb.efw.model.Ingredient;
+import com.eliasfb.efw.model.Meal;
 import com.eliasfb.efw.model.User;
 
 @Mapper(componentModel = "spring")
@@ -33,6 +37,7 @@ public abstract class DishToDtoMapper {
 	}
 
 	@Mapping(source = "ingredients", target = "ingredients", ignore = true)
+	@Mapping(source = "meals", target = "meals", ignore = true)
 	protected abstract DishDto dishToDishDto(Dish dish);
 
 	public abstract MenuDishDto dishToMenuDishDto(Dish dish);
@@ -41,6 +46,9 @@ public abstract class DishToDtoMapper {
 		DishDto dishDto = dishToDishDto(dish);
 		dishDto.setIngredients(dish.getIngredients().stream()
 				.map(i -> new DishIngredientDto(ingredientMapper.toDto(i.getId().getIngredient()), i.getQuantity()))
+				.collect(Collectors.toList()));
+		dishDto.setMeals(dish.getMeals().stream()
+				.map(m -> new MealDto(m.getId().getMeal().getId(), m.getId().getMeal().getName()))
 				.collect(Collectors.toList()));
 		dishDto.setStats(getDishStats(dish));
 		return dishDto;
@@ -51,6 +59,7 @@ public abstract class DishToDtoMapper {
 	}
 
 	@Mapping(source = "ingredients", target = "ingredients", ignore = true)
+	@Mapping(source = "meals", target = "meals", ignore = true)
 	protected abstract Dish createDishDtoToDish(CreateDishDto createDish);
 
 	public Dish toEntity(CreateDishDto dto) {
@@ -62,6 +71,8 @@ public abstract class DishToDtoMapper {
 		}
 		dish.setIngredients(dto.getIngredients().stream()
 				.map(ig -> new IngDisRel(new IngDisRelId(dish, new Ingredient(ig.getId())), ig.getQuantity()))
+				.collect(Collectors.toList()));
+		dish.setMeals(dto.getMeals().stream().map(meal -> new DisMealRel(new DisMealRelId(dish, new Meal(meal))))
 				.collect(Collectors.toList()));
 		return dish;
 	}

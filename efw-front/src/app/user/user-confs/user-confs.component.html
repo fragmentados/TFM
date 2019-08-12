@@ -45,10 +45,30 @@
             </tbody>
           </table>
       </div>
-      <div class="form-group">
-          <label for="meals">Meals Per Week:</label>
-          <input type="string" [(ngModel)]="mealsAsString" placeholder="Meals" name="meals" class="form-control" id="meals">
+      <div class="form-group" *ngIf="categories">
+        <label for="meals">Meals Per Week:</label>
+        <div style="display:flex;">
+          <input [(ngModel)]="mealToAdd" placeholder="Meal" name="Meal" class="form-control" id="Meal">
+          <button class="btn btn-info" style="margin-left: 10px;" (click)="addMeal()">Add Meal</button>
         </div>
+      </div>
+      <div class="form-group" *ngIf="userConf.meals">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden">Id</th>
+              <th>Name</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let meal of userConf.meals">
+              <td><div contenteditable>{{meal.name}}</div></td>
+              <td><button class="btn btn-danger" (click)="removeMeal(meal)">Remove</button></td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
     </div>
     <button class="btn btn-success" (click)="updateConfs()">Update Confs</button>
   </form>

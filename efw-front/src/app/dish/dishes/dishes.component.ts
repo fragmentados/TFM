@@ -1,9 +1,11 @@
+import { AddDishToMenu } from './../../models/menu/addDishToMenu.model';
 import { Component, OnInit } from '@angular/core';
-import { DishService } from '../dish.service';
+import { DishRestService } from '../dishRest.service';
 import { Dish } from '../../models/dish/dish.model';
 import { UserService } from '../../user.service';
 import { User } from '../../models/user/user.model';
 import { Router } from '@angular/router';
+import { MenuService } from '../../menu/menu.service';
 
 @Component({
   selector: 'app-dishes',
@@ -15,7 +17,8 @@ export class DishesComponent implements OnInit {
   dishes: Dish[];
   currentUser: User;
 
-  constructor(private router: Router, private userService: UserService, private dishService: DishService) {
+  constructor(private router: Router, private userService: UserService,
+    private dishService: DishRestService, private menuService: MenuService) {
     this.currentUser = this.userService.currentUserValue;
   }
 
@@ -35,6 +38,18 @@ export class DishesComponent implements OnInit {
       .subscribe( data => {
         this.dishes = this.dishes.filter(u => u !== dish);
       });
+  }
+
+  addToMenu(dish: Dish): void {
+    const addToMenu: AddDishToMenu = new AddDishToMenu();
+    addToMenu.dishId = dish.id;
+    this.menuService.addDishToFirstValidSpotMenu(this.currentUser.id, addToMenu).subscribe(data => {
+      if (data.errorCode === 0) {
+        alert('Dish added correctly');
+      } else {
+        alert('There are no valid spots for that dish');
+      }
+    });
   }
 
 }

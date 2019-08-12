@@ -1,7 +1,9 @@
 package com.eliasfb.efw.service.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eliasfb.efw.dto.LoginDto;
+import com.eliasfb.efw.dto.MealDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UserConfigurationsDto;
 import com.eliasfb.efw.dto.UserDto;
 import com.eliasfb.efw.dto.mapper.IngredientToIngredientDtoMapper;
+import com.eliasfb.efw.dto.mapper.MealToDtoMapper;
 import com.eliasfb.efw.dto.mapper.UserConfigurationToDtoMapper;
 import com.eliasfb.efw.enums.UserConfigurationEnum;
 import com.eliasfb.efw.model.FoodCategory;
+import com.eliasfb.efw.model.Meal;
 import com.eliasfb.efw.model.User;
 import com.eliasfb.efw.repository.FoodCategoryRepository;
+import com.eliasfb.efw.repository.MealRepository;
 import com.eliasfb.efw.repository.UserRepository;
 import com.eliasfb.efw.service.UserConfigurationService;
+import com.eliasfb.efw.service.UserDataLoadService;
 import com.eliasfb.efw.service.UserService;
 
 @Service
@@ -35,13 +42,27 @@ public class UserServiceImpl implements UserService {
 	private UserConfigurationService confService;
 
 	@Autowired
+	private UserDataLoadService userDataLoadService;
+
+	@Autowired
 	private UserConfigurationToDtoMapper userConfMapper;
+
+	@Autowired
+	private MealToDtoMapper mealMapper;
 
 	@Autowired
 	private IngredientToIngredientDtoMapper ingMapper;
 
+	@Autowired
+	private MealRepository mealRepository;
+
 	@Override
 	public User create(User user) {
+		// Default Meals
+		if (user != null) {
+			user.setMeals(this.userDataLoadService.getDefaultMeals(user));
+		}
+
 		return repository.save(user);
 	}
 
@@ -74,8 +95,28 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public ResponseDto updateUserConfigurations(int id, UserConfigurationsDto confsDto) {
 		User user = repository.findOne(id);
+		// User Confs
 		user.setConfigurations(userConfMapper.toEntity(confsDto, id));
-		repository.save(user);
+		// User Meals
+		List<Meal> mealsSentByFront = this.mealMapper.mealDtoListToMealList(confsDto.getMeals());
+		List<Meal> userMeals = user.getMeals();
+		List<Meal> mealsToUpdate = new ArrayList<>();
+		// We set the hours of the meals ordered
+		LocalDateTime hour = LocalDate.now().atStartOfDay();
+		for (Meal m : mealsSentByFront) {
+			m.setHour(hour.format(DateTimeFormatter.ofPattern("HH")));
+			if (userMeals.stream().anyMatch(userMeal -> m.getName().equals(userMeal.getName()))) {
+				this.mealRepository.save(m);
+			} else {
+				m.setUser(user);
+				mealsToUpdate.add(m);
+			}
+			hour = hour.plusHours(1);
+		}
+		user.setMeals(mealsToUpdate);
+		// Persist changes
+		user = repository.save(user);
+
 		return new ResponseDto(ResponseDto.OK_CODE, "User confs updated correctly");
 	}
 
@@ -99,9 +140,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 		// Meals
-		List<String> meals = confService.findUserConfigurationListByNameOrDefault(id,
-				UserConfigurationEnum.MEALS_ON_WEEK.getName(), String.class,
-				Arrays.asList("DESAYUNO", "COMIDA", "CENA"));
+		List<MealDto> meals = this.findUserMeals(id);
 
 		return new UserConfigurationsDto(maxCaloriesPerWeek, maxProteinsPerWeek, maxFatsPerWeek, maxCarbsPerWeek,
 				ingMapper.foodCategoryListToDto(bannedCategories), meals);
@@ -121,4 +160,17 @@ public class UserServiceImpl implements UserService {
 		return response;
 	}
 
+	@Override
+	public List<MealDto> findUserMeals(Integer userId) {
+		return this.mealMapper.mealListToMealDtoList(this.mealRepository.findByUserIdOrderByHour(userId));
+	}
+
+	@Override
+	public Meal deleteMeal(int mealId) {
+		Meal meal = this.mealRepository.findOne(mealId);
+		if (meal != null) {
+			this.mealRepository.delete(meal);
+		}
+		return meal;
+	}
 }

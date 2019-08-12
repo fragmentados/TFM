@@ -1,22 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { DishService } from '../dish.service';
+import { DishRestService } from '../dishRest.service';
 import { AddDish } from '../../models/dish/addDish.model';
 import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '../../ingredient/ingredient.service';
 import { Stat } from '../../models/nutrition/stat.model';
 import { User } from '../../models/user/user.model';
 import { UserService } from '../../user.service';
-import { AddDishIngredient } from '../../models/dish/addDishIngredient.model';
-
-
-class IngredientNameAndQuantity {
-    constructor(ing, quantity) {
-      this.ingredient = ing;
-      this.quantity = quantity;
-    }
-    ingredient: Ingredient;
-    quantity: number;
-}
+import { Meal } from '../../models/dish/meal.model';
+import { DishService } from '../dish.service';
+import { IngredientNameAndQuantity } from '../../models/ingredient/ingredientNameAndQuantity.model';
+import { OK_CODE } from '../../models/service';
 
 @Component({
   selector: 'app-add-dish',
@@ -32,64 +25,33 @@ export class AddDishComponent implements OnInit {
   selectedIng: Ingredient;
   ingredientQuantity: number;
   currentUser: User;
+  allowedMeals: Meal[] = [];
+  selectedMeals: boolean[] = [];
 
-  constructor(private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
+  constructor(private dishRestService: DishRestService,
+    private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
     this.currentUser = this.userService.currentUserValue;
   }
 
   ngOnInit() {
     this.ingredientService.getUserIngredients(this.currentUser.id).subscribe(data => this.ingredients = data);
+    this.userService.getUserMeals(this.currentUser.id).subscribe(data => this.allowedMeals = data);
     this.dish.ingredients = [];
   }
 
   addIngredient() {
-    if (this.selectedIng != null) {
-      if (this.dish.ingredients.filter(ing => ing.id === this.selectedIng.id).length === 0) {
-        this.dish.ingredients.push(new AddDishIngredient(this.selectedIng.id, this.ingredientQuantity));
-        this.selectedIngredients.push(new IngredientNameAndQuantity(this.selectedIng, this.ingredientQuantity));
-        this.updateDishStatsWithIngredientStats(this.selectedIng);
-        this.autoFillDishName(this.selectedIng.name);
-      } else {
-        alert('That ingredient has already been selected');
-      }
-    } else {
-      alert('You must select an ingredient first');
+    const dishName: string = this.dishService.addIngredient(this.selectedIng,
+      this.selectedIngredients, this.dish.ingredients, this.dish.name, this.ingredientQuantity);
+    if (dishName) {
+      this.dish.name = dishName;
+      this.dishStats = this.dishService.addIngredientStatsToDish(this.dishStats, this.selectedIng, this.ingredientQuantity);
     }
   }
 
   removeIngredient(ingredient: IngredientNameAndQuantity) {
     this.dish.ingredients = this.dish.ingredients.filter(ing => ing.id !== ingredient.ingredient.id);
     this.selectedIngredients = this.selectedIngredients.filter(ing => ing !== ingredient);
-    this.updateDishStatsWithoutIngredientStats(ingredient);
-  }
-
-
-  updateDishStatsWithoutIngredientStats(ingredient: IngredientNameAndQuantity) {
-    if (this.dishStats == null) {
-      this.dishStats = [];
-    }
-    for (const ingredientStat of ingredient.ingredient.stats) {
-      const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
-      this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
-      this.dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) -
-          (parseFloat(ingredientStat.value) * ingredient.quantity / 100)).toString()));
-    }
-  }
-
-  updateDishStatsWithIngredientStats(ingredient: Ingredient) {
-    if (this.dishStats == null) {
-      this.dishStats = [];
-    }
-    for (const ingredientStat of ingredient.stats) {
-      const dishStat: Stat = this.dishStats.find(element => element.name === ingredientStat.name);
-      if (dishStat == null) {
-        this.dishStats.push(new Stat(ingredientStat.name, (parseFloat(ingredientStat.value) * this.ingredientQuantity / 100).toString()));
-      } else {
-        this.dishStats = this.dishStats.filter(element => element.name !== dishStat.name);
-        this.dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) +
-          (parseFloat(ingredientStat.value) * this.ingredientQuantity / 100)).toString()));
-      }
-    }
+    this.dishStats = this.dishService.subsctratIngredientStatsFromDish(this.dishStats, ingredient);
   }
 
   clearForm(): void {
@@ -105,25 +67,28 @@ export class AddDishComponent implements OnInit {
     this.ingredientQuantity = 0;
   }
 
-  createDish(): void {
-    this.dish.userId = this.currentUser.id;
-    this.dishService.createDish(this.dish)
-        .subscribe( data => {
-          this.clearForm();
-          alert('Dish ' + this.dish.name + ' created successfully.');
-        });
-  }
-
-  autoFillDishName(ingrName: string) {
-    if (this.dish.name == null || this.dish.name === '') {
-      this.dish.name = ingrName;
-    } else {
-      if (this.dish.name.includes('con')) {
-        this.dish.name = this.dish.name + ' y ' + ingrName;
-      } else {
-        this.dish.name = this.dish.name + ' con ' + ingrName;
+  setMealsToAdd() {
+    const addedMeals: number[] = [];
+    for (const i in this.selectedMeals) {
+      if (this.selectedMeals[i]) {
+        addedMeals.push(this.allowedMeals[i].id);
       }
     }
+    this.dish.meals = addedMeals;
+  }
+
+  createDish(): void {
+    this.setMealsToAdd();
+    this.dish.userId = this.currentUser.id;
+    this.dishRestService.createDish(this.dish)
+        .subscribe( data => {
+          if (data.errorCode === OK_CODE) {
+            this.clearForm();
+            alert('Dish ' + this.dish.name + ' created successfully.');
+          } else {
+            alert(data.message);
+          }
+        });
   }
 
 }

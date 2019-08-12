@@ -2,15 +2,11 @@ import { FoodCategory } from './../models/ingredient/foodCategory.model';
 import { AddIngredient } from '../models/ingredient/addIngredient.model';
 import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Ingredient } from '../models/ingredient/ingredient.model';
 import { UpdateIngredient } from '../models/ingredient/updateIngredient.model';
 import { NutritionEstimate } from '../models/nutrition/nutritionEstimate.model';
-
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { BackendResponse } from '../models/backendResponse.model';
 
 @Injectable()
 export class IngredientService {
@@ -29,7 +25,7 @@ export class IngredientService {
   }
 
   public updateIngredient(id: number, ingredient: UpdateIngredient) {
-    return this.http.put(this.ingredientUrl + '/' + id, ingredient);
+    return this.http.put<BackendResponse>(this.ingredientUrl + '/' + id, ingredient);
   }
 
   public deleteIngredient(ingredient) {
@@ -37,7 +33,7 @@ export class IngredientService {
   }
 
   public createIngredient(ingredient: AddIngredient) {
-    return this.http.post<Ingredient>(this.ingredientUrl, ingredient);
+    return this.http.post<BackendResponse>(this.ingredientUrl, ingredient);
   }
 
   public nutritionEstimate(ingredientName: string) {

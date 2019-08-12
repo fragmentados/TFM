@@ -4,4 +4,5 @@ export class AddDish {
   name: string;
   recipe: string;
   ingredients: AddDishIngredient[];
+  meals: number[];
 }

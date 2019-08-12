@@ -13,6 +13,7 @@
   <div class="form-group" *ngIf="categories">
     <label for="categorySelect">Categories:</label>
     <select [(ngModel)]="ingredient.categoryId" #CategoriesSelect="ngModel" name="CategoriesSelect" class="form-control" id="Categories" (ngModelChange)="checkBannedCategory()" >
+      <option></option>
       <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
     </select>
   </div>

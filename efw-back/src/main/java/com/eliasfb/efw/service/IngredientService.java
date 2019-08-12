@@ -11,7 +11,7 @@ import com.eliasfb.efw.model.Ingredient;
 
 public interface IngredientService {
 
-	Ingredient create(CreateOrUpdateIngredientDto createIngredient);
+	ResponseDto create(CreateOrUpdateIngredientDto createIngredient);
 
 	ResponseDto delete(int id);
 

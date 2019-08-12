@@ -12,8 +12,8 @@
     <tr *ngFor="let stat of stats">
       <td><b>{{stat.name}}</b></td>
       <td><b>{{stat.value}}</b></td>
-      <td *ngIf="areMenuStats && userConfs && isStatOverLimit(stat)"><font color="red">Limit exceeded!</font></td>
-      <td *ngIf="areMenuStats && userConfs && !isStatOverLimit(stat)"><font color="green">All ok!</font></td>
+      <td *ngIf="areMenuStats && userConfs && isStatOverLimit(stat)"><img width="45px" height="30px" src="assets/redX.jpg"/></td>
+      <td *ngIf="areMenuStats && userConfs && !isStatOverLimit(stat)"><img width="32px" height="32px" src="assets/tick.png"/></td>
     </tr>
     </tbody>
   </table>

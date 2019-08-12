@@ -25,8 +25,6 @@ public abstract class UserConfigurationToDtoMapper {
 				dto.getMaxProteinsPerWeek().toString()));
 		confs.add(createUserConfiguration(userId, UserConfigurationEnum.MAX_CARBOHYDRATES_PER_WEEK.getName(),
 				dto.getMaxCarbohydratesPerWeek().toString()));
-		confs.add(createUserConfiguration(userId, UserConfigurationEnum.MEALS_ON_WEEK.getName(),
-				String.join(", ", dto.getMeals())));
 		confs.add(createUserConfiguration(userId, UserConfigurationEnum.BANNED_CATEGORIES.getName(),
 				joinBannedCategories(dto)));
 		return confs;

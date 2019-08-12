@@ -1,4 +1,4 @@
-import { Response } from './../models/response.model';
+import { BackendResponse } from '../models/backendResponse.model';
 import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -32,11 +32,16 @@ export class MenuService {
   }
 
   public clearMenu(menuId: number) {
-    return this.http.delete<Response>(this.menuUrl + '/' + menuId + '/clearMenu');
+    return this.http.delete<BackendResponse>(this.menuUrl + '/' + menuId + '/clearMenu');
+  }
+
+  public addDishToFirstValidSpotMenu(userId: number, addDishToMenu: AddDishToMenu) {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.post<BackendResponse>(this.menuUrl + '/dish/firstValidSpot', addDishToMenu, {params: params});
   }
 
   public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {
-    return this.http.post<Response>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
+    return this.http.post<BackendResponse>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
   }
 
   public randomGenerateMenu(menuId: number, userId: number) {
@@ -57,7 +62,7 @@ export class MenuService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: addDishToMenu
     };
-    return this.http.delete<Response>(this.menuUrl + '/' + menuId + '/dish', httpOptions);
+    return this.http.delete<BackendResponse>(this.menuUrl + '/' + menuId + '/dish', httpOptions);
   }
 
   public formatDate(startDate: Date) {

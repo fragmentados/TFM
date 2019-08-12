@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eliasfb.efw.dto.CreateDishDto;
 import com.eliasfb.efw.dto.DishDto;
@@ -26,9 +27,16 @@ public class DishServiceImpl implements DishService {
 
 	@Override
 	public ResponseDto create(CreateDishDto createDish) {
-		Dish dishToCreate = this.mapper.toEntity(createDish);
-		this.repository.save(dishToCreate);
-		return new ResponseDto(ResponseDto.OK_CODE, "Dish created successfully");
+		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "Dish created successfully");
+		List<Dish> dishWithSameName = this.repository.findByUserAndByName(createDish.getUserId(), createDish.getName());
+		if (dishWithSameName.isEmpty()) {
+			Dish dishToCreate = this.mapper.toEntity(createDish);
+			this.repository.save(dishToCreate);
+		} else {
+			response = new ResponseDto(ResponseDto.UNIQUE_CONSTRAINT_CODE,
+					"There already exists a dish with this name for this user");
+		}
+		return response;
 	}
 
 	@Override
@@ -62,15 +70,23 @@ public class DishServiceImpl implements DishService {
 	}
 
 	@Override
+	@Transactional
 	public ResponseDto update(Integer dishId, CreateDishDto dto) {
 		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "Dish updated successfully");
 		Dish dish = this.repository.findOne(dishId);
 		if (dish != null) {
-			// All fields should be updated except users
-			Dish updateDish = this.mapper.toEntity(dto);
-			updateDish.setUsers(dish.getUsers());
-			updateDish.setId(dishId);
-			this.repository.save(updateDish);
+			List<Dish> dishWithSameName = this.repository.findOtherDishByUserAndByName(dto.getUserId(), dto.getName(),
+					dish.getId());
+			if (dishWithSameName.isEmpty()) {
+				// All fields should be updated except users
+				Dish updateDish = this.mapper.toEntity(dto);
+				updateDish.setUsers(dish.getUsers());
+				updateDish.setId(dishId);
+				this.repository.save(updateDish);
+			} else {
+				response = new ResponseDto(ResponseDto.UNIQUE_CONSTRAINT_CODE,
+						"There is already a dish with this name for this user");
+			}
 		} else {
 			response = new ResponseDto(ResponseDto.ERROR_CODE, "Dish not found");
 		}

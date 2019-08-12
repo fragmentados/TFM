@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { IngredientService } from '.././ingredient.service';
 import { User } from '../../models/user/user.model';
 import { Stat } from '../../models/nutrition/stat.model';
+import { UNIQUE_CONSTRAINT_CODE, OK_CODE } from '../../models/service';
 
 @Component({
   templateUrl: './add-ingredient.component.html',
@@ -44,6 +45,7 @@ export class AddIngredientComponent implements OnInit {
 
   clearForm() {
     this.ingredient.name = '';
+    this.ingredient.categoryId = null;
     this.ingredient.calories = null;
     this.ingredient.carbohydrates = null;
     this.ingredient.proteins = null;
@@ -54,8 +56,12 @@ export class AddIngredientComponent implements OnInit {
     this.ingredient.userId = this.currentUser.id;
     this.ingredientService.createIngredient(this.ingredient)
         .subscribe( data => {
-          this.clearForm();
-          alert('Ingredient created successfully.');
+          if (data.errorCode === OK_CODE) {
+            this.clearForm();
+            alert('Ingredient created successfully.');
+          } else {
+            alert(data.message);
+          }
         });
   }
 

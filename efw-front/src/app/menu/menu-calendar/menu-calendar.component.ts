@@ -46,7 +46,7 @@ export class MenuCalendarComponent implements OnInit {
     this.initMenuAndEvents();
     this.userService.getUserConfs(this.currentUser.id).subscribe(data => {
       this.userConfs = data;
-      this.mealsInWeek = this.userConfs.meals;
+      this.mealsInWeek = this.userConfs.meals.map(meal => meal.name);
     });
   }
 

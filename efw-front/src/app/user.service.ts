@@ -7,6 +7,7 @@ import { Login } from './models/user/login.model';
 import { ResponseUser } from './models/user/responseUser.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Meal } from './models/dish/meal.model';
 
 
 const httpOptions = {
@@ -40,12 +41,20 @@ export class UserService {
     return this.http.get<UserConfs>(this.userUrl + '/' + userId + '/conf');
   }
 
+  public getUserMeals(userId: number) {
+    return this.http.get<Meal[]>(this.userUrl + '/' + userId + '/meals');
+  }
+
   public updateUserConfs(userId: number, userConf: UserConfs) {
     return this.http.post(this.userUrl + '/' + userId + '/conf', userConf);
   }
 
   public deleteUser(user: User) {
     return this.http.delete(this.userUrl + '/' + user.id);
+  }
+
+  public deleteMeal(mealId: number) {
+    return this.http.delete(this.userUrl + '/meals/' + mealId);
   }
 
   public createUser(user: User) {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,13 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public ResponseDto create(CreateMenuDto dto) {
+
+		createMenuByDto(dto);
+
+		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been created correctly");
+	}
+
+	private Menu createMenuByDto(CreateMenuDto dto) {
 		// We initialize the menu entity with the data supplied :
 		Menu menu = new Menu();
 		// user id
@@ -73,9 +81,7 @@ public class MenuServiceImpl implements MenuService {
 		// start date
 		menu.setStartDate(getLastWeekStart(dto.getStartDate()));
 		// We persist the entity
-		repository.save(menu);
-
-		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been created correctly");
+		return repository.save(menu);
 	}
 
 	@Override
@@ -142,6 +148,59 @@ public class MenuServiceImpl implements MenuService {
 			repository.save(menu);
 		}
 		return new ResponseDto(ResponseDto.OK_CODE, "Dish added to menu correctly");
+	}
+
+	@Override
+	@Transactional
+	public ResponseDto addDishToFirstValidSpotOnMenu(int userId, AddDishToMenuDto dto) {
+		ResponseDto result = new ResponseDto(ResponseDto.ERROR_CODE, "No valid spot found for menu and dish");
+		// We find the current user menu
+		String startDateForToday = getLastWeekStart(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		Menu menu = repository.findByUserIdAndStartDate(userId, startDateForToday);
+		// If the user has no menu on that date, we create it
+		if (menu == null) {
+			menu = this.createMenuByDto(new CreateMenuDto(userId, startDateForToday));
+		}
+		// We find the dish
+		Dish dish = this.dishRepository.findOne(dto.getDishId());
+		// We iterate over the week days
+		LocalDateTime startDate = LocalDate.parse(menu.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+				.atTime(0, 0, 0);
+		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
+		boolean spotFound = false;
+		while (startDate.compareTo(endDate) < 0 && !spotFound) {
+			// We search the first valid spot
+			spotFound = findSpotOnDay(menu, dish, startDate);
+			startDate = startDate.plusDays(1L);
+		}
+		if (spotFound) {
+			result = new ResponseDto(ResponseDto.OK_CODE, "Dish added to first valid spot correctly");
+			// We persist the changes
+			this.repository.save(menu);
+		}
+		return result;
+	}
+
+	private boolean findSpotOnDay(Menu menu, Dish dish, LocalDateTime date) {
+		boolean result = false;
+		for (int i = 0; i < MenuServiceImpl.MEALS_IN_DAY && !result; i++) {
+			String hourFormatted = date.format(DateTimeFormatter.ofPattern("HH"));
+			String dateWithHourFormatted = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+			// The dish must allow this concrete spot and the menu must have the spot empty
+			boolean dishMealsAllowThisSpot = dish.getMeals().stream().map(meal -> meal.getId().getMeal())
+					.anyMatch(m -> hourFormatted.equals(m.getHour()));
+			boolean menuHasThisSpotOccupied = menu.getDishes().stream().map(d -> d.getId())
+					.anyMatch(d -> dateWithHourFormatted.equals(d.getDishDate()));
+			result = dishMealsAllowThisSpot && !menuHasThisSpotOccupied;
+			if (result) {
+				// If this spot is valid, we add the dish to the spot and we stop
+				menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, dish, dateWithHourFormatted)));
+			} else {
+				// If this spot is invalid, we pass to the next spot
+				date = date.plusHours(1L);
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -227,15 +286,35 @@ public class MenuServiceImpl implements MenuService {
 
 	private void fillDayWithRandomDishes(Menu menu, List<Dish> userDishes, LocalDateTime date) {
 		for (int i = 0; i < MenuServiceImpl.MEALS_IN_DAY; i++) {
-			Dish randomDish = randomSelectDish(userDishes);
-			menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, randomDish,
-					date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))));
+			// Select a dish
+			Dish randomDish = selectRandomDishWithValidMeal(userDishes, date);
+			if (randomDish != null) {
+				// Add it to the menu and go to the next hour
+				menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, randomDish,
+						date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))));
+			}
 			date = date.plusHours(1L);
 		}
 	}
 
+	// We'll try to select a dish whose meals are accord with the date
+	// If we can't, we return null
+	private Dish selectRandomDishWithValidMeal(List<Dish> userDishes, LocalDateTime date) {
+		Dish validDish = null;
+		String hourFormatted = date.format(DateTimeFormatter.ofPattern("HH"));
+		// We filter the dishes by those with any available meal that matches the date
+		List<Dish> validDishes = userDishes.stream().filter(dish -> dish.getMeals().stream()
+				.map(meal -> meal.getId().getMeal()).anyMatch(m -> hourFormatted.equals(m.getHour())))
+				.collect(Collectors.toList());
+		if (!validDishes.isEmpty()) {
+			validDish = randomSelectDish(validDishes);
+		}
+		return validDish;
+	}
+
 	private Dish randomSelectDish(List<Dish> userDishes) {
-		Integer randomIndex = (int) (Math.random() * (userDishes.size() - 1));
+		Random random = new Random();
+		Integer randomIndex = random.nextInt((userDishes.size() - 1) - 0 + 1);
 		return userDishes.get(randomIndex);
 	}
 
@@ -295,37 +374,62 @@ public class MenuServiceImpl implements MenuService {
 			Map<String, Double> currentValues, Map<String, Double> maxValues) {
 		boolean result = true;
 		for (int i = 0; i < MenuServiceImpl.MEALS_IN_DAY && result; i++) {
-			// We select a valid dish
-			Dish validDish = selectValidDish(menu, userDishes, currentValues, maxValues);
-			if (validDish != null) {
-				// If we can, we add it to the menu and we continue
-				menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, validDish,
-						date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))));
-				addDishStats(validDish, currentValues);
+			// We add a valid dish to the menu
+			result = selectValidDishWithValidMeal(menu, userDishes, currentValues, maxValues, date);
+			if (result) {
+				// If we can, we continue
 				date = date.plusHours(1L);
-			} else {
-				// If we can't we stop
-				result = false;
 			}
 		}
 		return result;
 	}
 
-	private Dish selectValidDish(Menu menu, List<Dish> userDishes, Map<String, Double> currentValues,
-			Map<String, Double> maxValues) {
+	// We'll try to select a dish whose meals are accord with the date
+	// If we can't, we return null
+	private boolean selectValidDishWithValidMeal(Menu menu, List<Dish> userDishes, Map<String, Double> currentValues,
+			Map<String, Double> maxValues, LocalDateTime date) {
+		Boolean canWeContinue = true;
+		String hourFormatted = date.format(DateTimeFormatter.ofPattern("HH"));
+		// We filter the dishes by those with any available meal that matches the date
+		List<Dish> validDishes = userDishes.stream().filter(dish -> dish.getMeals().stream()
+				.map(meal -> meal.getId().getMeal()).anyMatch(m -> hourFormatted.equals(m.getHour())))
+				.collect(Collectors.toList());
+		if (!validDishes.isEmpty()) {
+			// If there are valid dishes we select one from those
+			canWeContinue = selectValidDish(menu, validDishes, currentValues, maxValues, date);
+		}
+		return canWeContinue;
+	}
+
+	private boolean selectValidDish(Menu menu, List<Dish> userDishes, Map<String, Double> currentValues,
+			Map<String, Double> maxValues, LocalDateTime date) {
 		Dish dishSelected = null;
 		// We select the first dish that is valid i.e. it is within the ranges in ALL of
 		// its stats
+		List<Dish> validDishes = new ArrayList<>();
 		for (Dish d : userDishes) {
 			if (isValidDish(d, currentValues, maxValues)) {
 				dishSelected = d;
+				validDishes.add(dishSelected);
 				// We prioritize those dishes that are not contained already within the menu
 				if (!menu.containsDish(d)) {
+					validDishes = new ArrayList<>();
 					break;
 				}
 			}
 		}
-		return dishSelected;
+		// If we could obtain a valid dish, we add it to the menu
+		if (dishSelected != null) {
+			if (!validDishes.isEmpty()) {
+				// If we have several valid dishes, we randomly select one
+				dishSelected = randomSelectDish(validDishes);
+			}
+			menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, dishSelected,
+					date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))));
+			addDishStats(dishSelected, currentValues);
+		}
+
+		return dishSelected != null;
 	}
 
 	private void addDishStats(Dish dish, Map<String, Double> currentValues) {

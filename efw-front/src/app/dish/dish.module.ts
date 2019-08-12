@@ -5,9 +5,11 @@ import { AddDishComponent } from './add-dish/add-dish.component';
 import { DishesComponent } from './dishes/dishes.component';
 import { FormsModule } from '@angular/forms';
 import { DishRoutingModule } from './dish-routing.module';
-import { DishService } from './dish.service';
+import { DishRestService } from './dishRest.service';
 import { IngredientService } from '../ingredient/ingredient.service';
 import { UpdateDishComponent } from './update-dish/update-dish.component';
+import { MenuModule } from '../menu/menu.module';
+import { DishService } from './dish.service';
 
 @NgModule({
   declarations: [AddDishComponent, DishesComponent, UpdateDishComponent],
@@ -15,9 +17,10 @@ import { UpdateDishComponent } from './update-dish/update-dish.component';
     CommonModule,
     FormsModule,
     DishRoutingModule,
-    NutritionModule
+    NutritionModule,
+    MenuModule
   ],
   exports: [DishesComponent],
-  providers: [DishService, IngredientService]
+  providers: [DishRestService, DishService, IngredientService]
 })
 export class DishModule { }

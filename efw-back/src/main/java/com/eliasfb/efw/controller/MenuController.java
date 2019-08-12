@@ -54,6 +54,12 @@ public class MenuController {
 		return service.findUserMenu(userId, startDate);
 	}
 
+	@PostMapping(path = { "/dish/firstValidSpot" })
+	public ResponseDto addDishToFirstValidSpot(@RequestParam("userId") Integer userId,
+			@RequestBody AddDishToMenuDto dto) {
+		return service.addDishToFirstValidSpotOnMenu(userId, dto);
+	}
+
 	@PostMapping(path = { "/{id}/dish" })
 	public ResponseDto addDishToMenu(@PathVariable("id") int id, @RequestBody AddDishToMenuDto dto) {
 		return service.addDishToMenu(id, dto);

@@ -1,44 +1,104 @@
-import { BACKEND_URL } from './../models/service';
+import { User } from './../models/user/user.model';
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Stat } from '../models/nutrition/stat.model';
+import { Ingredient } from '../models/ingredient/ingredient.model';
+import { IngredientNameAndQuantity } from '../models/ingredient/ingredientNameAndQuantity.model';
+import { AddDishIngredient } from '../models/dish/addDishIngredient.model';
 import { Dish } from '../models/dish/dish.model';
 import { AddDish } from '../models/dish/addDish.model';
-
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { Meal } from '../models/dish/meal.model';
 
 @Injectable()
 export class DishService {
 
-  constructor(private http: HttpClient) {}
-
-  private dishUrl = BACKEND_URL + 'dishes';
-
-  public getUserDishes(userId: number) {
-    const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<Dish[]>(this.dishUrl, {params : params});
+  addIngredient(selectedIng: Ingredient, selectedIngredients: IngredientNameAndQuantity[],
+    dishIngredients: AddDishIngredient[], dishName: string, ingredientQuantity: number) {
+    let dishNameResult: string;
+    if (selectedIng != null) {
+      if (dishIngredients.filter(ing => ing.id === selectedIng.id).length === 0) {
+        dishIngredients.push(new AddDishIngredient(selectedIng.id, ingredientQuantity));
+        selectedIngredients.push(new IngredientNameAndQuantity(selectedIng, ingredientQuantity));
+        dishNameResult = this.autoFillDishName(dishName, selectedIng.name);
+      } else {
+        alert('That ingredient has already been selected');
+      }
+    } else {
+      alert('You must select an ingredient first');
+    }
+    return dishNameResult;
   }
 
-  public getDish(dishId: number) {
-    return this.http.get<Dish>(this.dishUrl + '/' + dishId);
+  addIngredientStatsToDish(dishStats: Stat[], ingredient: Ingredient, ingredientQuantity: number): Stat[] {
+    if (dishStats == null) {
+      dishStats = [];
+    }
+    for (const ingredientStat of ingredient.stats) {
+      const dishStat: Stat = dishStats.find(element => element.name === ingredientStat.name);
+      if (dishStat == null) {
+        dishStats.push(new Stat(ingredientStat.name, (parseFloat(ingredientStat.value) * ingredientQuantity / 100).toString()));
+      } else {
+        dishStats = dishStats.filter(element => element.name !== dishStat.name);
+        dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) +
+          (parseFloat(ingredientStat.value) * ingredientQuantity / 100)).toString()));
+      }
+    }
+    return dishStats;
   }
 
-  public getDishes() {
-    return this.http.get<Dish[]>(this.dishUrl);
+  subsctratIngredientStatsFromDish(dishStats: Stat[], ingredient: IngredientNameAndQuantity): Stat[] {
+    if (dishStats == null) {
+      dishStats = [];
+    }
+    for (const ingredientStat of ingredient.ingredient.stats) {
+      const dishStat: Stat = dishStats.find(element => element.name === ingredientStat.name);
+      if (dishStat) {
+        dishStats = dishStats.filter(element => element.name !== dishStat.name);
+        dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) -
+            (parseFloat(ingredientStat.value) * ingredient.quantity / 100)).toString()));
+      }
+    }
+    return dishStats;
   }
 
-  public deleteDish(dish) {
-    return this.http.delete(this.dishUrl + '/' + dish.id);
+  autoFillDishName(dishName: string, ingrName: string): string {
+    let dishNameResult: string;
+    if (dishName == null || dishName === '') {
+      dishNameResult = ingrName;
+    } else {
+      if (dishName.includes('con')) {
+        dishNameResult = dishName + ' y ' + ingrName;
+      } else {
+        dishNameResult = dishName + ' con ' + ingrName;
+      }
+    }
+    return dishNameResult;
   }
 
-  public createDish(dish: AddDish) {
-    return this.http.post<Dish>(this.dishUrl, dish);
+  dishToAddDish(dish: Dish, selectedIngredients: IngredientNameAndQuantity[],
+    dishStats: Stat[], currentUser: User, allowedMeals: Meal[], selectedMeals: Boolean[]): AddDish {
+    const updateDish: AddDish = new AddDish();
+    updateDish.name = dish.name;
+    updateDish.recipe = dish.recipe;
+    updateDish.userId = currentUser.id;
+    updateDish.ingredients = [];
+    dish.ingredients.forEach(ingredient => {
+      updateDish.ingredients.push(new AddDishIngredient(ingredient.ingredient.id, ingredient.quantity));
+      selectedIngredients.push(new IngredientNameAndQuantity(ingredient.ingredient, ingredient.quantity));
+    });
+    for (const stat of dish.stats) {
+      dishStats.push(stat);
+    }
+    this.setSelectedMealsByDish(dish.meals, allowedMeals, selectedMeals);
+    return updateDish;
   }
 
-  public updateDish(dishId: number, dish: AddDish) {
-    return this.http.put<Dish>(this.dishUrl + '/' + dishId, dish);
+  setSelectedMealsByDish(dishMeals: Meal[], allowedMeals: Meal[], selectedMeals: Boolean[]) {
+    for (const i in allowedMeals) {
+      if (dishMeals.filter(m => m.id  === allowedMeals[i].id).length > 0) {
+        selectedMeals.push(true);
+      } else {
+        selectedMeals.push(undefined);
+      }
+    }
   }
-
 }

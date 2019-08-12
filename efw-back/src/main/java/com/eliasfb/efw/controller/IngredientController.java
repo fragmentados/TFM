@@ -19,7 +19,6 @@ import com.eliasfb.efw.dto.IngredientDto;
 import com.eliasfb.efw.dto.NutritionEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.model.FoodCategory;
-import com.eliasfb.efw.model.Ingredient;
 import com.eliasfb.efw.service.IngredientService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,7 +30,7 @@ public class IngredientController {
 	private IngredientService service;
 
 	@PostMapping
-	public Ingredient create(@RequestBody CreateOrUpdateIngredientDto createIngredient) {
+	public ResponseDto create(@RequestBody CreateOrUpdateIngredientDto createIngredient) {
 		return service.create(createIngredient);
 	}
 

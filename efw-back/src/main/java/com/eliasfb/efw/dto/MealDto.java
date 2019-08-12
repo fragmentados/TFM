@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateMenuDto implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private Integer userId;
-	private String startDate;
-
+public class MealDto implements Serializable {
+	private Integer id;
+	private String name;
 }

@@ -34,8 +34,17 @@ public class IngredientServiceImpl implements IngredientService {
 	private IngredientToIngredientDtoMapper mapper;
 
 	@Override
-	public Ingredient create(CreateOrUpdateIngredientDto createIngredient) {
-		return repository.save(mapper.createToEntity(createIngredient));
+	public ResponseDto create(CreateOrUpdateIngredientDto createIngredient) {
+		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "Ingredient created successfully");
+		List<Ingredient> ingredientWithSameName = this.repository.findByUserIdAndName(createIngredient.getUserId(),
+				createIngredient.getName());
+		if (!ingredientWithSameName.isEmpty()) {
+			response = new ResponseDto(ResponseDto.UNIQUE_CONSTRAINT_CODE,
+					"There already exists an ingredient with that name for that user");
+		} else {
+			repository.save(mapper.createToEntity(createIngredient));
+		}
+		return response;
 	}
 
 	@Override
@@ -73,11 +82,18 @@ public class IngredientServiceImpl implements IngredientService {
 		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "Ingredient updated successfully");
 		Ingredient ingredient = this.repository.findOne(ingredientId);
 		if (ingredient != null) {
-			// All fields should be updated except users
-			Ingredient updateIngredient = mapper.createToEntity(dto);
-			updateIngredient.setUsers(ingredient.getUsers());
-			updateIngredient.setId(ingredientId);
-			repository.save(updateIngredient);
+			List<Ingredient> ingredientWithSameName = this.repository
+					.findOtherIngredientByUserIdAndName(dto.getUserId(), dto.getName(), ingredient.getId());
+			if (!ingredientWithSameName.isEmpty()) {
+				response = new ResponseDto(ResponseDto.UNIQUE_CONSTRAINT_CODE,
+						"There already exists an ingredient with that name for that user");
+			} else {
+				// All fields should be updated except users
+				Ingredient updateIngredient = mapper.createToEntity(dto);
+				updateIngredient.setUsers(ingredient.getUsers());
+				updateIngredient.setId(ingredientId);
+				repository.save(updateIngredient);
+			}
 		} else {
 			response = new ResponseDto(ResponseDto.ERROR_CODE, "Ingredient not found");
 		}

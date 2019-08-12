@@ -12,6 +12,7 @@
         <th>Carbohydrates</th>
         <th>Update</th>
         <th>Delete</th>
+        <th>Add To Menu</th>
       </tr>
       </thead>
       <tbody>
@@ -19,8 +20,9 @@
         <td class="hidden">{{dish.id}}</td>
         <td>{{dish.name}}</td>
         <td *ngFor="let stat of dish.stats">{{stat.value}}</td>
-        <td><button class="btn btn-success" (click)="updateDish(dish)">Update</button></td>
+        <td><button class="btn btn-info" (click)="updateDish(dish)">Update</button></td>
         <td><button class="btn btn-danger" (click)="deleteDish(dish)">Delete</button></td>
+        <td><button class="btn btn-success" (click)="addToMenu(dish)">Add To Menu</button></td>
       </tr>
       </tbody>
     </table>

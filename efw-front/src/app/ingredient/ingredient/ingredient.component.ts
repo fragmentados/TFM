@@ -1,3 +1,4 @@
+import { FoodCategory } from './../../models/ingredient/foodCategory.model';
 import { UserService } from '../../user.service';
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../../models/ingredient/ingredient.model';
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 export class IngredientComponent implements OnInit {
 
   ingredients: Ingredient[];
+  bannedCategories: FoodCategory[];
   currentUser: User;
 
   constructor(private router: Router, private userService: UserService, private ingredientService: IngredientService) {
@@ -24,6 +26,9 @@ export class IngredientComponent implements OnInit {
     this.ingredientService.getUserIngredients(this.currentUser.id)
       .subscribe( data => {
         this.ingredients = data;
+      });
+      this.userService.getUserConfs(this.currentUser.id).subscribe(data => {
+        this.bannedCategories = data.bannedCategories;
       });
   }
 
@@ -36,6 +41,10 @@ export class IngredientComponent implements OnInit {
       .subscribe( data => {
         this.ingredients = this.ingredients.filter(u => u !== ingredient);
       });
+  }
+
+  isBanned(ingredient: Ingredient) {
+    return this.bannedCategories.filter(bc => bc.id === ingredient.category.id).length > 0;
   }
 
 }

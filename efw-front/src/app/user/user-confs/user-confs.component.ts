@@ -4,6 +4,7 @@ import { UserConfs } from './../../models/user/userConfs.model';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service';
 import { User } from '../../models/user/user.model';
+import { Meal } from '../../models/dish/meal.model';
 
 @Component({
   selector: 'app-user-confs',
@@ -17,7 +18,7 @@ export class UserConfsComponent implements OnInit {
   categories: FoodCategory[];
   bannedCategories: FoodCategory[] = [];
   selectedCategory: FoodCategory;
-  mealsAsString: string;
+  mealToAdd: string;
 
   constructor(private userService: UserService, private ingredientService: IngredientService) {
     this.currentUser = this.userService.currentUserValue;
@@ -32,13 +33,11 @@ export class UserConfsComponent implements OnInit {
     this.userService.getUserConfs(this.currentUser.id).subscribe(data => {
       this.userConf = data;
       this.bannedCategories = data.bannedCategories;
-      this.mealsAsString = data.meals.join(', ');
     });
   }
 
   updateConfs() {
     this.userConf.bannedCategories = this.bannedCategories;
-    this.userConf.meals = this.mealsAsString.split(', ');
     this.userService.updateUserConfs(this.currentUser.id, this.userConf).subscribe(data => {
       this.refreshConfs();
     });
@@ -52,6 +51,23 @@ export class UserConfsComponent implements OnInit {
 
   unBanCategory(category: FoodCategory) {
     this.bannedCategories = this.bannedCategories.filter(bc => bc !== category);
+  }
+
+  addMeal() {
+    const meal: Meal = new Meal();
+    meal.name = this.mealToAdd;
+    this.userConf.meals.push(meal);
+    this.mealToAdd = '';
+  }
+
+  removeMeal(meal: Meal) {
+    if (meal.id) {
+      this.userService.deleteMeal(meal.id).subscribe(data => {
+        this.userConf.meals = this.userConf.meals.filter(m => m !== meal);
+      });
+    } else {
+      this.userConf.meals = this.userConf.meals.filter(m => m !== meal);
+    }
   }
 
 }

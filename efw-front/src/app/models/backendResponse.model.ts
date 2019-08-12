@@ -1,4 +1,4 @@
-export class Response {
+export class BackendResponse {
   errorCode: number;
   message: string;
 }

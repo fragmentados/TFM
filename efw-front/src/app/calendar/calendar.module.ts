@@ -1,4 +1,4 @@
-import { DishService } from '../dish/dish.service';
+import { DishRestService } from '../dish/dishRest.service';
 import { NgModule, Provider, ModuleWithProviders } from '@angular/core';
 import { CalendarWeekViewEventComponent } from './calendar-week-view-event/calendar-week-view-event.component';
 import { CalendarWeekViewHeaderComponent } from './calendar-week-view-header/calendar-week-view-header.component';
@@ -59,7 +59,7 @@ export class CalendarModule {
         config.eventTitleFormatter || CalendarEventTitleFormatter,
         config.dateFormatter || CalendarDateFormatter,
         config.utils || CalendarUtils,
-        DishService
+        DishRestService
       ]
     };
   }

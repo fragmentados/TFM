@@ -41,7 +41,7 @@ public class User {
 	private String email;
 	@Column
 	private String password;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Menu> menus;
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -50,9 +50,12 @@ public class User {
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Dish> dishes;
-	@OneToMany(mappedBy = "id.user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<UserConfiguration> configurations;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Meal> meals;
 
 	public User(int id) {
 		super();
