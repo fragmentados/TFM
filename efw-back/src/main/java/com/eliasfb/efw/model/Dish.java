@@ -43,8 +43,7 @@ public class Dish {
 	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.REMOVE, CascadeType.MERGE })
 	private List<DisMealRel> meals;
 
-	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE,
-			CascadeType.REMOVE })
+	@OneToMany(mappedBy = "id.dish", cascade = { CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE })
 	private List<IngDisRel> ingredients;
 
 	@OneToMany(mappedBy = "id.dish", cascade = CascadeType.REMOVE)

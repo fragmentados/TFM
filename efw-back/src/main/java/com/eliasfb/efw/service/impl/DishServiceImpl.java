@@ -14,6 +14,7 @@ import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.IngDisRel;
 import com.eliasfb.efw.model.IngDisRelId;
 import com.eliasfb.efw.model.Ingredient;
+import com.eliasfb.efw.repository.DisMealRelRepository;
 import com.eliasfb.efw.repository.DishRepository;
 import com.eliasfb.efw.service.DishService;
 
@@ -22,6 +23,8 @@ public class DishServiceImpl implements DishService {
 
 	@Autowired
 	private DishRepository repository;
+	@Autowired
+	private DisMealRelRepository dishMealRepository;
 	@Autowired
 	private DishToDtoMapper mapper;
 
@@ -80,6 +83,16 @@ public class DishServiceImpl implements DishService {
 			if (dishWithSameName.isEmpty()) {
 				// All fields should be updated except users
 				Dish updateDish = this.mapper.toEntity(dto);
+				// TODO EFB REVIEW HOW TO UPDATE MEALS
+				// We delete the meals not found
+				/*
+				 * List<DisMealRel> mealsToUpdate = new ArrayList<>();
+				 * mealsToUpdate.addAll(updateDish.getMeals());
+				 * dish.getMeals().stream().filter(m ->
+				 * !updateDish.getMeals().contains(m)).forEach(m -> {
+				 * this.dishMealRepository.delete(m); mealsToUpdate.remove(m); });
+				 * updateDish.setMeals(mealsToUpdate);
+				 */
 				updateDish.setUsers(dish.getUsers());
 				updateDish.setId(dishId);
 				this.repository.save(updateDish);

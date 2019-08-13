@@ -25,7 +25,7 @@
     [tooltipTemplate]="tooltipTemplate"
     [tooltipAppendToBody]="tooltipAppendToBody"
     [tooltipDelay]="tooltipDelay"
-    (mwlClick)="eventClicked.emit()"
+    (mwlClick)="eventClicked.emit($event)"
   >
     <app-calendar-event-actions
       [event]="weekEvent.event"

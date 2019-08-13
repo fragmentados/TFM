@@ -7,6 +7,7 @@ import { AddDishToMenu } from '../models/menu/addDishToMenu.model';
 import { ShoppingList } from '../models/menu/shoppingList/shoppingList.model';
 import { AddMenu } from '../models/menu/addMenu.model';
 import { UpdateDishOnMenu } from '../models/menu/updateDishOnMenu.model';
+import { SpotFound } from '../models/menu/spotFound.model';
 
 @Injectable()
 export class MenuService {
@@ -37,7 +38,7 @@ export class MenuService {
 
   public addDishToFirstValidSpotMenu(userId: number, addDishToMenu: AddDishToMenu) {
     const params = new HttpParams().set('userId', userId.toString());
-    return this.http.post<BackendResponse>(this.menuUrl + '/dish/firstValidSpot', addDishToMenu, {params: params});
+    return this.http.post<SpotFound>(this.menuUrl + '/dish/firstValidSpot', addDishToMenu, {params: params});
   }
 
   public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {

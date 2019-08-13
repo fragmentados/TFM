@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.MenuSpotFoundDto;
 import com.eliasfb.efw.dto.PriceEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
@@ -61,7 +62,6 @@ public class MenuServiceImpl implements MenuService {
 	private MenuToDtoMapper mapper;
 
 	private static final Long DAYS_IN_WEEK = 7L;
-	private static final Integer MEALS_IN_DAY = 3;
 
 	@Override
 	public ResponseDto create(CreateMenuDto dto) {
@@ -152,8 +152,9 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	@Transactional
-	public ResponseDto addDishToFirstValidSpotOnMenu(int userId, AddDishToMenuDto dto) {
-		ResponseDto result = new ResponseDto(ResponseDto.ERROR_CODE, "No valid spot found for menu and dish");
+	public MenuSpotFoundDto addDishToFirstValidSpotOnMenu(int userId, AddDishToMenuDto dto) {
+		MenuSpotFoundDto spotDto = new MenuSpotFoundDto();
+		String spotFound = null;
 		// We find the current user menu
 		String startDateForToday = getLastWeekStart(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		Menu menu = repository.findByUserIdAndStartDate(userId, startDateForToday);
@@ -161,29 +162,30 @@ public class MenuServiceImpl implements MenuService {
 		if (menu == null) {
 			menu = this.createMenuByDto(new CreateMenuDto(userId, startDateForToday));
 		}
+		// We find the user meals
+		Integer mealsInWeek = this.userService.findUserMeals(userId).size();
 		// We find the dish
 		Dish dish = this.dishRepository.findOne(dto.getDishId());
 		// We iterate over the week days
 		LocalDateTime startDate = LocalDate.parse(menu.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 				.atTime(0, 0, 0);
 		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
-		boolean spotFound = false;
-		while (startDate.compareTo(endDate) < 0 && !spotFound) {
+		while (startDate.compareTo(endDate) < 0 && spotFound == null) {
 			// We search the first valid spot
-			spotFound = findSpotOnDay(menu, dish, startDate);
+			spotFound = findSpotOnDay(menu, dish, startDate, mealsInWeek);
 			startDate = startDate.plusDays(1L);
 		}
-		if (spotFound) {
-			result = new ResponseDto(ResponseDto.OK_CODE, "Dish added to first valid spot correctly");
+		if (spotFound != null) {
 			// We persist the changes
 			this.repository.save(menu);
+			spotDto.setDate(spotFound);
 		}
-		return result;
+		return spotDto;
 	}
 
-	private boolean findSpotOnDay(Menu menu, Dish dish, LocalDateTime date) {
-		boolean result = false;
-		for (int i = 0; i < MenuServiceImpl.MEALS_IN_DAY && !result; i++) {
+	private String findSpotOnDay(Menu menu, Dish dish, LocalDateTime date, Integer mealsInWeek) {
+		String spot = null;
+		for (int i = 0; i < mealsInWeek && spot == null; i++) {
 			String hourFormatted = date.format(DateTimeFormatter.ofPattern("HH"));
 			String dateWithHourFormatted = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
 			// The dish must allow this concrete spot and the menu must have the spot empty
@@ -191,16 +193,16 @@ public class MenuServiceImpl implements MenuService {
 					.anyMatch(m -> hourFormatted.equals(m.getHour()));
 			boolean menuHasThisSpotOccupied = menu.getDishes().stream().map(d -> d.getId())
 					.anyMatch(d -> dateWithHourFormatted.equals(d.getDishDate()));
-			result = dishMealsAllowThisSpot && !menuHasThisSpotOccupied;
-			if (result) {
+			if (dishMealsAllowThisSpot && !menuHasThisSpotOccupied) {
 				// If this spot is valid, we add the dish to the spot and we stop
+				spot = dateWithHourFormatted;
 				menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, dish, dateWithHourFormatted)));
 			} else {
 				// If this spot is invalid, we pass to the next spot
 				date = date.plusHours(1L);
 			}
 		}
-		return result;
+		return spot;
 	}
 
 	@Override
@@ -262,6 +264,7 @@ public class MenuServiceImpl implements MenuService {
 		// First, we query the necessary info : The menu and the user dishes
 		Menu menu = this.repository.findOne(menuId);
 		List<Dish> userDishes = this.dishRepository.findUserDishes(userId);
+		Integer mealsInWeek = this.userService.findUserMeals(userId).size();
 		// Empty the menu dishes
 		if (!menu.getDishes().isEmpty()) {
 			this.clearMenu(menuId);
@@ -273,7 +276,7 @@ public class MenuServiceImpl implements MenuService {
 		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
 		while (startDate.compareTo(endDate) < 0) {
 			// We fill each day with every meal
-			fillDayWithRandomDishes(menu, userDishes, startDate);
+			fillDayWithRandomDishes(menu, userDishes, startDate, mealsInWeek);
 			startDate = startDate.plusDays(1L);
 		}
 
@@ -284,8 +287,8 @@ public class MenuServiceImpl implements MenuService {
 		return this.mapper.menuToMenuDto(menu);
 	}
 
-	private void fillDayWithRandomDishes(Menu menu, List<Dish> userDishes, LocalDateTime date) {
-		for (int i = 0; i < MenuServiceImpl.MEALS_IN_DAY; i++) {
+	private void fillDayWithRandomDishes(Menu menu, List<Dish> userDishes, LocalDateTime date, Integer mealsInWeek) {
+		for (int i = 0; i < mealsInWeek; i++) {
 			// Select a dish
 			Dish randomDish = selectRandomDishWithValidMeal(userDishes, date);
 			if (randomDish != null) {
@@ -324,6 +327,7 @@ public class MenuServiceImpl implements MenuService {
 		// First, we query the necessary info : The menu and the user dishes
 		Menu menu = this.repository.findOne(menuId);
 		List<Dish> userDishes = this.dishRepository.findUserDishes(userId);
+		Integer mealsInWeek = this.userService.findUserMeals(userId).size();
 		// We get the max stats per week needed for the algorythm
 		UserConfigurationsDto confs = this.userService.findConfigurations(userId);
 		Map<String, Double> maxStats = getMaxStats(confs);
@@ -339,7 +343,7 @@ public class MenuServiceImpl implements MenuService {
 		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
 		while (startDate.compareTo(endDate) < 0) {
 			// We fill each day with every meal -> In case we can't, we stop filling
-			if (!fillDayWithValidDishes(menu, userDishes, startDate, currentStats, maxStats)) {
+			if (!fillDayWithValidDishes(menu, userDishes, startDate, currentStats, maxStats, mealsInWeek)) {
 				break;
 			}
 			startDate = startDate.plusDays(1L);
@@ -371,9 +375,9 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	private boolean fillDayWithValidDishes(Menu menu, List<Dish> userDishes, LocalDateTime date,
-			Map<String, Double> currentValues, Map<String, Double> maxValues) {
+			Map<String, Double> currentValues, Map<String, Double> maxValues, Integer mealsInWeek) {
 		boolean result = true;
-		for (int i = 0; i < MenuServiceImpl.MEALS_IN_DAY && result; i++) {
+		for (int i = 0; i < mealsInWeek && result; i++) {
 			// We add a valid dish to the menu
 			result = selectValidDishWithValidMeal(menu, userDishes, currentValues, maxValues, date);
 			if (result) {

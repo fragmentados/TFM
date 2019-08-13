@@ -16,7 +16,7 @@
   [mealsInWeek]="mealsInWeek"
   (eventTimesChanged)="eventTimesChanged($event)"
   (dishAdded)="updateMenuStatsWithDishStats($event)"
-  (eventClicked)="deleteDishFromCalendar($event)">
+  (eventClicked)="handleClickEvent($event)">
   </app-calendar-week-view>
   <br/>
   <div align="center">

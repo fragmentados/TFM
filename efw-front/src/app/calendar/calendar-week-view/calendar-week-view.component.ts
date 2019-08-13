@@ -143,6 +143,7 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
   @Output()
   eventClicked = new EventEmitter<{
     event: CalendarEvent;
+    shiftKey: boolean;
   }>();
 
   /**
@@ -832,15 +833,25 @@ export class CalendarWeekViewComponent implements OnChanges, OnInit, OnDestroy {
     return newEventDates;
   }
 
-  dishEventClicked(dishEvent: CalendarEvent) {
-    if (this.events.length === 1) {
-      this.events = [];
-    } else {
-      const indexOfEvent = this.events.indexOf(dishEvent);
-      this.events.splice(indexOfEvent, 1);
+  dishEventClicked(dishEvent: CalendarEvent, clickEvent) {
+    const shiftKey = clickEvent.shiftKey;
+    // If not shift key, we remove the event and the dish
+    if (!shiftKey) {
+      // We remove the event from the calendar component
+      if (this.events.length === 1) {
+        this.events = [];
+      } else {
+        const indexOfEvent = this.events.indexOf(dishEvent);
+        this.events.splice(indexOfEvent, 1);
+      }
+      this.refreshBody();
     }
-    this.refreshBody();
-    this.eventClicked.emit({ event: dishEvent });
+    this.eventClicked.emit(
+      {
+        event: dishEvent,
+        shiftKey: shiftKey
+      }
+    );
   }
 
   addDishEvent(dishEvent) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.MenuSpotFoundDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
@@ -55,7 +56,7 @@ public class MenuController {
 	}
 
 	@PostMapping(path = { "/dish/firstValidSpot" })
-	public ResponseDto addDishToFirstValidSpot(@RequestParam("userId") Integer userId,
+	public MenuSpotFoundDto addDishToFirstValidSpot(@RequestParam("userId") Integer userId,
 			@RequestBody AddDishToMenuDto dto) {
 		return service.addDishToFirstValidSpotOnMenu(userId, dto);
 	}

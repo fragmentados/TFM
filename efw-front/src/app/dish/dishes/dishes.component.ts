@@ -44,7 +44,7 @@ export class DishesComponent implements OnInit {
     const addToMenu: AddDishToMenu = new AddDishToMenu();
     addToMenu.dishId = dish.id;
     this.menuService.addDishToFirstValidSpotMenu(this.currentUser.id, addToMenu).subscribe(data => {
-      if (data.errorCode === 0) {
+      if (data.date) {
         alert('Dish added correctly');
       } else {
         alert('There are no valid spots for that dish');
