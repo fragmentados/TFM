@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.FillMenuFromTemplateDto;
 import com.eliasfb.efw.dto.MenuSpotFoundDto;
 import com.eliasfb.efw.dto.PriceEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
@@ -31,11 +32,13 @@ import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.model.MenuDisRel;
 import com.eliasfb.efw.model.MenuDisRelId;
+import com.eliasfb.efw.model.MenuTemplate;
 import com.eliasfb.efw.model.UnitAndQuantity;
 import com.eliasfb.efw.model.User;
 import com.eliasfb.efw.repository.DishRepository;
 import com.eliasfb.efw.repository.MenuDisRelRepository;
 import com.eliasfb.efw.repository.MenuRepository;
+import com.eliasfb.efw.repository.MenuTemplateRepository;
 import com.eliasfb.efw.service.MenuService;
 import com.eliasfb.efw.service.PriceEstimateService;
 import com.eliasfb.efw.service.UserService;
@@ -48,6 +51,9 @@ public class MenuServiceImpl implements MenuService {
 
 	@Autowired
 	private DishRepository dishRepository;
+
+	@Autowired
+	private MenuTemplateRepository menuTemplateRepo;
 
 	@Autowired
 	private MenuDisRelRepository menuDisRelRepository;
@@ -456,5 +462,45 @@ public class MenuServiceImpl implements MenuService {
 						.get(NutritionalStatEnum.PROTEINS.getName())
 				&& (currentValues.get(NutritionalStatEnum.CARBOHYDRATES.getName())
 						+ dish.getCarbohydrates()) < maxValues.get(NutritionalStatEnum.CARBOHYDRATES.getName());
+	}
+
+	@Override
+	@Transactional
+	public MenuDto fillMenuFromTemplate(int menuId, FillMenuFromTemplateDto dto) {
+		// Find corresponding entities : Menu and template
+		Menu menuToBeUpdated = this.repository.findOne(menuId);
+		MenuTemplate menuTemplate = this.menuTemplateRepo.findOne(dto.getTemplateId());
+		Menu menuFromTemplate = menuTemplate.getMenu();
+		// Empty the menu dishes
+		if (!menuToBeUpdated.getDishes().isEmpty()) {
+			this.clearMenu(menuId);
+			menuToBeUpdated.setDishes(new ArrayList<>());
+		}
+		Integer mealsInWeek = this.userService.findUserMeals(dto.getUserId()).size();
+		LocalDateTime startDate = LocalDate
+				.parse(menuToBeUpdated.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
+		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
+		Integer daysFromStartDate = 0;
+		while (startDate.compareTo(endDate) < 0) {
+			// We fill each day with every meal -> In case we can't, we stop filling
+			LocalDateTime date = startDate;
+			for (int i = 0; i < mealsInWeek; i++) {
+				// We add a valid dish to the menu
+				List<Dish> dishesForDate = menuFromTemplate.getDishesFromDaysOffsetAndHour(daysFromStartDate, date);
+				final LocalDateTime dateToInsert = date;
+				dishesForDate.stream().forEach(d -> {
+					menuToBeUpdated.getDishes().add(new MenuDisRel(new MenuDisRelId(menuToBeUpdated, d,
+							dateToInsert.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))));
+				});
+				date = date.plusHours(1L);
+			}
+			startDate = startDate.plusDays(1L);
+			daysFromStartDate++;
+		}
+
+		// We persist the changes made
+		Menu menuToBeReturned = this.repository.save(menuToBeUpdated);
+
+		return this.mapper.menuToMenuDto(menuToBeReturned);
 	}
 }

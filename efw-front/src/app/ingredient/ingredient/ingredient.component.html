@@ -1,7 +1,7 @@
 <div class="col-md-6">
   <h2> Ingredient Details</h2>
 
-  <table class="table table-striped">
+  <table class="table" show-filter="true">
     <thead>
     <tr>
       <th class="hidden">Id</th>
@@ -22,7 +22,7 @@
       <td>{{ingredient.name}}</td>
       <td>{{ingredient.category.name}}</td>
       <td *ngFor="let stat of ingredient.stats">{{stat.value}}</td>
-      <td><img *ngIf="isBanned(ingredient)" width="32px" height="32px" src="assets/warning.png"></td>
+      <td><img title="{{warningText}}" *ngIf="isBanned(ingredient)" width="32px" height="32px" src="assets/warning.png"></td>
       <td><button class="btn btn-success" (click)="updateIngredient(ingredient)">Update</button></td>
       <td><button class="btn btn-danger" (click)="deleteIngredient(ingredient)">Delete</button></td>
     </tr>

@@ -17,6 +17,7 @@ export class IngredientComponent implements OnInit {
   ingredients: Ingredient[];
   bannedCategories: FoodCategory[];
   currentUser: User;
+  warningText = 'The food category of this ingredient is currently banned by you';
 
   constructor(private router: Router, private userService: UserService, private ingredientService: IngredientService) {
     this.currentUser = this.userService.currentUserValue;

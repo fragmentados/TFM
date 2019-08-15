@@ -1,3 +1,4 @@
+import { MenuTemplateService } from './menuTemplate.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuCalendarComponent } from './menu-calendar/menu-calendar.component';
@@ -24,6 +25,6 @@ import { UserService } from '../user.service';
     MenuRoutingModule,
     NutritionModule
   ],
-  providers: [MenuService, UserService]
+  providers: [MenuService, MenuTemplateService, UserService]
 })
 export class MenuModule { }

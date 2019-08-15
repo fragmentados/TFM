@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.FillMenuFromTemplateDto;
 import com.eliasfb.efw.dto.MenuSpotFoundDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
@@ -39,4 +40,7 @@ public interface MenuService {
 	MenuDto generateValidMenu(Integer menuId, Integer userId);
 
 	MenuSpotFoundDto addDishToFirstValidSpotOnMenu(int userId, AddDishToMenuDto dto);
+
+	MenuDto fillMenuFromTemplate(int menuId, FillMenuFromTemplateDto dto);
+
 }

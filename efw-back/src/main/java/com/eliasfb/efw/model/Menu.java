@@ -1,5 +1,8 @@
 package com.eliasfb.efw.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +85,17 @@ public class Menu {
 
 	public boolean containsDish(Dish d) {
 		return this.dishes.stream().filter(dishRel -> dishRel.getId().getDish().equals(d)).findFirst().isPresent();
+	}
+
+	public List<Dish> getDishesFromDaysOffsetAndHour(Integer daysFromStartDate, LocalDateTime dateTime) {
+		// We get the corresponding date on this menu
+		LocalDateTime dateTimeWithOffset = LocalDate.parse(this.startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+				.plusDays(daysFromStartDate).atTime(dateTime.getHour(), 0);
+
+		return this.dishes.stream().map(dish -> dish.getId())
+				.filter(d -> dateTimeWithOffset.equals(
+						LocalDateTime.parse(d.getDishDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"))))
+				.map(drel -> drel.getDish()).collect(Collectors.toList());
 	}
 
 	@Data

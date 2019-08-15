@@ -1,3 +1,4 @@
+import { FillMenuFromTemplate } from './../models/menu/fillMenuFromTemplate.model';
 import { BackendResponse } from '../models/backendResponse.model';
 import { BACKEND_URL } from './../models/service';
 import {Injectable} from '@angular/core';
@@ -57,6 +58,10 @@ export class MenuService {
 
   public updateDishDateOnMenu(menuId: number, updateDishOnMenu: UpdateDishOnMenu) {
     return this.http.put<Menu>(this.menuUrl + '/' + menuId + '/dish', updateDishOnMenu);
+  }
+
+  public fillMenuFromTemplate(menuId: number, fillMenu: FillMenuFromTemplate) {
+    return this.http.put<Menu>(this.menuUrl + '/' + menuId + '/template', fillMenu);
   }
 
   public removeDishFromMenu(menuId: number, addDishToMenu: AddDishToMenu) {

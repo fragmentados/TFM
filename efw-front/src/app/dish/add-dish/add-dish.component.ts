@@ -27,6 +27,7 @@ export class AddDishComponent implements OnInit {
   currentUser: User;
   allowedMeals: Meal[] = [];
   selectedMeals: boolean[] = [];
+  image;
 
   constructor(private dishRestService: DishRestService,
     private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
@@ -89,6 +90,10 @@ export class AddDishComponent implements OnInit {
             alert(data.message);
           }
         });
+  }
+
+  onImageSelected(imageFile) {
+    this.image = imageFile;
   }
 
 }

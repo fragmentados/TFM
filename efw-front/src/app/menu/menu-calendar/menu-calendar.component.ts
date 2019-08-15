@@ -1,3 +1,4 @@
+import { FillMenuFromTemplate } from './../../models/menu/fillMenuFromTemplate.model';
 import { OK_CODE } from '../../models/service';
 import { AddDishToMenu } from './../../models/menu/addDishToMenu.model';
 // tslint:disable-next-line:max-line-length
@@ -16,6 +17,8 @@ import { Subject } from 'rxjs';
 import { User } from '../../models/user/user.model';
 import { MenuDish } from '../../models/menu/menuDish.model';
 import { UpdateDishOnMenu } from '../../models/menu/updateDishOnMenu.model';
+import { MenuTemplateService } from '../menuTemplate.service';
+import { CreateMenuTemplate } from '../../models/menu/menutemplate/createMenuTemplate.model';
 
 @Component({
   selector: 'app-menu-calendar',
@@ -38,7 +41,8 @@ export class MenuCalendarComponent implements OnInit {
     this.updateStatsSubject.next(this.menu);
   }
 
-  constructor(private userService: UserService, private menuService: MenuService, public dialog: MatDialog) {
+  constructor(private userService: UserService, private menuService: MenuService,
+    private menuTemplateService: MenuTemplateService, public dialog: MatDialog) {
     this.currentUser = this.userService.currentUserValue;
   }
 
@@ -135,6 +139,29 @@ export class MenuCalendarComponent implements OnInit {
   createMenu() {
     this.menuService.createMenu(this.currentUser.id, this.viewDate).subscribe(data => {
       this.initMenuAndEvents();
+    });
+  }
+
+  saveTemplate() {
+    const createTemplate = new CreateMenuTemplate();
+    createTemplate.menuId = this.menu.id;
+    createTemplate.userId = this.currentUser.id;
+    createTemplate.name = 'Nombre de prueba Frontend';
+    this.menuTemplateService.saveAsTemplate(createTemplate).subscribe(data => {
+      alert('Template correctly saved');
+    });
+  }
+
+  fillFromTemplate() {
+    const fillFromTemplate = new FillMenuFromTemplate();
+    fillFromTemplate.templateId = 5;
+    fillFromTemplate.userId = this.currentUser.id;
+    this.menuService.fillMenuFromTemplate(this.menu.id, fillFromTemplate).subscribe(data => {
+      this.menu.days = data.days;
+      this.menu.stats = data.stats;
+      this.sendUpdateStatsEvent();
+      this.initCalendarEventsWithDishes();
+      alert('Menu Filled From Template');
     });
   }
 

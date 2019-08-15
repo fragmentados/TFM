@@ -12,6 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.eliasfb.efw.dto.MenuTemplateDto;
 import com.eliasfb.efw.dto.menu.MenuDayDto;
 import com.eliasfb.efw.dto.menu.MenuDishDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
@@ -20,6 +21,7 @@ import com.eliasfb.efw.enums.NutritionalStatEnum;
 import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.model.MenuDisRel;
+import com.eliasfb.efw.model.MenuTemplate;
 
 @Mapper(componentModel = "spring", uses = DishToDtoMapper.class)
 public abstract class MenuToDtoMapper {
@@ -80,5 +82,9 @@ public abstract class MenuToDtoMapper {
 		menuDishDto.setDate(menuDisRel.getId().getDishDate());
 		return menuDishDto;
 	}
+
+	public abstract List<MenuTemplateDto> menuTemplateListToMenuTemplateDtoList(List<MenuTemplate> menuTemplates);
+
+	public abstract MenuTemplateDto menuTemplateToMenuTemplateDto(MenuTemplate menuTemplate);
 
 }

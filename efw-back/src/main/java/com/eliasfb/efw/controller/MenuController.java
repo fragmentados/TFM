@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.FillMenuFromTemplateDto;
 import com.eliasfb.efw.dto.MenuSpotFoundDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
@@ -79,6 +80,11 @@ public class MenuController {
 	@PutMapping(path = { "/{id}/dish" })
 	public MenuDto updateDishDateOnMenu(@PathVariable("id") int id, @RequestBody UpdateDishOnMenuDto dto) {
 		return service.updateDishDateOnMenu(id, dto);
+	}
+
+	@PutMapping(path = { "/{id}/template" })
+	public MenuDto fillMenuFromTemplate(@PathVariable("id") int id, @RequestBody FillMenuFromTemplateDto dto) {
+		return service.fillMenuFromTemplate(id, dto);
 	}
 
 	@DeleteMapping(path = { "/{id}/dish" })
