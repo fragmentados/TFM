@@ -19,6 +19,8 @@ import { MenuDish } from '../../models/menu/menuDish.model';
 import { UpdateDishOnMenu } from '../../models/menu/updateDishOnMenu.model';
 import { MenuTemplateService } from '../menuTemplate.service';
 import { CreateMenuTemplate } from '../../models/menu/menutemplate/createMenuTemplate.model';
+import { MenuSaveTemplateComponent } from '../menu-save-template/menu-save-template.component';
+import { MenuSelectTemplateComponent } from '../menu-select-template/menu-select-template.component';
 
 @Component({
   selector: 'app-menu-calendar',
@@ -143,25 +145,36 @@ export class MenuCalendarComponent implements OnInit {
   }
 
   saveTemplate() {
-    const createTemplate = new CreateMenuTemplate();
-    createTemplate.menuId = this.menu.id;
-    createTemplate.userId = this.currentUser.id;
-    createTemplate.name = 'Nombre de prueba Frontend';
-    this.menuTemplateService.saveAsTemplate(createTemplate).subscribe(data => {
-      alert('Template correctly saved');
-    });
+      const dialogRef = this.dialog.open(MenuSaveTemplateComponent, {
+        width: '600px'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog closed: ${result}`);
+        const createTemplate = new CreateMenuTemplate();
+        createTemplate.menuId = this.menu.id;
+        createTemplate.userId = this.currentUser.id;
+        createTemplate.name = result;
+        this.menuTemplateService.saveAsTemplate(createTemplate).subscribe(data => {
+          alert('Template correctly saved');
+        });
+      });
   }
 
   fillFromTemplate() {
-    const fillFromTemplate = new FillMenuFromTemplate();
-    fillFromTemplate.templateId = 5;
-    fillFromTemplate.userId = this.currentUser.id;
-    this.menuService.fillMenuFromTemplate(this.menu.id, fillFromTemplate).subscribe(data => {
-      this.menu.days = data.days;
-      this.menu.stats = data.stats;
-      this.sendUpdateStatsEvent();
-      this.initCalendarEventsWithDishes();
-      alert('Menu Filled From Template');
+    const dialogRef = this.dialog.open(MenuSelectTemplateComponent, {
+      width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const fillFromTemplate = new FillMenuFromTemplate();
+      fillFromTemplate.templateId = result.id;
+      fillFromTemplate.userId = this.currentUser.id;
+      this.menuService.fillMenuFromTemplate(this.menu.id, fillFromTemplate).subscribe(data => {
+        this.menu.days = data.days;
+        this.menu.stats = data.stats;
+        this.sendUpdateStatsEvent();
+        this.initCalendarEventsWithDishes();
+        alert('Menu Filled From Template');
+      });
     });
   }
 

@@ -11,9 +11,11 @@ import { adapterFactory } from '../calendar/date-adapters/date-fns';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NutritionModule } from '../nutrition/nutrition.module';
 import { UserService } from '../user.service';
+import { MenuSaveTemplateComponent } from './menu-save-template/menu-save-template.component';
+import { MenuSelectTemplateComponent } from './menu-select-template/menu-select-template.component';
 
 @NgModule({
-  declarations: [MenuCalendarComponent],
+  declarations: [MenuCalendarComponent, MenuSaveTemplateComponent, MenuSelectTemplateComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -24,6 +26,10 @@ import { UserService } from '../user.service';
     MatDialogModule,
     MenuRoutingModule,
     NutritionModule
+  ],
+  entryComponents: [
+    MenuSaveTemplateComponent,
+    MenuSelectTemplateComponent
   ],
   providers: [MenuService, MenuTemplateService, UserService]
 })
