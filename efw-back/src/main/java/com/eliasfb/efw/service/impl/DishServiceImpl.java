@@ -14,7 +14,6 @@ import com.eliasfb.efw.model.Dish;
 import com.eliasfb.efw.model.IngDisRel;
 import com.eliasfb.efw.model.IngDisRelId;
 import com.eliasfb.efw.model.Ingredient;
-import com.eliasfb.efw.repository.DisMealRelRepository;
 import com.eliasfb.efw.repository.DishRepository;
 import com.eliasfb.efw.service.DishService;
 
@@ -23,8 +22,6 @@ public class DishServiceImpl implements DishService {
 
 	@Autowired
 	private DishRepository repository;
-	@Autowired
-	private DisMealRelRepository dishMealRepository;
 	@Autowired
 	private DishToDtoMapper mapper;
 

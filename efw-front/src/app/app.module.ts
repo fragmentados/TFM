@@ -8,12 +8,14 @@ import {HttpClientModule} from '@angular/common/http';
 import { CalendarModule } from './calendar/calendar.module';
 import { adapterFactory } from './calendar/date-adapters/date-fns';
 import { UserService } from './user.service';
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    FacebookModule.forRoot(),
     BrowserAnimationsModule,
     AppRoutingModule,
     CalendarCommonModule,

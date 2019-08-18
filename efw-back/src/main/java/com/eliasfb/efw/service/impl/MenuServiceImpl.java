@@ -17,28 +17,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.FillMenuFromTemplateDto;
 import com.eliasfb.efw.dto.MenuSpotFoundDto;
+import com.eliasfb.efw.dto.MlSuggestDishDto;
 import com.eliasfb.efw.dto.PriceEstimateDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
 import com.eliasfb.efw.dto.UserConfigurationsDto;
+import com.eliasfb.efw.dto.mapper.DishToDtoMapper;
 import com.eliasfb.efw.dto.mapper.MenuToDtoMapper;
 import com.eliasfb.efw.dto.menu.MenuDto;
 import com.eliasfb.efw.dto.menu.ShoppingListDto;
 import com.eliasfb.efw.dto.menu.ShoppingListItemDto;
 import com.eliasfb.efw.enums.NutritionalStatEnum;
 import com.eliasfb.efw.model.Dish;
+import com.eliasfb.efw.model.MachineLearningInstance;
+import com.eliasfb.efw.model.Meal;
 import com.eliasfb.efw.model.Menu;
 import com.eliasfb.efw.model.MenuDisRel;
 import com.eliasfb.efw.model.MenuDisRelId;
 import com.eliasfb.efw.model.MenuTemplate;
 import com.eliasfb.efw.model.UnitAndQuantity;
 import com.eliasfb.efw.model.User;
+import com.eliasfb.efw.repository.CustomQueryRepository;
 import com.eliasfb.efw.repository.DishRepository;
+import com.eliasfb.efw.repository.MealRepository;
 import com.eliasfb.efw.repository.MenuDisRelRepository;
 import com.eliasfb.efw.repository.MenuRepository;
 import com.eliasfb.efw.repository.MenuTemplateRepository;
+import com.eliasfb.efw.service.MachineLearningService;
 import com.eliasfb.efw.service.MenuService;
 import com.eliasfb.efw.service.PriceEstimateService;
 import com.eliasfb.efw.service.UserService;
@@ -53,19 +61,31 @@ public class MenuServiceImpl implements MenuService {
 	private DishRepository dishRepository;
 
 	@Autowired
+	private MealRepository mealRepository;
+
+	@Autowired
 	private MenuTemplateRepository menuTemplateRepo;
 
 	@Autowired
 	private MenuDisRelRepository menuDisRelRepository;
 
 	@Autowired
+	private CustomQueryRepository customQueryRepo;
+
+	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private MachineLearningService machineLearningService;
 
 	@Autowired
 	private PriceEstimateService priceEstimate;
 
 	@Autowired
 	private MenuToDtoMapper mapper;
+
+	@Autowired
+	private DishToDtoMapper dishMapper;
 
 	private static final Long DAYS_IN_WEEK = 7L;
 
@@ -503,4 +523,37 @@ public class MenuServiceImpl implements MenuService {
 
 		return this.mapper.menuToMenuDto(menuToBeReturned);
 	}
+
+	@Override
+	@Transactional
+	public DishDto machineLearningSuggestDish(int menuId, MlSuggestDishDto dto) {
+		DishDto dishResult = null;
+		Menu menu = this.repository.findOne(menuId);
+		LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+		Meal meal = this.mealRepository
+				.findByUserIdAndHour(menu.getUser().getId(), date.format(DateTimeFormatter.ofPattern("HH"))).get(0);
+		if (menu != null) {
+			List<MachineLearningInstance> trainingInstances = this.customQueryRepo
+					.findUserInstances(menu.getUser().getId());
+			String dayName = date.getDayOfWeek().name();
+			MachineLearningInstance testInstance = new MachineLearningInstance(dayName, meal.getName());
+			try {
+				String dishNameSuggested = this.machineLearningService.evaluateInstance(trainingInstances,
+						testInstance);
+				// We have found a dish suggested -> We insert it into the menu in the concrete
+				// date
+				if (dishNameSuggested != null) {
+					List<Dish> dishWithName = this.dishRepository.findByUserAndByName(menu.getUser().getId(),
+							dishNameSuggested);
+					menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, dishWithName.get(0), dto.getDate())));
+					this.repository.save(menu);
+					dishResult = this.dishMapper.toDto(dishWithName.get(0));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dishResult;
+	}
+
 }

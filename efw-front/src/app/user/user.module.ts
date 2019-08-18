@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserConfsComponent } from './user-confs/user-confs.component';
 import { LoginComponent } from './login/login.component';
+import { FacebookService } from 'ngx-facebook';
 
 
 @NgModule({
@@ -18,6 +19,6 @@ import { LoginComponent } from './login/login.component';
     UserRoutingModule
   ],
   exports: [UserComponent, AddUserComponent],
-  providers: [UserService, IngredientService]
+  providers: [UserService, IngredientService, FacebookService]
 })
 export class UserModule { }

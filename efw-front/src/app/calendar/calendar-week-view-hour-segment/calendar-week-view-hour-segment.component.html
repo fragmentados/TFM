@@ -9,7 +9,8 @@
     {{segment.name}}
   </div>
   <div *ngIf="!isMealLabel">
-    <button (click)="addDishPopup()">Add dish</button>
+    <button style="margin-top:10px;margin-left: 5px" (click)="addDishPopup()">Add</button>
+    <button style="margin-left:10px" (click)="suggestDish()">Suggest</button>
   </div>
 </div>
 

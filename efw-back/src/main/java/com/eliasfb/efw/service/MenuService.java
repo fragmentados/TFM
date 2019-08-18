@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.FillMenuFromTemplateDto;
 import com.eliasfb.efw.dto.MenuSpotFoundDto;
+import com.eliasfb.efw.dto.MlSuggestDishDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
@@ -30,6 +32,8 @@ public interface MenuService {
 	Menu update(Menu menu);
 
 	ResponseDto addDishToMenu(int menuId, AddDishToMenuDto dto);
+
+	DishDto machineLearningSuggestDish(int menuId, MlSuggestDishDto dto);
 
 	MenuDto updateDishDateOnMenu(int menuId, UpdateDishOnMenuDto dto);
 

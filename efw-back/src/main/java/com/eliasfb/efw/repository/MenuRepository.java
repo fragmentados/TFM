@@ -7,6 +7,7 @@ import org.springframework.data.repository.Repository;
 import com.eliasfb.efw.model.Menu;
 
 public interface MenuRepository extends Repository<Menu, Integer> {
+
 	void delete(Menu menu);
 
 	List<Menu> findAll();

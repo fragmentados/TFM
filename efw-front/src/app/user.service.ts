@@ -4,10 +4,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from './models/user/user.model';
 import { UserConfs } from './models/user/userConfs.model';
 import { Login } from './models/user/login.model';
-import { ResponseUser } from './models/user/responseUser.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Meal } from './models/dish/meal.model';
+import { FacebookService, InitParams, LoginResponse } from 'ngx-facebook';
 
 
 const httpOptions = {
@@ -24,9 +24,16 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private fb: FacebookService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    const initParams: InitParams = {
+      appId: '704819356612857',
+      xfbml: true,
+      version: 'v2.8'
+    };
+
+    fb.init(initParams);
   }
 
   public getUser(userId: number) {
@@ -64,7 +71,7 @@ export class UserService {
   public login(login: Login) {
     return this.http.post<User>(this.userUrl + '/login', login)
       .pipe(map(user => {
-        if (user) {
+        if (user && user.id) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
@@ -74,10 +81,28 @@ export class UserService {
     }));
   }
 
+  public loginFacebook() {
+    return this.fb.login();
+  }
+
+  public fakeLoginElias(facebookUserId: string, accessToken: string) {
+    this.getUser(1).subscribe(data => {
+      data.facebookUserId = facebookUserId;
+      data.accessToken = accessToken;
+      localStorage.setItem('currentUser', JSON.stringify(data));
+      this.currentUserSubject.next(data);
+    });
+  }
+
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.fb.getLoginStatus().then(data => {
+      if (data.status === 'connected') {
+        this.fb.logout().then(() => console.log('Logged out!'));
+      }
+    });
   }
 
 }

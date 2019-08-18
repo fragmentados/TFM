@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eliasfb.efw.dto.AddDishToMenuDto;
 import com.eliasfb.efw.dto.CreateMenuDto;
+import com.eliasfb.efw.dto.DishDto;
 import com.eliasfb.efw.dto.FillMenuFromTemplateDto;
 import com.eliasfb.efw.dto.MenuSpotFoundDto;
+import com.eliasfb.efw.dto.MlSuggestDishDto;
 import com.eliasfb.efw.dto.ResponseDto;
 import com.eliasfb.efw.dto.UpdateDishOnMenuDto;
 import com.eliasfb.efw.dto.menu.MenuDto;
@@ -65,6 +67,11 @@ public class MenuController {
 	@PostMapping(path = { "/{id}/dish" })
 	public ResponseDto addDishToMenu(@PathVariable("id") int id, @RequestBody AddDishToMenuDto dto) {
 		return service.addDishToMenu(id, dto);
+	}
+
+	@PostMapping(path = { "/{id}/suggest" })
+	public DishDto machineLearningSuggestDish(@PathVariable("id") int id, @RequestBody MlSuggestDishDto dto) {
+		return service.machineLearningSuggestDish(id, dto);
 	}
 
 	@PostMapping(path = { "/{id}/random" })

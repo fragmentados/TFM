@@ -1,3 +1,4 @@
+import { SuggestDish } from './../../models/menu/suggestDish.model';
 import { addHours } from 'date-fns';
 import { CalendarEvent } from 'calendar-utils';
 import { Component, Input, EventEmitter, Output } from '@angular/core';
@@ -61,5 +62,22 @@ export class CalendarWeekViewHourSegmentComponent {
         });
       });
     });
+  }
+
+  suggestDish() {
+    const suggestDish = new SuggestDish();
+    suggestDish.date = this.menuService.formatDateWithHour(this.segment.date);
+    this.menuService.suggestDishForMenu(this.menuId, suggestDish).subscribe(data => {
+      console.log(`Dish added to menu: ${data}`);
+        this.dishAdded.emit({
+          event: {
+            start: this.segment.date,
+            end: addHours(this.segment.date, 1),
+            title: data.name,
+            draggable: true
+          },
+          dish: data
+        });
+    })
   }
 }

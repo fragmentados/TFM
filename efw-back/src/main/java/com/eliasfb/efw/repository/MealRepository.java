@@ -13,6 +13,8 @@ public interface MealRepository extends Repository<Meal, Integer> {
 	@Query("SELECT m FROM Meal m JOIN m.user u WHERE u.id = :userId ORDER BY m.hour")
 	List<Meal> findByUserIdOrderByHour(@Param("userId") Integer userId);
 
+	List<Meal> findByUserIdAndHour(Integer userId, String hour);
+
 	void delete(Meal meal);
 
 	Meal save(Meal meal);

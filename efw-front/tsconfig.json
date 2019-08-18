@@ -16,6 +16,9 @@
       "es2017",
       "dom"
     ],
+    "types": [
+      "node", "jasmine", "facebook-js-sdk"
+    ],
     "module": "es2015",
     "baseUrl": "./"
   }

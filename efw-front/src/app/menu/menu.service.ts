@@ -9,6 +9,8 @@ import { ShoppingList } from '../models/menu/shoppingList/shoppingList.model';
 import { AddMenu } from '../models/menu/addMenu.model';
 import { UpdateDishOnMenu } from '../models/menu/updateDishOnMenu.model';
 import { SpotFound } from '../models/menu/spotFound.model';
+import { SuggestDish } from '../models/menu/suggestDish.model';
+import { Dish } from '../models/dish/dish.model';
 
 @Injectable()
 export class MenuService {
@@ -44,6 +46,10 @@ export class MenuService {
 
   public addDishToMenu(menuId: number, addDishToMenu: AddDishToMenu) {
     return this.http.post<BackendResponse>(this.menuUrl + '/' + menuId + '/dish', addDishToMenu);
+  }
+
+  public suggestDishForMenu(menuId: number, suggestDish: SuggestDish) {
+    return this.http.post<Dish>(this.menuUrl + '/' + menuId + '/suggest', suggestDish);
   }
 
   public randomGenerateMenu(menuId: number, userId: number) {

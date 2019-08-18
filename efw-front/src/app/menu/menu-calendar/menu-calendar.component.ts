@@ -1,3 +1,4 @@
+import { FacebookService } from 'ngx-facebook';
 import { FillMenuFromTemplate } from './../../models/menu/fillMenuFromTemplate.model';
 import { OK_CODE } from '../../models/service';
 import { AddDishToMenu } from './../../models/menu/addDishToMenu.model';
@@ -44,7 +45,7 @@ export class MenuCalendarComponent implements OnInit {
   }
 
   constructor(private userService: UserService, private menuService: MenuService,
-    private menuTemplateService: MenuTemplateService, public dialog: MatDialog) {
+    private menuTemplateService: MenuTemplateService, private fb: FacebookService, public dialog: MatDialog) {
     this.currentUser = this.userService.currentUserValue;
   }
 
@@ -194,6 +195,19 @@ export class MenuCalendarComponent implements OnInit {
     mywindow.close();
 
       return true;
+  }
+
+  shareMenu() {
+    this.fb.ui(
+      {
+          method: 'feed',
+          name: 'This is the content of the "name" field.',
+          // link: 'http://www.example.com',
+          // picture: 'http://www.hyperarts.com/external-xfbml/share-image.gif',
+          caption: '',
+          description: 'Trying out facebook publish',
+          message: ''
+      });
   }
 
   updateMenuStatsWithDishStats(dishStats: Stat[]) {
