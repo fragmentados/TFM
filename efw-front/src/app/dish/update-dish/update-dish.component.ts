@@ -29,6 +29,7 @@ export class UpdateDishComponent implements OnInit {
   dishId: number;
   allowedMeals: Meal[] = [];
   selectedMeals: boolean[] = [];
+  statsTitle = 'Dish Stats';
 
   constructor(private route: ActivatedRoute, private dishService: DishService, private dishRestService: DishRestService,
     private ingredientService: IngredientService, private userService: UserService) {
@@ -60,6 +61,13 @@ export class UpdateDishComponent implements OnInit {
       this.dish.name = dishName;
       this.dishStats = this.dishService.addIngredientStatsToDish(this.dishStats, this.selectedIng, this.ingredientQuantity);
     }
+  }
+
+  clearForm(): void {
+    this.dish.name = '';
+    this.dish.recipe = '';
+    this.selectedIng = null;
+    this.clearIngredients();
   }
 
   clearIngredients(): void {

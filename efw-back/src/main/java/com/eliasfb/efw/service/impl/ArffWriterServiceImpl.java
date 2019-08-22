@@ -19,8 +19,8 @@ public class ArffWriterServiceImpl implements ArffWriterService {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("training.arff"));
 		this.writeHeader(writer, dbInstances, "Training");
 		for (MachineLearningInstance dbInstance : dbInstances) {
-			writer.write(
-					dbInstance.getWeekDay() + "," + dbInstance.getMealName() + "," + dbInstance.getDishName() + "\n");
+			writer.write("'" + dbInstance.getWeekDay() + "','" + dbInstance.getMealName() + "','"
+					+ dbInstance.getDishName() + "'\n");
 		}
 		writer.close();
 	}
@@ -30,7 +30,7 @@ public class ArffWriterServiceImpl implements ArffWriterService {
 			throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("test.arff"));
 		this.writeHeader(writer, dbInstances, "Test");
-		writer.write(dbInstance.getWeekDay() + "," + dbInstance.getMealName() + ",?");
+		writer.write("'" + dbInstance.getWeekDay() + "','" + dbInstance.getMealName() + "',?");
 		writer.close();
 	}
 
@@ -38,26 +38,30 @@ public class ArffWriterServiceImpl implements ArffWriterService {
 			throws IOException {
 		writer.write("@relation " + relationName + "\n");
 		writer.write("\n");
-		writer.write("@attribute weekDay {" + getWeekDaysFromDbInstances(dbInstances) + "}\n");
-		writer.write("@attribute mealName {" + getMealNamesFromDbInstances(dbInstances) + "}\n");
-		writer.write("@attribute dishName {" + getDishNamesFromDbInstances(dbInstances) + "}\n");
+		writer.write(
+				"@attribute weekDay {" + formatStringListAsString(getWeekDaysFromDbInstances(dbInstances)) + "}\n");
+		writer.write(
+				"@attribute mealName {" + formatStringListAsString(getMealNamesFromDbInstances(dbInstances)) + "}\n");
+		writer.write(
+				"@attribute dishName {" + formatStringListAsString(getDishNamesFromDbInstances(dbInstances)) + "}\n");
 		writer.write("\n");
 		writer.write("@data\n");
 	}
 
-	private static String getDishNamesFromDbInstances(List<MachineLearningInstance> dbInstances) {
-		return String.join(",",
-				dbInstances.stream().map(dbi -> dbi.getDishName()).distinct().collect(Collectors.toList()));
+	private static String formatStringListAsString(List<String> stringList) {
+		return "'" + String.join("','", stringList) + "'";
 	}
 
-	private static String getMealNamesFromDbInstances(List<MachineLearningInstance> dbInstances) {
-		return String.join(",",
-				dbInstances.stream().map(dbi -> dbi.getMealName()).distinct().collect(Collectors.toList()));
+	private static List<String> getDishNamesFromDbInstances(List<MachineLearningInstance> dbInstances) {
+		return dbInstances.stream().map(dbi -> dbi.getDishName()).distinct().collect(Collectors.toList());
 	}
 
-	private static String getWeekDaysFromDbInstances(List<MachineLearningInstance> dbInstances) {
-		return String.join(",",
-				dbInstances.stream().map(dbi -> dbi.getWeekDay()).distinct().collect(Collectors.toList()));
+	private static List<String> getMealNamesFromDbInstances(List<MachineLearningInstance> dbInstances) {
+		return dbInstances.stream().map(dbi -> dbi.getMealName()).distinct().collect(Collectors.toList());
+	}
+
+	private static List<String> getWeekDaysFromDbInstances(List<MachineLearningInstance> dbInstances) {
+		return dbInstances.stream().map(dbi -> dbi.getWeekDay()).distinct().collect(Collectors.toList());
 	}
 
 }

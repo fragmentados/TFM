@@ -6,12 +6,12 @@
     <tr>
       <th class="hidden">Id</th>
       <th>Name</th>
-      <th>Category</th>
+      <th *ngIf="!isTablet && !isMobile">Category</th>
       <th>Calories</th>
-      <th>Fats</th>
-      <th>Proteins</th>
-      <th>Carbohydrates</th>
-      <th>Warning</th>
+      <th *ngIf="isTablet || !isMobile">Fats</th>
+      <th *ngIf="isTablet || !isMobile">Proteins</th>
+      <th *ngIf="isTablet || !isMobile">Carbohydrates</th>
+      <th *ngIf="!isTablet && !isMobile">Warning</th>
       <th>Update</th>
       <th>Delete</th>
     </tr>
@@ -20,9 +20,12 @@
     <tr *ngFor="let ingredient of ingredients">
       <td class="hidden">{{ingredient.id}}</td>
       <td>{{ingredient.name}}</td>
-      <td>{{ingredient.category.name}}</td>
-      <td *ngFor="let stat of ingredient.stats">{{stat.value}}</td>
-      <td><img title="{{warningText}}" *ngIf="isBanned(ingredient)" width="32px" height="32px" src="assets/warning.png"></td>
+      <td *ngIf="!isTablet && !isMobile">{{ingredient.category.name}}</td>
+      <td *ngIf="isMobile">{{ingredientCalories(ingredient)}}</td>
+      <ng-container *ngFor="let stat of ingredient.stats">
+        <td *ngIf="isTablet || !isMobile">{{stat.value}}</td>
+      </ng-container>
+      <td *ngIf="!isTablet && !isMobile"><img title="{{warningText}}" *ngIf="isBanned(ingredient)" width="32px" height="32px" src="assets/warning.png"></td>
       <td><button class="btn btn-success" (click)="updateIngredient(ingredient)">Update</button></td>
       <td><button class="btn btn-danger" (click)="deleteIngredient(ingredient)">Delete</button></td>
     </tr>

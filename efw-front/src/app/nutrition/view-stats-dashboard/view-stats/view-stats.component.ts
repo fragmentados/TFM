@@ -9,6 +9,8 @@ import { Stat } from '../../../models/nutrition/stat.model';
 })
 export class ViewStatsComponent {
 
+  @Input() statsTitle: string;
+
   @Input() viewageType: string;
 
   @Input() stats: Stat[];

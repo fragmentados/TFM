@@ -26,6 +26,9 @@ export class LoginComponent implements OnInit {
       console.log(response);
       if (response.status === 'connected') {
         // TODO REMOVE THIS WHEN CORRECT USER MANAGEMENT
+        this.userService.getFacebookProfile().then((res: any) => {
+          console.log('Got the user profile', res);
+        });
         this.userService.fakeLoginElias(response.authResponse.userID, response.authResponse.accessToken);
         this.router.navigate(['/menu']);
       }

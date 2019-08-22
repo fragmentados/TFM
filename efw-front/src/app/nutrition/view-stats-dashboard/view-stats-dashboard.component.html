@@ -1,16 +1,16 @@
 <form>
   <div class="dashboard-header">
     <h2 class="dashboard-title"> Nutrition Stats - {{viewageType}}</h2>
-    <button (click)="switchDaily()" *ngIf="viewageType === 'WEEKLY'"> Switch to Daily</button>
-    <div class="dashboard-daily" *ngIf="viewageType === 'DAILY'">
-      <input type="date" min="{{menu.startDate}}" max="{{getMaxMenuDate()}}" #DaySelect="ngModel" name="DaySelect" (change)="updateSelectedDailyStats($event)" [(ngModel)]="selectedDay" class="form-control">
-      <button (click)="switchWeekly()">Switch to Weekly</button>
+    <button (click)="switchDaily()" *ngIf="!isMobile && viewageType === 'WEEKLY'"> Switch to Daily</button>
+    <div class="dashboard-daily" *ngIf="!isMobile && viewageType === 'DAILY'">
+      <input type="date" min="{{getMinDate()}}" max="{{getMaxMenuDate()}}" #DaySelect="ngModel" name="DaySelect" (change)="updateSelectedDailyStats($event)" [(ngModel)]="selectedDay" class="form-control">
+      <button *ngIf="!isTablet" (click)="switchWeekly()">Switch to Weekly</button>
     </div>
   </div>
 </form>
 <app-view-stats *ngIf="selectedStats"
   [stats]="selectedStats"
   [userConfs]="userConfs"
-  [areMenuStats]="true"
+  [areMenuStats]="viewageType === 'WEEKLY'"
   [viewageType]="viewageType">
 </app-view-stats>

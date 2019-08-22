@@ -1,3 +1,4 @@
+import { ApplicationStateService } from './../../application-state.service';
 import { FacebookService } from 'ngx-facebook';
 import { FillMenuFromTemplate } from './../../models/menu/fillMenuFromTemplate.model';
 import { OK_CODE } from '../../models/service';
@@ -39,14 +40,19 @@ export class MenuCalendarComponent implements OnInit {
   private updateStatsSubject: Subject<Menu> = new Subject<Menu>();
   currentUser: User;
   refresh: Subject<any> = new Subject();
+  isMobile = true;
+  isTablet = true;
 
   sendUpdateStatsEvent() {
     this.updateStatsSubject.next(this.menu);
   }
 
   constructor(private userService: UserService, private menuService: MenuService,
-    private menuTemplateService: MenuTemplateService, private fb: FacebookService, public dialog: MatDialog) {
+    private menuTemplateService: MenuTemplateService, private fb: FacebookService,
+    private appStateService: ApplicationStateService, public dialog: MatDialog) {
     this.currentUser = this.userService.currentUserValue;
+    this.isMobile = appStateService.getIsMobileResolution();
+    this.isTablet = appStateService.getIsTabletResolution();
   }
 
   ngOnInit() {
@@ -289,6 +295,16 @@ export class MenuCalendarComponent implements OnInit {
     const date: string = this.menuService.formatDate(start);
     const dateWithHour: string = this.menuService.formatDateWithHour(start);
     return this.menu.days.filter(day => day.date === date)[0].meals.filter(meal => meal.date === dateWithHour)[0];
+  }
+
+  getDaysInWeek() {
+    if (this.isMobile) {
+      return 1;
+    } else if (this.isTablet) {
+      return 3;
+    } else {
+      return 7;
+    }
   }
 
   updateMenuWithNewMenu() {

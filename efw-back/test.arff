@@ -1,8 +1,8 @@
 @relation Test
 
-@attribute weekDay {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY}
-@attribute mealName {Desayuno,Comida,Cena}
-@attribute dishName {Desayuno,Comida,Cena}
+@attribute weekDay {'MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY'}
+@attribute mealName {'Desayuno','Comida','Merienda','Cena'}
+@attribute dishName {'Lunes Desayuno','Lunes Comida','Lunes Cena','Martes Desayuno','Martes Comida','Martes Cena','Miercoles Desayuno','Miercoles Comida','Miercoles Cena','Jueves Desayuno','Jueves Comida','Jueves Cena','Viernes Desayuno','Viernes Comida','Viernes Cena','Sabado Desayuno','Sabado Comida','Sabado Cena','Domingo Desayuno','Domingo Comida','Domingo Cena','Patatas con lechuga','Prueba Desayuno','Carne con patatas','Prueba Comida','Prueba Merienda','Prueba Cena'}
 
 @data
-THURSDAY,Cena,?
+'WEDNESDAY','Desayuno',?

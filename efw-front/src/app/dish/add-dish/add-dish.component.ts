@@ -28,6 +28,7 @@ export class AddDishComponent implements OnInit {
   allowedMeals: Meal[] = [];
   selectedMeals: boolean[] = [];
   image;
+  statsTitle = 'Dish Stats';
 
   constructor(private dishRestService: DishRestService,
     private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
@@ -36,7 +37,12 @@ export class AddDishComponent implements OnInit {
 
   ngOnInit() {
     this.ingredientService.getUserIngredients(this.currentUser.id).subscribe(data => this.ingredients = data);
-    this.userService.getUserMeals(this.currentUser.id).subscribe(data => this.allowedMeals = data);
+    this.userService.getUserMeals(this.currentUser.id).subscribe(data => {
+      this.allowedMeals = data;
+      this.allowedMeals.forEach(m => {
+        this.selectedMeals.push(true);
+      });
+    });
     this.dish.ingredients = [];
   }
 
@@ -57,6 +63,7 @@ export class AddDishComponent implements OnInit {
 
   clearForm(): void {
     this.dish.name = '';
+    this.dish.recipe = '';
     this.selectedIng = null;
     this.clearIngredients();
   }

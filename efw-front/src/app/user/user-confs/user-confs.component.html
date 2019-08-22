@@ -1,7 +1,8 @@
-<div class="col-md-6">
-    <h2 class="text-center">User Confs</h2>
-  <form>
-    <div *ngIf="userConf">
+
+<h2 class="text-center">User Confs</h2>
+<form>
+  <div *ngIf="userConf" class="halfscreendiv">
+    <div class="col-md-6">
       <div class="form-group">
         <label for="maxCalories">Max Calories per Week:</label>
         <input type="number" [(ngModel)]="userConf.maxCaloriesPerWeek" placeholder="Max Calories Per Week" name="maxCalories" class="form-control" id="maxCalories">
@@ -45,6 +46,8 @@
             </tbody>
           </table>
       </div>
+    </div>
+    <div class="col-md-6">
       <div class="form-group" *ngIf="categories">
         <label for="meals">Meals Per Week:</label>
         <div style="display:flex;">
@@ -70,6 +73,6 @@
           </table>
       </div>
     </div>
-    <button class="btn btn-success" (click)="updateConfs()">Update Confs</button>
-  </form>
   </div>
+  <button class="btn btn-success" (click)="updateConfs()">Update Confs</button>
+</form>

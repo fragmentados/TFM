@@ -1,3 +1,4 @@
+import { ApplicationStateService } from './application-state.service';
 import { CalendarCommonModule, DateAdapter } from './calendar/common/calendar-common.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +27,7 @@ import { FacebookModule } from 'ngx-facebook';
       useFactory: adapterFactory
     })
   ],
-  providers: [UserService],
+  providers: [UserService, ApplicationStateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-<app-calendar-header
+<app-calendar-header *ngIf="!isMobile && !isTablet"
   [(view)]="view"
   [(viewDate)]="viewDate"
   (viewDateChange)="updateMenuWithNewMenu()">
@@ -11,6 +11,7 @@
   [viewDate]="viewDate"
   [weekStartsOn]=[1]
   [events]="events"
+  [daysInWeek]="getDaysInWeek()"
   [menuId]="menu.id"
   [refresh]="refresh"
   [mealsInWeek]="mealsInWeek"
@@ -19,7 +20,7 @@
   (eventClicked)="handleClickEvent($event)">
   </app-calendar-week-view>
   <br/>
-  <div align="center">
+  <div align="center" *ngIf="!isMobile && !isTablet">
     <button mat-raised-button (click)="generateShoppingList()"><b>Shopping List</b></button>
     <button (click)="clearMenu()"><b>Clear menu</b></button>
     <button (click)="randomMenu()"><b>Random menu</b></button>

@@ -1,3 +1,5 @@
+import { MenuService } from './../../menu/menu.service';
+import { ApplicationStateService } from './../../application-state.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Menu } from '../../models/menu/menu.model';
 import { UserConfs } from '../../models/user/userConfs.model';
@@ -14,6 +16,8 @@ export class ViewStatsDashboardComponent implements OnInit {
   viewageType: string;
   selectedStats: Stat[];
   selectedDay: string;
+  isMobile = true;
+  isTablet = false;
 
   @Input()
   menu: Menu;
@@ -24,17 +28,31 @@ export class ViewStatsDashboardComponent implements OnInit {
   @Input()
   events: Observable<void>;
 
-  constructor() { }
+  constructor(private appStateService: ApplicationStateService, private menuService: MenuService) {
+    this.isMobile = this.appStateService.getIsMobileResolution();
+    this.isTablet = this.appStateService.getIsTabletResolution();
+  }
 
   ngOnInit() {
-    this.switchWeekly();
+    if (this.isMobile || this.isTablet) {
+      this.switchDaily();
+    } else {
+      this.switchWeekly();
+    }
     this.events.subscribe((menuReceived) => this.updateCurrentSelectedStats(menuReceived));
   }
 
   switchDaily() {
     this.viewageType = 'DAILY';
+    this.selectedDay = this.menuService.formatDate(new Date());
+    this.updateSelectedDailyStats(null);
+  }
+
+  switchToCurrentDay() {
+    this.viewageType = 'DAILY';
     this.selectedStats = null;
   }
+
 
   switchWeekly() {
     this.viewageType = 'WEEKLY';
@@ -59,7 +77,20 @@ export class ViewStatsDashboardComponent implements OnInit {
     }
   }
 
+  getMinDate() {
+    if (this.isTablet) {
+      return this.menuService.formatDate(new Date());
+    } else {
+      return this.menu.startDate;
+    }
+  }
+
   getMaxMenuDate() {
+    if (this.isTablet) {
+      const currentDate = this.menuService.formatDate(new Date());
+      const indexOfCurrentDay = this.menu.days.indexOf(this.menu.days.filter(d => d.date === currentDate)[0]);
+      return this.menu.days[indexOfCurrentDay + 2].date;
+    }
     return this.menu.days[this.menu.days.length - 1].date;
   }
 

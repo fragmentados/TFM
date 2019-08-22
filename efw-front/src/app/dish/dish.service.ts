@@ -53,10 +53,17 @@ export class DishService {
       const dishStat: Stat = dishStats.find(element => element.name === ingredientStat.name);
       if (dishStat) {
         dishStats = dishStats.filter(element => element.name !== dishStat.name);
-        dishStats.push(new Stat(dishStat.name, (parseFloat(dishStat.value) -
-            (parseFloat(ingredientStat.value) * ingredient.quantity / 100)).toString()));
+        const newStatValue = parseFloat(dishStat.value) - (parseFloat(ingredientStat.value) * ingredient.quantity / 100);
+        if (newStatValue > 0) {
+          dishStats.push(new Stat(dishStat.name, newStatValue.toString()));
+        }
       }
     }
+
+    if (dishStats.length === 0) {
+      dishStats = null;
+    }
+
     return dishStats;
   }
 

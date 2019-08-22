@@ -69,20 +69,29 @@ export class UserService {
   }
 
   public login(login: Login) {
+    this.currentUserSubject.next(new User());
     return this.http.post<User>(this.userUrl + '/login', login)
       .pipe(map(user => {
         if (user && user.id) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          this.notifyUserChange(user);
         }
 
         return user;
     }));
   }
 
+  public notifyUserChange(user) {
+    this.currentUserSubject.next(user);
+  }
+
   public loginFacebook() {
     return this.fb.login();
+  }
+
+  public getFacebookProfile() {
+    return this.fb.api('/me?fields=first_name, email');
   }
 
   public fakeLoginElias(facebookUserId: string, accessToken: string) {
@@ -100,7 +109,9 @@ export class UserService {
     this.currentUserSubject.next(null);
     this.fb.getLoginStatus().then(data => {
       if (data.status === 'connected') {
-        this.fb.logout().then(() => console.log('Logged out!'));
+        this.fb.logout().then(() => {
+          console.log('Logged out!');
+        });
       }
     });
   }

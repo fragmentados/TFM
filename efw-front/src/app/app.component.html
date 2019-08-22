@@ -1,83 +1,74 @@
-<div class="container-fluid">
+<!--<div class="container-fluid">-->
 <div class="col-md-offset-1">
-  <h1 align="center">
+  <h1 align="center" *ngIf="!isMobile">
     <img width="75px" height="75px" src="assets/Logo.png"> {{title}}!
   </h1>
 </div>
 
-<ul class="horizontal-menu">
-  <li class="horizontal-menu" *ngIf="!currentUser">
-      Sign up / Login
-      <ul class="list-categories">
-        <li>
-          <a routerLink="/users/addUser">Sign up</a>
-        </li>
-        <li>
-          <a routerLink="/users/login">Login</a>
-        </li>
-      </ul>
-  </li>
-  <li class="horizontal-menu" *ngIf="currentUser">
-    Logout
-    <ul class="list-categories">
-      <li>
-        <a (click)="logout()">Logout</a>
-      </li>
-    </ul>
-</li>
-  <li class="horizontal-menu">
-    Users
-    <ul class="list-categories">
-      <li>
+<!-- Top Navigation Menu -->
+<div class="efw-topnav" id="myTopnav">
+  <a *ngIf="isMobile">{{title}}</a>
+  <div class="efw-dropdown" *ngIf="!currentUser">
+    <button class="efw-dropbtn">Sign up / Login
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="efw-dropdown-content">
+      <a routerLink="/users/addUser">Sign up</a>
+      <a routerLink="/users/login">Login</a>
+    </div>
+  </div>
+  <div *ngIf="currentUser">
+    <div class="efw-dropdown" *ngIf="!currentUser">
+      <button class="efw-dropbtn">Users
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="efw-dropdown-content">
         <a routerLink="/users">List Users</a>
-      </li>
-      <li>
         <a routerLink="/users/addUser">Add User</a>
-      </li>
-      <li>
-          <a routerLink="/users/userConfs">User Configurations</a>
-        </li>
-    </ul>
-  </li>
-  <li class="horizontal-menu" *ngIf="currentUser">
-    Ingredients
-    <ul class="list-categories">
-      <li>
+        <a routerLink="/users/userConfs">User Configurations</a>
+      </div>
+    </div>
+    <div class="efw-dropdown">
+      <button class="efw-dropbtn">Ingredients
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="efw-dropdown-content">
         <a routerLink="/ingredients">List Ingredients</a>
-      </li>
-      <li>
         <a routerLink="/ingredients/addIngredient">Add Ingredient</a>
-      </li>
-    </ul>
-  </li>
-  <li class="horizontal-menu" *ngIf="currentUser">
-    Dishes
-    <ul class="list-categories">
-      <li>
+      </div>
+    </div>
+    <div class="efw-dropdown">
+      <button class="efw-dropbtn">Dishes
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="efw-dropdown-content">
         <a routerLink="/dishes">List Dishes</a>
-      </li>
-      <li>
         <a routerLink="/dishes/addDish">Add Dish</a>
-      </li>
-    </ul>
-  </li>
-  <li class="horizontal-menu" *ngIf="currentUser">
-    Menu
-    <ul class="list-categories">
-      <li>
-        <a routerLink="/menu">Menu Calendar</a>
-      </li>
-    </ul>
-  </li>
-  <li style="float:right;" *ngIf="currentUser && currentUser.facebookUserId">
-    <img src="https://graph.facebook.com/{{currentUser.facebookUserId}}/picture"/>
-  </li>
-  <li style="float:right;" *ngIf="currentUser">
-    <b>{{currentUser.firstName}}</b>
-  </li>
-</ul>
-
-<br/>
-<router-outlet></router-outlet>
+      </div>
+    </div>
+    <a routerLink="/menu">Menu Calendar</a>
+    <a style="float:right;" *ngIf="!isMobile && !isTablet && currentUser && currentUser.facebookUserId">
+      <img src="https://graph.facebook.com/{{currentUser.facebookUserId}}/picture"/>
+    </a>
+    <div class="efw-dropdown user-menu" *ngIf="currentUser">
+      <button class="efw-dropbtn">{{currentUser.firstName}}
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="efw-dropdown-content">
+        <!--<a routerLink="/users">List Users</a>
+        <a routerLink="/users/addUser">Add User</a>-->
+        <a routerLink="/users/userConfs">Configs</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+  <a href="javascript:void(0);" class="efw-icon" (click)="displayMobileNavBar()">
+    <i class="fa fa-bars"></i>
+  </a>
 </div>
+<div class="container-fluid">
+  <br/>
+  <router-outlet></router-outlet>
+</div>
+<!--</div>-->
 

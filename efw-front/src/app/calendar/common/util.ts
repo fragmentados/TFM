@@ -140,9 +140,9 @@ export function getWeekViewPeriod(
   weekStartsOn: number,
   daysInWeek?: number
 ): { viewStart: Date; viewEnd: Date } {
-  let viewStart = daysInWeek
-    ? dateAdapter.startOfDay(viewDate)
-    : dateAdapter.startOfWeek(viewDate, { weekStartsOn });
+  let viewStart = daysInWeek && daysInWeek === 7
+    ? dateAdapter.startOfWeek(viewDate, { weekStartsOn })
+    : dateAdapter.startOfDay(viewDate);
     viewStart = dateAdapter.subDays(
       addDaysWithExclusions(dateAdapter, viewStart, 1),
       1

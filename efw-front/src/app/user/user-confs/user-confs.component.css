@@ -1,0 +1,16 @@
+.halfscreendiv {
+  display: flex;
+}
+.btn {
+  margin-left: 1%;
+}
+@media screen and (max-width: 768px) {
+  .halfscreendiv {
+    display: block;
+  }
+
+  .btn {
+    margin-bottom: 7%;
+    margin-left: 3%;
+  }
+}

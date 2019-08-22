@@ -1,3 +1,4 @@
+import { ApplicationStateService } from './../../application-state.service';
 import { FoodCategory } from './../../models/ingredient/foodCategory.model';
 import { UserService } from '../../user.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,9 +19,14 @@ export class IngredientComponent implements OnInit {
   bannedCategories: FoodCategory[];
   currentUser: User;
   warningText = 'The food category of this ingredient is currently banned by you';
+  isMobile = false;
+  isTablet = false;
 
-  constructor(private router: Router, private userService: UserService, private ingredientService: IngredientService) {
+  constructor(private router: Router, private userService: UserService, private ingredientService: IngredientService,
+    private appStateService: ApplicationStateService) {
     this.currentUser = this.userService.currentUserValue;
+    this.isMobile = this.appStateService.getIsMobileResolution();
+    this.isTablet = this.appStateService.getIsTabletResolution();
   }
 
   ngOnInit() {
@@ -46,6 +52,10 @@ export class IngredientComponent implements OnInit {
 
   isBanned(ingredient: Ingredient) {
     return this.bannedCategories.filter(bc => bc.id === ingredient.category.id).length > 0;
+  }
+
+  ingredientCalories(ingredient: Ingredient) {
+    return ingredient.stats.filter(stat => stat.name === 'Calories')[0].value;
   }
 
 }

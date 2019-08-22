@@ -1,3 +1,4 @@
+import { ApplicationStateService } from './../../application-state.service';
 import { AddDishToMenu } from './../../models/menu/addDishToMenu.model';
 import { Component, OnInit } from '@angular/core';
 import { DishRestService } from '../dishRest.service';
@@ -16,10 +17,14 @@ export class DishesComponent implements OnInit {
 
   dishes: Dish[];
   currentUser: User;
+  isMobile: boolean;
+  isTablet = false;
 
   constructor(private router: Router, private userService: UserService,
-    private dishService: DishRestService, private menuService: MenuService) {
+    private dishService: DishRestService, private menuService: MenuService, private appStateService: ApplicationStateService) {
     this.currentUser = this.userService.currentUserValue;
+    this.isMobile = this.appStateService.getIsMobileResolution();
+    this.isTablet = this.appStateService.getIsTabletResolution();
   }
 
   ngOnInit() {
@@ -50,6 +55,10 @@ export class DishesComponent implements OnInit {
         alert('There are no valid spots for that dish');
       }
     });
+  }
+
+  dishCalories(dish: Dish) {
+    return dish.stats.filter(stat => stat.name === 'Calories')[0].value;
   }
 
 }
