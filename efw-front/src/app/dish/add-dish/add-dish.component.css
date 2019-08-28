@@ -8,6 +8,10 @@
   display: flex;
 }
 
+.add-dish {
+  display: flex;
+}
+
 .ingredient-select-element {
   margin-left: 10px;
 }
@@ -24,12 +28,20 @@ button {
   .ingredient-select {
     display: block;
   }
+  .add-dish {
+    display: block;
+  }
   .ingredient-select-element {
     margin-left: 0px;
     margin-top: 10px;
   }
   .ingredient-select-buttons {
-    margin-left: 65%;
+    display:block;
+  }
+
+  button {
+    width: 100%;
+    margin-left: 0px;
     margin-top: 10px;
   }
 

@@ -49,8 +49,10 @@ public class MenuController {
 	}
 
 	@GetMapping(path = { "/{id}/shoppingList" })
-	public ShoppingListDto getShoppingList(@PathVariable("id") int menuId) {
-		return service.getShoppingList(menuId);
+	public ShoppingListDto getShoppingList(@PathVariable("id") int menuId,
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate) {
+		return service.getShoppingList(menuId, startDate, endDate);
 	}
 
 	@GetMapping
@@ -75,13 +77,17 @@ public class MenuController {
 	}
 
 	@PostMapping(path = { "/{id}/random" })
-	public MenuDto randomGenerate(@PathVariable("id") int menuId, @RequestParam("userId") Integer userId) {
-		return service.randomGenerateMenu(menuId, userId);
+	public ResponseDto randomGenerate(@PathVariable("id") int menuId, @RequestParam("userId") Integer userId,
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate) {
+		return service.generateRandomMenu(menuId, userId, startDate, endDate);
 	}
 
 	@PostMapping(path = { "/{id}/valid" })
-	public MenuDto generateValidMenu(@PathVariable("id") int menuId, @RequestParam("userId") Integer userId) {
-		return service.generateValidMenu(menuId, userId);
+	public ResponseDto generateValidMenu(@PathVariable("id") int menuId, @RequestParam("userId") Integer userId,
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate) {
+		return service.generateValidMenu(menuId, userId, startDate, endDate);
 	}
 
 	@PutMapping(path = { "/{id}/dish" })
@@ -100,8 +106,10 @@ public class MenuController {
 	}
 
 	@DeleteMapping(path = { "/{id}/clearMenu" })
-	public ResponseDto clearMenu(@PathVariable("id") int id) {
-		return service.clearMenu(id);
+	public ResponseDto clearMenu(@PathVariable("id") int id,
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate) {
+		return service.clearMenu(id, startDate, endDate);
 	}
 
 	@DeleteMapping(path = { "/{id}" })

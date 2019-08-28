@@ -23,6 +23,13 @@ import { MenuTemplateService } from '../menuTemplate.service';
 import { CreateMenuTemplate } from '../../models/menu/menutemplate/createMenuTemplate.model';
 import { MenuSaveTemplateComponent } from '../menu-save-template/menu-save-template.component';
 import { MenuSelectTemplateComponent } from '../menu-select-template/menu-select-template.component';
+import * as moment from 'moment';
+
+class MenuForStatUpdate {
+  menu: Menu;
+  isLastPage: boolean;
+  viewDate: Date;
+}
 
 @Component({
   selector: 'app-menu-calendar',
@@ -37,14 +44,20 @@ export class MenuCalendarComponent implements OnInit {
   menu: Menu;
   userConfs: UserConfs;
   mealsInWeek: string[];
-  private updateStatsSubject: Subject<Menu> = new Subject<Menu>();
+  private updateStatsSubject: Subject<MenuForStatUpdate> = new Subject<MenuForStatUpdate>();
   currentUser: User;
   refresh: Subject<any> = new Subject();
   isMobile = true;
   isTablet = true;
+  isLastPage = false;
+  dayOffset = 1;
 
   sendUpdateStatsEvent() {
-    this.updateStatsSubject.next(this.menu);
+    this.updateStatsSubject.next({
+      menu: this.menu,
+      isLastPage: this.isLastPage,
+      viewDate: this.viewDate
+    });
   }
 
   constructor(private userService: UserService, private menuService: MenuService,
@@ -53,6 +66,11 @@ export class MenuCalendarComponent implements OnInit {
     this.currentUser = this.userService.currentUserValue;
     this.isMobile = appStateService.getIsMobileResolution();
     this.isTablet = appStateService.getIsTabletResolution();
+    if (this.isMobile) {
+      this.dayOffset = 1;
+    } else if (this.isTablet) {
+      this.dayOffset = 3;
+    }
   }
 
   ngOnInit() {
@@ -61,6 +79,40 @@ export class MenuCalendarComponent implements OnInit {
       this.userConfs = data;
       this.mealsInWeek = this.userConfs.meals.map(meal => meal.name);
     });
+  }
+
+  nextDay(ev) {
+    if (!this.isLastPage) {
+      const currentDayMoment = moment(this.menuService.formatDate(this.viewDate), 'YYYY-MM-DD');
+      const nextDayMoment = moment(currentDayMoment).add(this.dayOffset, 'day');
+      const endOfWeekMoment = moment(this.menu.startDate, 'YYYY-MM-DD').add(7 - this.dayOffset, 'day');
+      if (nextDayMoment < endOfWeekMoment) {
+        this.viewDate = new Date(nextDayMoment.format('YYYY-MM-DD'));
+        this.refresh.next();
+      } else if (currentDayMoment.diff(endOfWeekMoment, 'days') === 0) {
+        this.isLastPage = true;
+      } else if (nextDayMoment >= endOfWeekMoment) {
+        this.viewDate = new Date(endOfWeekMoment.format('YYYY-MM-DD'));
+        this.refresh.next();
+      }
+      this.sendUpdateStatsEvent();
+    }
+  }
+
+  previousDay(ev) {
+    if (this.isLastPage) {
+      this.isLastPage = false;
+    } else {
+      const previousDayMoment = moment(this.menuService.formatDate(this.viewDate), 'YYYY-MM-DD').subtract(this.dayOffset, 'd');
+      const menuStartDateMoment = moment(this.menu.startDate, 'YYYY-MM-DD');
+      if (previousDayMoment > menuStartDateMoment) {
+        this.viewDate = new Date(previousDayMoment.format('YYYY-MM-DD'));
+      } else {
+        this.viewDate = new Date(menuStartDateMoment.format('YYYY-MM-DD'));
+      }
+      this.refresh.next();
+    }
+    this.sendUpdateStatsEvent();
   }
 
   initMenuAndEvents() {
@@ -105,7 +157,35 @@ export class MenuCalendarComponent implements OnInit {
   }
 
   generateShoppingList() {
-    this.menuService.getShoppingList(this.menu.id).subscribe(data => {
+    this.menuService.getShoppingList(this.menu.id, null, null).subscribe(data => {
+      const dialogRef = this.dialog.open(CalendarWeekViewShoppingListComponent, {
+        width: '600px',
+        data: data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog closed: ${result}`);
+      });
+    });
+  }
+
+  generateDayShoppingList() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    this.menuService.getShoppingList(this.menu.id, currentDateFormatted, null).subscribe(data => {
+      const dialogRef = this.dialog.open(CalendarWeekViewShoppingListComponent, {
+        width: '600px',
+        data: data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog closed: ${result}`);
+      });
+    });
+  }
+
+  generateDayRangeShoppingList() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    const endDateFormatted = moment(this.menuService.formatDate(this.viewDate), 'YYYY-MM-DD')
+                              .add(this.dayOffset - 1, 'd').format('YYYY-MM-DD');
+    this.menuService.getShoppingList(this.menu.id, currentDateFormatted, endDateFormatted).subscribe(data => {
       const dialogRef = this.dialog.open(CalendarWeekViewShoppingListComponent, {
         width: '600px',
         data: data
@@ -117,7 +197,7 @@ export class MenuCalendarComponent implements OnInit {
   }
 
   clearMenu() {
-    this.menuService.clearMenu(this.menu.id).subscribe(data => {
+    this.menuService.clearMenu(this.menu.id, null, null).subscribe(data => {
       if (data.errorCode === 0) {
         this.events = [];
         this.menu.days = [];
@@ -127,21 +207,67 @@ export class MenuCalendarComponent implements OnInit {
     });
   }
 
+  clearDay() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    this.menuService.clearMenu(this.menu.id, currentDateFormatted, null).subscribe(data => {
+      if (data.errorCode === 0) {
+        this.initMenuAndEvents();
+      }
+    });
+  }
+
+  clearDays() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    const endDateFormatted = moment(this.menuService.formatDate(this.viewDate), 'YYYY-MM-DD')
+                              .add(this.dayOffset - 1, 'd').format('YYYY-MM-DD');
+    this.menuService.clearMenu(this.menu.id, currentDateFormatted, endDateFormatted).subscribe(data => {
+      if (data.errorCode === 0) {
+        this.initMenuAndEvents();
+      }
+    });
+  }
+
   randomMenu() {
-    this.menuService.randomGenerateMenu(this.menu.id, this.currentUser.id).subscribe(data => {
-      this.menu.days = data.days;
-      this.menu.stats = data.stats;
-      this.sendUpdateStatsEvent();
-      this.initCalendarEventsWithDishes();
+    this.menuService.randomGenerateMenu(this.menu.id, this.currentUser.id, null, null).subscribe(data => {
+      this.initMenuAndEvents();
+    });
+  }
+
+  randomDay() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    this.menuService.randomGenerateMenu(this.menu.id, this.currentUser.id, currentDateFormatted, null).subscribe(data => {
+      this.initMenuAndEvents();
+    });
+  }
+
+  randomDays() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    const endDateFormatted = moment(this.menuService.formatDate(this.viewDate), 'YYYY-MM-DD')
+                              .add(this.dayOffset - 1, 'd').format('YYYY-MM-DD');
+    this.menuService.randomGenerateMenu(this.menu.id, this.currentUser.id, currentDateFormatted, endDateFormatted).subscribe(data => {
+      this.initMenuAndEvents();
     });
   }
 
   validMenu() {
-    this.menuService.generateValidMenu(this.menu.id, this.currentUser.id).subscribe(data => {
-      this.menu.days = data.days;
-      this.menu.stats = data.stats;
-      this.sendUpdateStatsEvent();
-      this.initCalendarEventsWithDishes();
+    this.menuService.generateValidMenu(this.menu.id, this.currentUser.id, null, null).subscribe(data => {
+      this.initMenuAndEvents();
+    });
+  }
+
+  validDay() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    this.menuService.generateValidMenu(this.menu.id, this.currentUser.id, currentDateFormatted, null).subscribe(data => {
+      this.initMenuAndEvents();
+    });
+  }
+
+  validDays() {
+    const currentDateFormatted = this.menuService.formatDate(this.viewDate);
+    const endDateFormatted = moment(this.menuService.formatDate(this.viewDate), 'YYYY-MM-DD')
+                              .add(this.dayOffset - 1, 'd').format('YYYY-MM-DD');
+    this.menuService.generateValidMenu(this.menu.id, this.currentUser.id, currentDateFormatted, endDateFormatted).subscribe(data => {
+      this.initMenuAndEvents();
     });
   }
 
@@ -207,12 +333,7 @@ export class MenuCalendarComponent implements OnInit {
     this.fb.ui(
       {
           method: 'feed',
-          name: 'This is the content of the "name" field.',
-          // link: 'http://www.example.com',
-          // picture: 'http://www.hyperarts.com/external-xfbml/share-image.gif',
-          caption: '',
-          description: 'Trying out facebook publish',
-          message: ''
+          link: 'https://localhost:4200/'
       });
   }
 
@@ -302,10 +423,31 @@ export class MenuCalendarComponent implements OnInit {
       return 1;
     } else if (this.isTablet) {
       return 3;
+      // return this.getTabletDaysInWeek();
     } else {
       return 7;
     }
   }
+
+  /*getTabletDaysInWeek(): number {
+    let tabletDays = 3;
+    const endOfWeek = new Date(this.menu.startDate);
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+    const endOfWeekAsString = this.menuService.formatDate(endOfWeek);
+    const currentDateAsString = this.menuService.formatDate(this.viewDate);
+    // If we are near the end of the week
+    const endOfWeekDiff = this.menuService.getDaysDiff(currentDateAsString, endOfWeekAsString) + 1;
+    if (endOfWeekDiff < tabletDays && endOfWeekDiff > 0) {
+      tabletDays = endOfWeekDiff;
+    }
+    // If we are near the begining of the week
+    const startOfWeekDiff = this.menuService.getDaysDiff(this.menu.startDate, currentDateAsString) + 1;
+    if ((startOfWeekDiff < tabletDays) && startOfWeekDiff > 0) {
+      tabletDays = startOfWeekDiff;
+    }
+
+    return tabletDays;
+  }*/
 
   updateMenuWithNewMenu() {
     this.initMenuAndEvents();

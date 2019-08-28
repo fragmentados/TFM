@@ -47,8 +47,12 @@ public class MercadonaPriceEstimateServiceImpl implements PriceEstimateService {
 	}
 
 	private PriceEstimateDto processResults(Map<String, Double> pricesByName, List<ShoppingListItemDto> shoppingItems) {
-		return new PriceEstimateDto(shoppingItems.stream()
-				.mapToDouble(it -> findFirstPrice(pricesByName, it.getIngredientName()) * it.getUnits()).sum());
+		// We get the total price summed of all the ingredients
+		Double priceSummed = shoppingItems.stream()
+				.mapToDouble(it -> findFirstPrice(pricesByName, it.getIngredientName()) * it.getUnits()).sum();
+		// We round that amount to two decimals
+		priceSummed = Math.round(priceSummed * 100.0) / 100.0;
+		return new PriceEstimateDto(priceSummed);
 	}
 
 	private Double findFirstPrice(Map<String, Double> pricesByName, String name) {

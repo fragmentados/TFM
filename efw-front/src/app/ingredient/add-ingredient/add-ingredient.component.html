@@ -4,9 +4,9 @@
 
   <div class="form-group">
     <label for="name">Name:</label>
-    <div style="display:flex;">
+    <div class="estimate-stats">
       <input [(ngModel)]="ingredient.name" placeholder="Name" name="Name" class="form-control" id="Name">
-      <button style="margin-left: 10px;" class="btn btn-success" (click)="estimateNutrition()">Estimate Stats</button>
+      <button class="btn btn-success btn-estimate" (click)="estimateNutrition()">Estimate Stats</button>
     </div>
   </div>
 

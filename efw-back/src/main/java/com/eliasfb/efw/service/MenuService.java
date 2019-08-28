@@ -19,9 +19,9 @@ public interface MenuService {
 
 	Menu delete(int id);
 
-	ResponseDto clearMenu(int id);
+	ResponseDto clearMenu(int id, String startDate, String endDate);
 
-	ShoppingListDto getShoppingList(int menuId);
+	ShoppingListDto getShoppingList(int menuId, String startDate, String endDate);
 
 	MenuDto findUserMenu(int userId, String startDate);
 
@@ -39,9 +39,9 @@ public interface MenuService {
 
 	ResponseDto removeDishFromMenu(int menuId, AddDishToMenuDto dto);
 
-	MenuDto randomGenerateMenu(Integer menuId, Integer userId);
+	ResponseDto generateRandomMenu(Integer menuId, Integer userId, String startDate, String endDate);
 
-	MenuDto generateValidMenu(Integer menuId, Integer userId);
+	ResponseDto generateValidMenu(Integer menuId, Integer userId, String startDate, String endDate);
 
 	MenuSpotFoundDto addDishToFirstValidSpotOnMenu(int userId, AddDishToMenuDto dto);
 

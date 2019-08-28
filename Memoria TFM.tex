@@ -134,32 +134,204 @@
 	
 	\clearpage
 	
-	\chapter{Motivación}	
+	\chapter{Motivación}
+	Se inicia este proyecto con el objetivo de obtener un sistema de planificación nutricional de menús semanales de la forma lo más configurable y utilizable por el usuario posible.
+	La idea de este sistema surge de una necesidad personal del desarrollador lo que da peso a la aplicabilidad de la aplicación a un gran número de usuarios.
+	Existe a mayores una motivación tecnológica de aprendizaje de un framework de frontend de cliente como es Angular para un mejor desarrollo profesional del alumno.
 	\chapter{Fundamentos teóricos}
+	
 	\chapter{Determinación de la situación actual}
 	\chapter{BASE TECNÓLOGICA}
+	En este apartado se describen brevemente las herramientas, frameworks y tecnologías en general utilizadas en el desarrollo de la aplicación. Durante el análisis inicial del proyecto quedó patente el hecho de que una plataforma web era la mejor solución para satisfacer los requisitos planteados, dado que se quería ofrecer un servicio fácilmente accesible a los usuarios. De esta forma la instalación y mantenimiento de la aplicación serían más cómodos para los usuarios (no deben preocuparse por estas cuestiones). Para mejorar el desarrollo y evitar que se acoplen el modelo y la vista, se utiliza el patrón Modelo Vista Controlador llevado hasta el extremo de que el modelo y la vista son artefactos totalmente diferentes lo que facilitará la agregación de una nueva posible vista en el futuro (Aplicaciones nativas móviles, por ejemplo) .
+	Para el desarrollo de la aplicación, se opta por utilizar el lenguaje de programación Java EE, puesto que entre otras posee soporte para diversas tecnologías relacionadas con el desarrollo web.
+	Para la persistencia de los datos se elige el uso de una base de datos relacional, cuyas características nos ayudan en el control y el correcto almacenamiento de los datos de la aplicación.	
 	\section{Lenguajes}
 	\subsection{Java SE 8}
+	Java Platform, Standard Edition o Java SE, es una colección de APIs del lenguaje de
+	programación Java. La plataforma Java es el nombre de un entorno o plataforma de computación
+	originaria de Sun Microsystems, capaz de ejecutar aplicaciones desarrolladas usando el
+	lenguaje de programación Java u outros lenguajes que compilen a bytecode y un conjunto
+	de herramientas de desarrollo. La plataforma es una máquina virtual de proceso nativo, es decir, ejecutable en una plataforma específica, capaz de interpretar y ejecutar instrucciones expresadas en un código binario especial (el bytecode Java), el cual es generado por el compilador del lenguaje Java.\cite{Java}
+	La utilización de la versión 8 de java nos facilita la iteración de las colecciones utilizadas mediante el uso de streams y lambdas los cuales limpian el código y mejoran su eficiencia en comportamientos iterativos.
 	\subsection{HTML}
+	HTML, siglas de HyperText Markup Language (lenguaje de marcas de
+	hipertexto), hace referencia al lenguaje de marcado para la elaboración de páginas
+	web. Es un estándar que sirve de referencia para la elaboración de páginas web
+	en sus diferentes versiones, define una estructura básica y un código (denominado
+	código HTML) para la definición de contenido de una página web, como texto,
+	imágenes, vídeos, entre otros. Es un estándar a cargo de la W3C (World Wide
+	Web Consortium), organización dedicada a la estandarización de casi todas
+	las tecnologías ligadas a la web, sobre todo en lo referente a su escritura e
+	interpretación. Se considera el lenguaje web más importante siendo su invención
+	crucial en la aparición, desarrollo y expansión de la World Wide Web. Es el
+	estándar que se ha impuesto en la visualización de páginas web y es el que todos
+	los navegadores actuales han adoptado.\cite{HTML}
 	\subsection{CSS}
+	CSS es un lenguaje de hojas de estilos creado para controlar el aspecto o presentación de los documentos electrónicos definidos con HTML y XHTML. CSS es la mejor forma de separar los contenidos y su presentación y es imprescindible para crear páginas web complejas.
+	
+	Separar la definición de los contenidos y la definición de su aspecto presenta numerosas ventajas, ya que obliga a crear documentos HTML/XHTML bien definidos y con significado completo (también llamados "documentos semánticos"). Además, mejora la accesibilidad del documento, reduce la complejidad de su mantenimiento y permite visualizar el mismo documento en infinidad de dispositivos diferentes.
+	
+	Al crear una página web, se utiliza en primer lugar el lenguaje HTML/XHTML para marcar los contenidos, es decir, para designar la función de cada elemento dentro de la página: párrafo, titular, texto destacado, tabla, lista de elementos, etc.
+	
+	Una vez creados los contenidos, se utiliza el lenguaje CSS para definir el aspecto de cada elemento: color, tamaño y tipo de letra del texto, separación horizontal y vertical entre elementos, posición de cada elemento dentro de la página, etc.\cite{CSS}
 	\section{Frameworks y librerías}
 	\subsection{Core}
 	\subsubsection{Spring}
+	Spring es un “framework” de código abierto, distribuido bajo la licencia Apache
+	2.0, para el desarrollo de aplicaciones que proporciona un modelo de config uración y de
+	programación ampliado para desarrollos de aplicaciones Java independiente de la
+	plataforma. Spring proporciona:
+	\begin{itemize}
+		\item Un modelo flexible de inyección de dependencias basado en anotaciones o en
+		configuraciones XML. Está basado en los principios de Inversión de Control
+		(IoC), lo que proporciona un desacoplamiento entre objetos. Esto significa que
+		el “framework” llama a procedimientos creados por el programador en lugar de
+		ser el programador el que llama a los procedimientos del “framework”.
+		\item Soporte avanzado para programación orientada a aspectos, que pretende la
+		separación mediante módulos de aspectos comunes aplicándolos de forma
+		declarativa, evitando duplicidad de código en diversos elementos. Se utiliza
+		sobre todo en gestión de transacciones, seguridad y configuración.
+		\item Soporte a declaración, gestión de caché, validación y formato de transacciones.
+		\item Abstracción para el trabajo de especificaciones como JDBC, JPA, JMS y JTA.
+		\item Soporte de primer nivel para “frameworks” de código abierto comunes como
+		Hibernate y Quartz.
+		\item Un marco flexible para las construir aplicaciones web MVC y servicios finales.
+		\item Y facilidades para la realización de pruebas unitarias, así como pruebas de
+		integración.
+		
+	\end{itemize}
+	Spring tiene un diseño modular, como puede verse en la Figura 1, que
+	permite cargar solo los módulos necesarios, aligerando el peso de la aplicación.\cite{Spring}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=6cm]{Imagenes/spring.png}
+		\caption{Spring}\label{spring}
+	\end{figure}
+
 	\subsubsection{Hibernate}	
+	Hibernate es una herramienta de Mapeo objeto-relacional (ORM) para la
+	plataforma Java que facilita el mapeo de atributos entre una base de datos
+	relacional tradicional y el modelo de objetos de una aplicación, mediante archivos
+	declarativos (XML) o anotaciones en los beans de las entidades que permiten
+	establecer estas relaciones.\\
+	\begin{center}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6cm]{Imagenes/hibernate.png}
+			\caption{Hibernate}\label{hibernate}
+		\end{figure}
+	\end{center}	
 	\section{Web}
 	\subsubsection{Angular JS}
-	\subsubsection{Bootstrap}     
+	AngularJS (comúnmente llamado Angular.js o AngularJS 1), es un framework de javascript de código abierto, mantenido por google, que se utiliza para crear y mantener aplicaciones web de una sola página. Su objetivo es aumentar las aplicaciones basadas en navegador con capacidad de Modelo Vista Controlador (MVC), en un esfuerzo para hacer que el desarrollo y las pruebas sean más fáciles.
+	
+	La biblioteca lee el HTML que contiene atributos de las etiquetas personalizadas adicionales, entonces obedece a las directivas de los atributos personalizados, y une las piezas de entrada o salida de la página a un modelo representado por las variables estándar de JavaScript. Los valores de las variables de JavaScript se pueden configurar manualmente, o recuperados de los recursos JSON estáticos o dinámicos.
+	
+	AngularJS se puede combinar con el entorno en tiempo de ejecución Node.js, el framework para servidor Express.js y la base de datos MongoDB para formar el conjunto MEAN.\\
+	\begin{center}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=10cm]{Imagenes/angularjs.jpg}
+			\caption{Angular JS}\label{angularjs}
+		\end{figure}
+	\end{center}
+	\subsubsection{Bootstrap}    
+	Twitter Bootstrap es un framework o conjunto de herramientas de software
+	libre para diseño de sitios y aplicaciones web. Contiene plantillas de diseño con
+	tipografía, formularios, botones, cuadros, menús de navegación y otros elementos
+	de diseño basado en HTML y CSS, así como extensiones de JavaScript opcionales
+	adicionales.  
 	\subsection{Pruebas}
 	\subsubsection{JUnit}
+	JUnit es un conjunto de bibliotecas utilizadas en programación para hacer
+	pruebas unitarias y de integración de aplicaciones Java.
+	JUnit es un conjunto de clases (framework) que permite realizar la ejecución
+	de clases Java de manera controlada, para poder evaluar si el funcionamiento de
+	cada uno de los métodos de la clase se comporta como se espera. Es decir, en
+	función de algún valor de entrada se evalúa el valor de retorno esperado; si la
+	ejecución cumple con la especificación, entonces JUnit devolvería que el método
+	de la clase pasó exitosamente la prueba; en caso de que el valor esperado sea
+	diferente al que devolvió el método durante la ejecución, JUnit devolvería un fallo
+	en el método correspondiente.
+	JUnit es también un medio para realizar las pruebas de regresión, necesarias
+	cuando una parte del código ha sido modificado y se desea ver que el nuevo código
+	cumple con los requerimientos anteriores y que no se ha alterado su funcionalidad
+	después de la nueva modificación.\cite{JUnit}
+	\subsubsection{Mockito}
+	Mockito es un framework open source para Java desarrollado bajo la licencia de MIT. El framework permite la creación the objetos de pruebas en tests unitarios automáticos para permitir test-driven development o behavior-driven development.
 	\subsubsection{Spring Test Context}
+	La inyección de dependencias permite que el código sea menos dependiente en el contenedor que lo sería con el desarrollo Java EE tradicional. Los POJOs que conforman la aplicación deberían ser probables en JUnit o tests TestNG, con objetos simplemente instanciados usando el operador new, sin Spring o cualquier otro contenedor. Siguiendo las  recomendaciones de arquitectura para Spring, la clara división en capas resultante y la componetización de tu código base facilitará las pruebas unitarias. Por ejemplo, puedes probar objetos de la capa servicios creando DAOs o interfaces de Repositorio de prueba, sin necesidad de acceder a datos persistentes mientras se ejecutan las pruebas unitarias.
+	
+	Las verdaderas pruebas unitarias suelen funcionar extremadamente rápido, ya que no hay infraestructura en tiempo de ejecución que desplegar. Enfatizar pruebas unitarias verdaderas como parte de tu metodología de desarrollo mejorará tu productividad. Puede que no necesites esta sección del capítulo de pruebas para ayudarte a escribir pruebas efectivas unitarias para tus aplicaciones basadas en inversión de control.
+	Para ciertos escenarios de pruebas unitarias, aún así, el Framework Spring provee los siguientes objetos de prueba y clases de apoyo de prueba.
 	\subsubsection{Eclemma}	
+	EclEmma es una herramienta de cobertura de código Java para Eclipse, disponible para la Licencia Pública de Eclipse. Trae el análisis de cobertura de código directamente al entorno de Eclipse:\cite{Eclemma}		
+	\begin{itemize}
+		\item Rápido ciclo de desarrollo/prueba: Arranca desde dentro del entorno como las ejecuciones de los tests de JUnit que pueden ser analizados directamente para cobertura de código.
+		\item Intenso análisis de cobertura: Los resultados de cobertura son resumidos inmediatamente y resaltados en los editores de código fuente Java.
+		\item No invasivo: EclEmma no requiere modificaciones en tus proyectos o realizar ningún otro ajuste.
+	\end{itemize}	
 	\subsection{Protocolos}
 	\section{Hypertext Transfer Protocol o HTTP}
+	Es el protocolo de comunicación que permite las transferencias de información en la World Wide Web. HTTP fue desarrollado por el World Wide Web Consortium y la Internet Engineering Task Force, colaboración que culminó en 1999 con la publicación de una serie de RFC, el más importante de ellos es el RFC 2616 que especifica la versión 1.1. HTTP define la sintaxis y la semántica que utilizan los elementos de software de la arquitectura web (clientes, servidores,proxies) para comunicarse. HTTP es un protocolo sin estado, es decir, no guarda ninguna información sobre conexiones anteriores. El desarrollo de aplicaciones web necesita frecuentemente mantener estado. Para esto se usan las cookies, que es información que un servidor puede almacenar en el sistema cliente. Esto le permite a las aplicaciones web instituir la noción de "sesión", y también permite rastrear usuarios ya que las cookies pueden guardarse en el cliente por tiempo indeterminado.
 	\subsection{Herramientas de Desarrollo}
 	\section{Maven}
-	\subsection{Servidores de Aplicaciones}
+	Maven es una herramienta de software para la gestión y construcción de
+	proyectos Java. Es similar en funcionalidad a Apache Ant, pero tiene un modelo
+	de configuración de construcción más simple, basado en un formato XML.
+	Maven utiliza un Project Object Model (POM) para describir el proyecto de
+	software a construir, sus dependencias de otros módulos y componentes externos,
+	y el orden de construcción de los elementos. Viene con objetivos predefinidos para
+	realizar ciertas tareas claramente definidas, como la compilación del código y su
+	empaquetado.
+	Para desarrollar esta aplicación se ha optado por realizar la implementación con el lenguaje de programación Java haciendo uso del IDE Eclipse EE como entorno de desarrollo. Se ha tomado esta decisión puesto que se tiene experiencia previa de su uso y por la gran cantidad de manuales y soporte disponible. Este proyecto ha sido desarrollado sobre un sistema Windows.
+	Eclipse es una comunidad de código abierto cuyos proyectos se centran en la construcción de una plataforma de desarrollo extensible, que facilita la gestión de los tiempos de ejecución y de los marcos de aplicación para la construcción, despliegue y gestión de software a través de todo el ciclo de vida del software. Eclipse, además de un IDE, entorno de desarrollo de aplicaciones enriquecidas, es una comunidad que proporciona herramientas y plugins para ayudar al desarrollo de software \cite{Maven}.
 	\subsection{Sistemas de Gestión de Bases de Datos}
+	\subsubsection{MySQL}
+	MySQL es un sistema de gestión de base de datos relacional, que está disponible
+	bajo licencia GPL y que tiene como características principales el soporte multitarea,
+	mediante hilos del núcleo; el soporte de gran cantidad de datos; soporte multiusuario,
+	con gestión de seguridad mediante contraseñas, privilegios y cifrado; y que está
+	disponible sobre múltiples plataformas.\cite{MySQL}
 	\subsection{Herramientas de apoyo}
+	\begin{itemize}
+		\item Trello: Se trata de una aplicación web para la gestión de proyectos de forma colaborativa, la cual se compone de tableros con listas de tareas compuestas de una manera muy intuitiva. Permite tener varias listas de tareas a modo de columnas, y arrastrar tareas de una a otra (por ejemplo pasar una tarea de la lista en progreso a finalizado). Al tratarse de una herramienta colaborativa, permite que varias personas puedan consultar y utilizar el mismo tablero, asignando tareas y añadiendo comentarios.
+		\item Navegadores: Dado que el proyecto consiste en el desarrollo de una aplicación web, se han utilizado diferentes navegadores durante el desarrollo para realizar las pruebas de todas las funcionalidades. Los navegadores utilizados han sido Firefox, Chrome, Opera Browser e Internet Explorer.
+		\item TexStudio: TeXstudio es un entorno de escritura integrado para crear documentos LaTeX. Su objetivo es hacer que escribir LaTeX sea lo más fácil y cómodo posible. Por lo tanto, TeXstudio tiene varias características tales como destacado de sintaxis, visualizador integrado, comprobador de referencias y varios asistentes. 
+		Texstudio es de código libre y está disponible para todos los grandes sistemas operativos. Texstudio se ha separado de Texmaker en 2009, debido a los procesos de desarrollo no abiertos de Texmaker y a diferencias filosofías referentes a configurabilidad y características. Originalmente fue llamado TeXmakerX porque empezó como un pequeño conjunto de extensiones de Texmaker con la esperanza de que se integrarían en Texmaker algún día. Mientras que en algunos puntos aún se puede ver que Texstudio se originó de Texmaker, cambios significativos en características y en el código base lo han convertido en un programa completamente independiente. 
+		TeXstudio funciona en Windows, Unix/Linux, BSD y Mac OS X. Está licenciado bajo GPL v2. Al ser de código libre, se puede utilizar y modificar a gusto.\cite{TexStudio}
+		\item Git\cite{Git}:
+		Git es un sistema de control de versiones distribuido gratuito y de código abierto diseñado para manejar todos los proyectos, pequeños a muy grandes con rapidez y eficiencia.
+		
+		Git es fácil de aprender y se consigue un rendimiento increíblemente rápido con poco trabajo. Representa una gran mejora con respecto a herramientas de tipo SCM tales como Subversion, CVS, Perforce y ClearCase con características como ramificación local sencilla, áreas de almacenamiento convenientes y múltiples flujos de trabajo.
+		Con git se pueden realizar tareas como las siguientes:
+		\begin{itemize}
+			\item Cambio de contexto sin fricción.
+			\item Ramificación basadas en roles.
+			\item Flujo de trabajo basado en características.
+			\item Experimentación desechable.
+		\end{itemize}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=4cm]{Imagenes/git.png}
+			\caption{Git}\label{git}
+		\end{figure}
+		
+		\item \LaTeX{}:
+		LaTex es un sistema de composición de textos, orientado especialmente a la creación de libros, documentos científicos y técnicos que contengan fórmulas matemáticas. Es el sistema empleado para la realización de toda la documentación del proyecto (incluyendo esta memoria). Consiste en un lenguaje que permite a la persona que escribe el documento no tener que preocuparse del formato.\cite{Latex}
+		
+		\item Dia:
+		Dia es una aplicación informática de propósito general para la creación de diagramas, desarrollada como parte del proyecto GNOME. Está concebido de forma modular, con diferentes paquetes de formas para diferentes necesidades.
+		Dia está diseñado como un sustituto de la aplicación comercial Visio de Microsoft. Se puede utilizar para dibujar diferentes tipos de diagramas. Actualmente se incluyen diagramas entidad-relación, diagramas UML, diagramas de flujo, diagramas de redes, diagramas de circuitos eléctricos, etc. Nuevas formas pueden ser fácilmente agregadas, dibujándolas con un subconjunto de SVG e incluyéndolas en un archivo XML.
+		El formato para leer y almacenar gráficos es XML (comprimido con gzip, para ahorrar espacio). Puede producir salida en los formatos EPS, SVG y PNG.
+		También conviene recordar que Dia, gracias al paquete dia2code, puede generar el esqueleto del código a escribir, si utilizáramos con tal fin un UML.\cite{Dia}	    	    	
+		
+		\item UML:
+		UML te ayuda a especificar, visualizar y documentar modelos de sistemas software, incluyendo su estructura y  diseño, de una forma que cumple todos esos requisitos. (UML puede ser empleado para modelado de negocios y modelado de otros sistemas no software también) Usando cualquiera del gran número de herramientas basadas en UML en el mercado es posible analizar los requisitos de las futuras aplicaciones y diseñar soluciones que los cumplan, representando los resultados usando los trece tipos de estándares de diagramas de UML 2.0 .
+		Es posible modelar prácticamente cualquier tipo de aplicación, funcionando en cualquier tipo y combinación de hardware, sistema operativo, lenguaje de programación, y red, en UML. Su flexibilidad permite al usuario modelar aplicaciones distribuidas que utilizan casi cualquier middleware en el mercado. Formado a partir de conceptos fundamentales de Orientación a Objetos incluyendo class y operación, se adecúa con facilidad a lengujaes y entornos orientados a objetos tales como C++, Java, y el reciente C Sharp, pero también puede ser empleado para modelar aplicaciones no orientadas a objetos, por ejemplo, Fortran, VB, o COBOL. Perfiles UML facilitan el modelado de sistemas Transaccionales, de Tiempo Real y Tolerantes a Fallos de una manera natural.\cite{UML}
+		
+	\end{itemize} 
 	\chapter{INTRODUCCIÓN AL DESARROLLO REALIZADO}
 	\section{Introducción}
 	\section{Tecnologías}
@@ -186,7 +358,7 @@
 	\subsection{Casos de uso administrador}
 	\chapter{DISEÑO DE LA APLICACIÓN}
 	\section{Introducción y Objetivos}
-	
+	En esta fase se realiza un estudio de viabilidad del proyecto y se determinan las especificaciones que debe cumplir el sistema. Este análisis de requisitos implica encontrar todas las exigencias y necesidades, así como las restricciones que debe contemplar el sistema. La información obtenida durante esta actividad puede verse en los diagramas casos de uso que se han detallado. También se obtiene un diagrama entidad-relación con el modelado de los datos necesario para almacenar la información.	
 	\section{Arquitectura general}
 	
 	El sistema se divide en dos subsistemas principales : efw-back y efw-front.
@@ -197,6 +369,14 @@
 	
 	\subsection{Arquitectura}
 	
+	La arquitectura global del sistema como se ha ido comentando ha sido una aplicación del patrón MVC siendo el Modelo y la Vista dos artefactos totalmente diferentes que les permite ser independientes como se ve en la figura:
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=10cm]{Imagenes/Arquitectura.png}
+		\caption{Arquitectura global}\label{Arquitectura global}
+	\end{figure}
+	
 	La arquitectura del backend se compone de cuatro elementos principales :
 	
 	\begin{itemize}
@@ -205,6 +385,12 @@
 		\item Repositorios, los encargados de las ejecuciones de las consultas / actualizaciones / borrados / inserciones sobre las propias bases de datos siguiendo las entidades configuradas.
 		\item Entidades de base de datos de hibernate, cada una correspondiente a una tabla. Definen las columnas de su tabla correspondiente así como sus relaciones entre ellas.
 	\end{itemize} 
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=12cm]{Imagenes/ArquitecturaBack.png}
+		\caption{Arquitectura backend}\label{Arquitectura backend}
+	\end{figure}
 	
 	\subsection{Modelo del dominio}    
 	\subsubsection{Diagrama de Entidades}
@@ -354,6 +540,12 @@
 		\item Servicio Typescript -> Contenedor de los cálculos de datos realizados en el frontal. Son también los responsables de las llamadas rest a los servicios expuestos por el backend.
 	\end{itemize}
 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=12cm]{Imagenes/DiagramaComponente.png}
+		\caption{Diagrama Componente Angular}\label{Diagrama Componente Angular}
+	\end{figure}
+
 	\subsection{Módulos empleados}
 	
 	Se definen los siguientes módulos agrupados por dominio : 
@@ -427,6 +619,42 @@
 	
 	\renewcommand{\bibname}{Enlaces de interés}
 	\begin{thebibliography}{99}
+		\bibitem{Spring}
+		Spring, \url{http://projects.spring.io/spring-framework/\#documentation}
+		\bibitem{Spring Image}
+		Spring Image,
+		\url{http://doc.javanb.com/spring-framework-reference-zh-2-0-5/images/spring-overview.png}
+		\bibitem{Eclipse Foundation}
+		Eclipse Foundation, \url{http://www.eclipse.org/home/newcomers.php}
+		\bibitem{Git}
+		Git, \url{https://git-scm.com/}
+		\bibitem{Git Image}
+		Git Image, \url{http://www.pihomeserver.fr/wp-content/uploads/2015/05/raspberry-pi-git-server.jpg}
+		\bibitem{HTML}
+		HTML, \url{http://www.desarrolloweb.com/manuales/manual-html.html}
+		\bibitem{CSS}
+		CSS, \url{http://librosweb.es/libro/css/capitulo\_1.html}
+		\bibitem{TexStudio}
+		TexStudio, \url{http://www.texstudio.org/}
+		\bibitem{Maven}
+		Maven, \url{http://maven.apache.org/what-is-maven.html}
+		\bibitem{JUnit}
+		JUnit, \url{http://junit.org/junit4/}
+		\bibitem{MySQL}
+		MySQL, \url{http://www.mysql.com/products/community/}
+		\bibitem{Latex}
+		Latex, \url{https://www.latex-project.org/}
+		\bibitem{UML}
+		UML, \url{http://www.uml.org/what-is-uml.htm}
+		\bibitem{Eclemma}
+		Eclemma, \url{http://www.eclemma.org/}
+		\bibitem{Inyeccion de dependencias}
+		Inyeccion de dependencias, \url{http://desarrolloweb.com/articulos/patron-diseno-contenedor-dependencias.html}
+		\bibitem{Patron Factoria}
+		Patron Factoria, \url{http://tratandodeentenderlo.blogspot.com.es/2010/02/patrones-de-diseno-factorias.html}
+		\bibitem{Mixins Component}
+		Mixins Component,
+		\url{http://tapestry.apache.org/component-mixins.html}
 		\bibitem{Patrones}
 		Erich Gamma,
 		\emph{Patrones de diseño},

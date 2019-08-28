@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -121,10 +122,16 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	@Transactional
-	public ResponseDto clearMenu(int id) {
+	public ResponseDto clearMenu(int id, String startDate, String endDate) {
 		Menu menu = findById(id);
-		if (menu != null) {
-			menuDisRelRepository.deleteByMenuId(menu.getId());
+		if (menu != null && !menu.getDishes().isEmpty()) {
+			if (startDate != null && endDate != null) {
+				menuDisRelRepository.deleteByMenuIdAndDates(menu.getId(), startDate, endDate);
+			} else if (startDate != null) {
+				menuDisRelRepository.deleteByMenuIdAndDate(menu.getId(), startDate);
+			} else {
+				menuDisRelRepository.deleteByMenuId(menu.getId());
+			}
 		}
 		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been cleared correctly");
 	}
@@ -274,9 +281,9 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public ShoppingListDto getShoppingList(int menuId) {
+	public ShoppingListDto getShoppingList(int menuId, String startDate, String endDate) {
 		Menu menu = repository.findOne(menuId);
-		Map<String, UnitAndQuantity> shoppingListItems = menu.getShoppingListItems();
+		Map<String, UnitAndQuantity> shoppingListItems = menu.getShoppingListItems(startDate, endDate);
 		List<ShoppingListItemDto> dtos = shoppingListItems.entrySet().stream()
 				.map(si -> new ShoppingListItemDto(si.getKey(), si.getValue().getUnit(), si.getValue().getQuantity()))
 				.collect(Collectors.toList());
@@ -286,31 +293,36 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	@Transactional
-	public MenuDto randomGenerateMenu(Integer menuId, Integer userId) {
+	public ResponseDto generateRandomMenu(Integer menuId, Integer userId, String startDate, String endDate) {
 		// First, we query the necessary info : The menu and the user dishes
 		Menu menu = this.repository.findOne(menuId);
+
 		List<Dish> userDishes = this.dishRepository.findUserDishes(userId);
 		Integer mealsInWeek = this.userService.findUserMeals(userId).size();
-		// Empty the menu dishes
-		if (!menu.getDishes().isEmpty()) {
-			this.clearMenu(menuId);
-			menu.setDishes(new ArrayList<>());
-		}
-		// We iterate over the week days
-		LocalDateTime startDate = LocalDate.parse(menu.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-				.atTime(0, 0, 0);
-		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
-		while (startDate.compareTo(endDate) < 0) {
-			// We fill each day with every meal
-			fillDayWithRandomDishes(menu, userDishes, startDate, mealsInWeek);
-			startDate = startDate.plusDays(1L);
+
+		if (startDate != null && endDate == null) {
+			// If we only need to fill one concrete day
+			LocalDateTime date = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
+			fillDayWithRandomDishes(menu, userDishes, date, mealsInWeek);
+		} else {
+			// We iterate over the week days
+			LocalDateTime generateStartDate = LocalDate.parse(startDate != null ? startDate : menu.getStartDate(),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
+			LocalDateTime generateEndDate = endDate != null
+					? LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0)
+					: generateStartDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK - 1);
+			while (generateStartDate.compareTo(generateEndDate) <= 0) {
+				// We fill each day with every meal
+				fillDayWithRandomDishes(menu, userDishes, generateStartDate, mealsInWeek);
+				generateStartDate = generateStartDate.plusDays(1L);
+			}
 		}
 
 		// We persist the changes
-		this.repository.save(menu);
+		menu = this.repository.save(menu);
 
 		// We return the menu formatted
-		return this.mapper.menuToMenuDto(menu);
+		return new ResponseDto(ResponseDto.OK_CODE, "Menu random generated correctly");
 	}
 
 	private void fillDayWithRandomDishes(Menu menu, List<Dish> userDishes, LocalDateTime date, Integer mealsInWeek) {
@@ -319,8 +331,9 @@ public class MenuServiceImpl implements MenuService {
 			Dish randomDish = selectRandomDishWithValidMeal(userDishes, date);
 			if (randomDish != null) {
 				// Add it to the menu and go to the next hour
-				menu.getDishes().add(new MenuDisRel(new MenuDisRelId(menu, randomDish,
-						date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")))));
+				MenuDisRel mdr = new MenuDisRel(new MenuDisRelId(menu, randomDish,
+						date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"))));
+				menu.getDishes().add(mdr);
 			}
 			date = date.plusHours(1L);
 		}
@@ -349,7 +362,7 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	@Transactional
-	public MenuDto generateValidMenu(Integer menuId, Integer userId) {
+	public ResponseDto generateValidMenu(Integer menuId, Integer userId, String startDate, String endDate) {
 		// First, we query the necessary info : The menu and the user dishes
 		Menu menu = this.repository.findOne(menuId);
 		List<Dish> userDishes = this.dishRepository.findUserDishes(userId);
@@ -357,37 +370,41 @@ public class MenuServiceImpl implements MenuService {
 		// We get the max stats per week needed for the algorythm
 		UserConfigurationsDto confs = this.userService.findConfigurations(userId);
 		Map<String, Double> maxStats = getMaxStats(confs);
-		Map<String, Double> currentStats = getInitialStats();
-		// Empty the menu dishes
-		if (!menu.getDishes().isEmpty()) {
-			this.clearMenu(menuId);
-			menu.setDishes(new ArrayList<>());
-		}
-		// We iterate over the week days
-		LocalDateTime startDate = LocalDate.parse(menu.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-				.atTime(0, 0, 0);
-		LocalDateTime endDate = startDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK);
-		while (startDate.compareTo(endDate) < 0) {
-			// We fill each day with every meal -> In case we can't, we stop filling
-			if (!fillDayWithValidDishes(menu, userDishes, startDate, currentStats, maxStats, mealsInWeek)) {
-				break;
+		Map<String, Double> currentStats = getInitialStats(menu);
+
+		if (startDate != null && endDate == null) {
+			// If we only need to fill one concrete day
+			LocalDateTime date = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
+			fillDayWithValidDishes(menu, userDishes, date, currentStats, maxStats, mealsInWeek);
+		} else {
+			// We iterate over the week days
+			LocalDateTime generateStartDate = LocalDate.parse(startDate != null ? startDate : menu.getStartDate(),
+					DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0);
+			LocalDateTime generateEndDate = endDate != null
+					? LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(0, 0, 0)
+					: generateStartDate.plusDays(MenuServiceImpl.DAYS_IN_WEEK - 1);
+			while (generateStartDate.compareTo(generateEndDate) <= 0) {
+				// We fill each day with every meal -> In case we can't, we stop filling
+				if (!fillDayWithValidDishes(menu, userDishes, generateStartDate, currentStats, maxStats, mealsInWeek)) {
+					break;
+				}
+				generateStartDate = generateStartDate.plusDays(1L);
 			}
-			startDate = startDate.plusDays(1L);
 		}
 
 		// We persist the changes
-		this.repository.save(menu);
+		menu = this.repository.save(menu);
 
 		// We return the menu formatted
-		return this.mapper.menuToMenuDto(menu);
+		return new ResponseDto(ResponseDto.OK_CODE, "Valid menu generated correctly");
 	}
 
-	private Map<String, Double> getInitialStats() {
+	private Map<String, Double> getInitialStats(Menu menu) {
 		Map<String, Double> maxStats = new HashMap<>();
-		maxStats.put(NutritionalStatEnum.CALORIES.getName(), 0d);
-		maxStats.put(NutritionalStatEnum.FATS.getName(), 0d);
-		maxStats.put(NutritionalStatEnum.CARBOHYDRATES.getName(), 0d);
-		maxStats.put(NutritionalStatEnum.PROTEINS.getName(), 0d);
+		maxStats.put(NutritionalStatEnum.CALORIES.getName(), menu.getCalories());
+		maxStats.put(NutritionalStatEnum.FATS.getName(), menu.getFats());
+		maxStats.put(NutritionalStatEnum.CARBOHYDRATES.getName(), menu.getCarbohydrates());
+		maxStats.put(NutritionalStatEnum.PROTEINS.getName(), menu.getProteins());
 		return maxStats;
 	}
 
@@ -493,8 +510,8 @@ public class MenuServiceImpl implements MenuService {
 		Menu menuFromTemplate = menuTemplate.getMenu();
 		// Empty the menu dishes
 		if (!menuToBeUpdated.getDishes().isEmpty()) {
-			this.clearMenu(menuId);
-			menuToBeUpdated.setDishes(new ArrayList<>());
+			this.clearMenu(menuId, null, null);
+			menuToBeUpdated.setDishes(new HashSet<>());
 		}
 		Integer mealsInWeek = this.userService.findUserMeals(dto.getUserId()).size();
 		LocalDateTime startDate = LocalDate

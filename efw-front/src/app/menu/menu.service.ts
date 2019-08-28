@@ -11,6 +11,7 @@ import { UpdateDishOnMenu } from '../models/menu/updateDishOnMenu.model';
 import { SpotFound } from '../models/menu/spotFound.model';
 import { SuggestDish } from '../models/menu/suggestDish.model';
 import { Dish } from '../models/dish/dish.model';
+import * as moment from 'moment';
 
 @Injectable()
 export class MenuService {
@@ -31,12 +32,26 @@ export class MenuService {
     return this.http.get<Menu>(this.menuUrl, { params: params });
   }
 
-  public getShoppingList(menuId: number) {
-    return this.http.get<ShoppingList>(this.menuUrl + '/' + menuId + '/shoppingList');
+  public getShoppingList(menuId: number, startDate: string, endDate: string) {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+    return this.http.get<ShoppingList>(this.menuUrl + '/' + menuId + '/shoppingList', {params: params});
   }
 
-  public clearMenu(menuId: number) {
-    return this.http.delete<BackendResponse>(this.menuUrl + '/' + menuId + '/clearMenu');
+  public clearMenu(menuId: number, startDate: string, endDate: string) {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+    return this.http.delete<BackendResponse>(this.menuUrl + '/' + menuId + '/clearMenu', {params: params});
   }
 
   public addDishToFirstValidSpotMenu(userId: number, addDishToMenu: AddDishToMenu) {
@@ -52,13 +67,25 @@ export class MenuService {
     return this.http.post<Dish>(this.menuUrl + '/' + menuId + '/suggest', suggestDish);
   }
 
-  public randomGenerateMenu(menuId: number, userId: number) {
-    const params = new HttpParams().set('userId', userId.toString());
+  public randomGenerateMenu(menuId: number, userId: number, startDate: string, endDate: string) {
+    let params = new HttpParams().set('userId', userId.toString());
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
     return this.http.post<Menu>(this.menuUrl + '/' + menuId + '/random', {}, { params: params });
   }
 
-  public generateValidMenu(menuId: number, userId: number) {
-    const params = new HttpParams().set('userId', userId.toString());
+  public generateValidMenu(menuId: number, userId: number, startDate: string, endDate: string) {
+    let params = new HttpParams().set('userId', userId.toString());
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
     return this.http.post<Menu>(this.menuUrl + '/' + menuId + '/valid', {}, { params: params });
   }
 
@@ -90,6 +117,12 @@ export class MenuService {
            ('0' + startDate.getHours()).slice(-2) + ':' +
            ('0' + startDate.getMinutes()).slice(-2) + ':' +
            ('0' + startDate.getSeconds()).slice(-2) + '.' + '0';
+  }
+
+  public getDaysDiff(firstDate: string, secondDate: string) {
+    const a = moment(firstDate, 'YYYY-MM-DD');
+    const b = moment(secondDate, 'YYYY-MM-DD');
+    return Math.abs(b.diff(a, 'days'));
   }
 
 }

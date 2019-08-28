@@ -1,40 +1,66 @@
-<app-calendar-header *ngIf="!isMobile && !isTablet"
-  [(view)]="view"
-  [(viewDate)]="viewDate"
-  (viewDateChange)="updateMenuWithNewMenu()">
-</app-calendar-header>
-<div align="center" *ngIf="!menu">
-  <button (click)="createMenu()"><b>Create Menu</b></button>
-</div>
-<div *ngIf="menu">
-  <app-calendar-week-view *ngIf="mealsInWeek"
-  [viewDate]="viewDate"
-  [weekStartsOn]=[1]
-  [events]="events"
-  [daysInWeek]="getDaysInWeek()"
-  [menuId]="menu.id"
-  [refresh]="refresh"
-  [mealsInWeek]="mealsInWeek"
-  (eventTimesChanged)="eventTimesChanged($event)"
-  (dishAdded)="updateMenuStatsWithDishStats($event)"
-  (eventClicked)="handleClickEvent($event)">
-  </app-calendar-week-view>
-  <br/>
-  <div align="center" *ngIf="!isMobile && !isTablet">
-    <button mat-raised-button (click)="generateShoppingList()"><b>Shopping List</b></button>
-    <button (click)="clearMenu()"><b>Clear menu</b></button>
-    <button (click)="randomMenu()"><b>Random menu</b></button>
-    <button (click)="validMenu()"><b>Valid menu</b></button>
-    <button (click)="saveTemplate()"><b>Save as Template</b></button>
-    <button (click)="fillFromTemplate()"><b>Fill from Template</b></button>
-    <button (click)="printMenu()"><b>Print menu</b></button>
-    <button (click)="shareMenu()">FACEBOOK SHARE</button>
+<div id="menuContainer" (swipeleft)="nextDay($event)" (swiperight)="previousDay($event)">
+  <h2 align="center" *ngIf="isLastPage">Weekly Overview</h2>
+  <app-calendar-header *ngIf="!isMobile && !isTablet"
+    [(view)]="view"
+    [(viewDate)]="viewDate"
+    (viewDateChange)="updateMenuWithNewMenu()">
+  </app-calendar-header>
+  <div align="center" *ngIf="!menu">
+    <button (click)="createMenu()"><b>Create Menu</b></button>
   </div>
-  <br/>
-  <app-view-stats-dashboard *ngIf="menu"
-  [menu]="menu"
-  [userConfs]="userConfs"
-  [events]="updateStatsSubject"
-  >
-  </app-view-stats-dashboard>
+  <div *ngIf="menu">
+    <app-calendar-week-view *ngIf="mealsInWeek && !isLastPage"
+    [viewDate]="viewDate"
+    [weekStartsOn]=[1]
+    [events]="events"
+    [daysInWeek]="getDaysInWeek()"
+    [menuId]="menu.id"
+    [refresh]="refresh"
+    [mealsInWeek]="mealsInWeek"
+    (eventTimesChanged)="eventTimesChanged($event)"
+    (dishAdded)="updateMenuStatsWithDishStats($event)"
+    (eventClicked)="handleClickEvent($event)">
+    </app-calendar-week-view>
+    <br/>
+    <div align="center" *ngIf="!isMobile && !isTablet">
+      <button mat-raised-button (click)="generateShoppingList()"><b>Shopping List</b></button>
+      <button (click)="clearMenu()"><b>Clear menu</b></button>
+      <button (click)="randomMenu()"><b>Random menu</b></button>
+      <button (click)="validMenu()"><b>Valid menu</b></button>
+      <button (click)="saveTemplate()"><b>Save as Template</b></button>
+      <button (click)="fillFromTemplate()"><b>Fill from Template</b></button>
+      <button (click)="printMenu()"><b>Print menu</b></button>
+      <button (click)="shareMenu()" *ngIf="currentUser.facebookUserId"><b>Facebook Share</b></button>
+    </div>
+    <div align="center" *ngIf="isMobile && !isLastPage">
+      <button mat-raised-button (click)="generateDayShoppingList()"><b>Shopping List</b></button>
+      <button (click)="clearDay()"><b>Clear day</b></button>
+      <button (click)="randomDay()"><b>Random day</b></button>
+      <button (click)="validDay()"><b>Valid day</b></button>
+    </div>
+    <div align="center" *ngIf="isTablet && !isLastPage">
+        <button mat-raised-button (click)="generateDayRangeShoppingList()"><b>Shopping List</b></button>
+        <button (click)="clearDays()"><b>Clear days</b></button>
+        <button (click)="randomDays()"><b>Random days</b></button>
+        <button (click)="validDays()"><b>Valid days</b></button>
+      </div>
+    <br/>
+    <app-view-stats-dashboard *ngIf="menu"
+    [menu]="menu"
+    [userConfs]="userConfs"
+    [events]="updateStatsSubject"
+    [isLastPage]="isLastPage"
+    >
+    </app-view-stats-dashboard>
+    <div align="center" *ngIf="(isMobile || isTablet) && isLastPage">
+        <button mat-raised-button (click)="generateShoppingList()"><b>Shopping List</b></button>
+        <button (click)="clearMenu()"><b>Clear menu</b></button>
+        <button (click)="randomMenu()"><b>Random menu</b></button>
+        <button (click)="validMenu()"><b>Valid menu</b></button>
+        <button (click)="saveTemplate()"><b>Save as Template</b></button>
+        <button (click)="fillFromTemplate()"><b>Fill from Template</b></button>
+        <button (click)="printMenu()"><b>Print menu</b></button>
+        <button (click)="shareMenu()" *ngIf="currentUser.facebookUserId"><b>Facebook Share</b></button>
+      </div>
+  </div>
 </div>

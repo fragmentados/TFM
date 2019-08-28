@@ -23,7 +23,12 @@ export class ViewStatsDashboardComponent implements OnInit {
   menu: Menu;
 
   @Input()
+  isLastPage: boolean;
+
+  @Input()
   userConfs: UserConfs;
+
+  viewDate: Date;
 
   @Input()
   events: Observable<void>;
@@ -35,7 +40,11 @@ export class ViewStatsDashboardComponent implements OnInit {
 
   ngOnInit() {
     if (this.isMobile || this.isTablet) {
-      this.switchDaily();
+      if (this.isMobile && this.isLastPage) {
+        this.switchWeekly();
+      } else {
+        this.switchDaily();
+      }
     } else {
       this.switchWeekly();
     }
@@ -43,35 +52,49 @@ export class ViewStatsDashboardComponent implements OnInit {
   }
 
   switchDaily() {
-    this.viewageType = 'DAILY';
+    this.viewageType = 'Daily';
     this.selectedDay = this.menuService.formatDate(new Date());
     this.updateSelectedDailyStats(null);
   }
 
   switchToCurrentDay() {
-    this.viewageType = 'DAILY';
+    this.viewageType = 'Daily';
     this.selectedStats = null;
   }
 
 
   switchWeekly() {
-    this.viewageType = 'WEEKLY';
+    this.viewageType = 'Weekly';
     this.selectedStats = this.menu.stats;
   }
 
   updateCurrentSelectedStats(menuReceived) {
-    this.menu = menuReceived;
-    if (this.viewageType === 'WEEKLY') {
+    if (menuReceived.isLastPage) {
+      this.switchWeekly();
+    } else if (this.isLastPage && !menuReceived.isLastPage) {
+      this.switchDaily();
+    }
+    this.menu = menuReceived.menu;
+    this.viewDate = menuReceived.viewDate;
+    if (this.viewageType === 'Weekly') {
       this.selectedStats = this.menu.stats;
-    } else if (this.viewageType === 'DAILY') {
+    } else if (this.viewageType === 'Daily') {
       this.updateSelectedDailyStats(null);
     }
   }
 
   updateSelectedDailyStats(event) {
-    const selectedDayFromMenu = this.menu.days.filter(day => day.date.startsWith(this.selectedDay))[0];
+    let dayToFilter = this.selectedDay;
+    // If it's mobile, we need to take the date from the current day
+    if (this.isMobile && this.viewDate) {
+      dayToFilter = this.menuService.formatDate(this.viewDate);
+    }
+    const selectedDayFromMenu = this.menu.days.filter(day => day.date.startsWith(dayToFilter))[0];
     if (selectedDayFromMenu != null) {
-      this.selectedStats = selectedDayFromMenu.stats;
+      this.selectedStats = [];
+      for (const stat of selectedDayFromMenu.stats) {
+        this.selectedStats.push(stat);
+      }
     } else {
       this.selectedStats = [];
     }
@@ -79,7 +102,7 @@ export class ViewStatsDashboardComponent implements OnInit {
 
   getMinDate() {
     if (this.isTablet) {
-      return this.menuService.formatDate(new Date());
+      return this.menuService.formatDate(this.viewDate);
     } else {
       return this.menu.startDate;
     }
@@ -87,7 +110,7 @@ export class ViewStatsDashboardComponent implements OnInit {
 
   getMaxMenuDate() {
     if (this.isTablet) {
-      const currentDate = this.menuService.formatDate(new Date());
+      const currentDate = this.menuService.formatDate(this.viewDate);
       const indexOfCurrentDay = this.menu.days.indexOf(this.menu.days.filter(d => d.date === currentDate)[0]);
       return this.menu.days[indexOfCurrentDay + 2].date;
     }

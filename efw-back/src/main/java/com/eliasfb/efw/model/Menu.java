@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -45,8 +46,8 @@ public class Menu {
 
 	private String startDate;
 
-	@OneToMany(mappedBy = "id.menu", cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
-	private List<MenuDisRel> dishes;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id.menu", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Set<MenuDisRel> dishes;
 
 	@JsonIgnore
 	public Double getCalories() {
@@ -68,8 +69,8 @@ public class Menu {
 		return this.dishes.stream().mapToDouble(di -> di.getId().getDish().getCarbohydrates()).sum();
 	}
 
-	public Map<String, UnitAndQuantity> getShoppingListItems() {
-		List<IngredientWithQuantity> ingredientList = this.dishes.stream()
+	public Map<String, UnitAndQuantity> getShoppingListItems(String startDate, String endDate) {
+		List<IngredientWithQuantity> ingredientList = this.filterDishesByDates(startDate, endDate).stream()
 				.flatMap(di -> di.getId().getDish().getIngredients().stream())
 				.map(igdi -> new IngredientWithQuantity(igdi.getId().getIngredient().getName(), igdi.getQuantity()))
 				.collect(Collectors.toList());
@@ -81,6 +82,21 @@ public class Menu {
 		ingredientCounts.entrySet().stream().forEach(es -> returnMap.put(es.getKey(),
 				new UnitAndQuantity(es.getValue(), ingredientQuantities.get(es.getKey()))));
 		return returnMap;
+	}
+
+	private List<MenuDisRel> filterDishesByDates(String startDate, String endDate) {
+		DateTimeFormatter dtfhh = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss.S");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return this.dishes.stream()
+				.filter(d -> (startDate == null && endDate == null)
+						|| ((startDate != null && endDate == null)
+								&& LocalDate.parse(d.getId().getDishDate(), dtfhh).format(dtf).equals(startDate))
+						|| ((startDate != null && endDate != null)
+								&& LocalDate.parse(d.getId().getDishDate(), dtfhh).getDayOfYear() >= LocalDate
+										.parse(startDate, dtf).getDayOfYear()
+								&& LocalDate.parse(d.getId().getDishDate(), dtfhh).getDayOfYear() <= LocalDate
+										.parse(endDate, dtf).getDayOfYear()))
+				.collect(Collectors.toList());
 	}
 
 	public boolean containsDish(Dish d) {

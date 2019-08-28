@@ -2,7 +2,7 @@
 
 @attribute weekDay {'MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY'}
 @attribute mealName {'Desayuno','Comida','Merienda','Cena'}
-@attribute dishName {'Lunes Desayuno','Lunes Comida','Lunes Cena','Martes Desayuno','Martes Comida','Martes Cena','Miercoles Desayuno','Miercoles Comida','Miercoles Cena','Jueves Desayuno','Jueves Comida','Jueves Cena','Viernes Desayuno','Viernes Comida','Viernes Cena','Sabado Desayuno','Sabado Comida','Sabado Cena','Domingo Desayuno','Domingo Comida','Domingo Cena','Patatas con lechuga','Prueba Desayuno','Carne con patatas','Prueba Comida','Prueba Merienda','Prueba Cena'}
+@attribute dishName {'Lunes Desayuno','Lunes Comida','Lunes Cena','Martes Desayuno','Martes Comida','Martes Cena','Miercoles Desayuno','Miercoles Comida','Miercoles Cena','Jueves Desayuno','Jueves Comida','Jueves Cena','Viernes Desayuno','Viernes Comida','Viernes Cena','Sabado Desayuno','Sabado Comida','Sabado Cena','Domingo Desayuno','Domingo Comida','Domingo Cena','Patatas con lechuga','Prueba Desayuno','Carne con patatas','Prueba Merienda','Prueba Comida','Prueba Cena'}
 
 @data
 'MONDAY','Desayuno','Lunes Desayuno'
@@ -36,9 +36,6 @@
 'SATURDAY','Desayuno','Patatas con lechuga'
 'SUNDAY','Desayuno','Patatas con lechuga'
 'MONDAY','Desayuno','Prueba Desayuno'
-'WEDNESDAY','Desayuno','Patatas con lechuga'
-'MONDAY','Desayuno','Prueba Desayuno'
-'TUESDAY','Desayuno','Prueba Desayuno'
 'MONDAY','Comida','Patatas con lechuga'
 'TUESDAY','Comida','Patatas con lechuga'
 'WEDNESDAY','Comida','Patatas con lechuga'
@@ -51,10 +48,9 @@
 'FRIDAY','Comida','Patatas con lechuga'
 'SATURDAY','Comida','Patatas con lechuga'
 'SUNDAY','Comida','Patatas con lechuga'
+'TUESDAY','Comida','Prueba Merienda'
 'MONDAY','Comida','Prueba Comida'
 'WEDNESDAY','Comida','Patatas con lechuga'
-'MONDAY','Comida','Prueba Desayuno'
-'TUESDAY','Comida','Prueba Desayuno'
 'FRIDAY','Merienda','Patatas con lechuga'
 'THURSDAY','Merienda','Patatas con lechuga'
 'FRIDAY','Merienda','Patatas con lechuga'
@@ -62,17 +58,13 @@
 'SUNDAY','Merienda','Patatas con lechuga'
 'WEDNESDAY','Merienda','Carne con patatas'
 'MONDAY','Merienda','Prueba Merienda'
-'TUESDAY','Merienda','Prueba Merienda'
-'MONDAY','Merienda','Patatas con lechuga'
-'TUESDAY','Merienda','Patatas con lechuga'
-'WEDNESDAY','Merienda','Patatas con lechuga'
+'WEDNESDAY','Merienda','Martes Cena'
 'THURSDAY','Cena','Patatas con lechuga'
 'FRIDAY','Cena','Patatas con lechuga'
 'SATURDAY','Cena','Patatas con lechuga'
 'SUNDAY','Cena','Patatas con lechuga'
-'WEDNESDAY','Cena','Carne con patatas'
+'WEDNESDAY','Cena','Martes Desayuno'
 'TUESDAY','Cena','Prueba Cena'
 'MONDAY','Cena','Prueba Desayuno'
-'MONDAY','Cena','Patatas con lechuga'
-'TUESDAY','Cena','Patatas con lechuga'
-'WEDNESDAY','Cena','Patatas con lechuga'
+'TUESDAY','Cena','Lunes Desayuno'
+'WEDNESDAY','Cena','Martes Desayuno'

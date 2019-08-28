@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+// @ToString(exclude = { "menu", "dish", "dishDate" })
 public class MenuDisRelId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,6 +28,12 @@ public class MenuDisRelId implements Serializable {
 
 	@Column(name = "dish_date")
 	private String dishDate;
+
+	@Override
+	public String toString() {
+		return "MenuDisRelId : menuId = " + this.menu.getId() + ", dishId = " + this.dish.getId() + ", dishDate = "
+				+ this.dishDate;
+	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
@@ -34,7 +35,7 @@ public abstract class MenuToDtoMapper {
 	@Mapping(source = "dishes", target = "days")
 	public abstract MenuDto menuToMenuDto(Menu menu);
 
-	public List<MenuDayDto> menuDisListToDto(List<MenuDisRel> menuDisRels) {
+	public List<MenuDayDto> menuDisSetToDto(Set<MenuDisRel> menuDisRels) {
 		List<MenuDayDto> menuDays = new ArrayList<>();
 		Map<String, List<MenuDishDto>> menuDisByDate = groupMenuDisByDate(menuDisRels);
 		menuDisByDate.keySet().forEach(date -> menuDays
@@ -45,7 +46,7 @@ public abstract class MenuToDtoMapper {
 				.compareTo(LocalDate.parse(d2.getDate(), dateFormatter))).collect(Collectors.toList());
 	}
 
-	private Map<String, List<MenuDishDto>> groupMenuDisByDate(List<MenuDisRel> menuDisRels) {
+	private Map<String, List<MenuDishDto>> groupMenuDisByDate(Set<MenuDisRel> menuDisRels) {
 		Map<String, List<MenuDishDto>> menuDisByDate = new HashMap<>();
 		menuDisRels.forEach(menuDis -> {
 			// Format date without hours
