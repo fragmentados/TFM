@@ -1,0 +1,13 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}AP\IeC {\'E}NDICE}{11}{chapter.1}
+\contentsline {section}{\numberline {1.1}Manual de Usuario}{11}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Autenticaci\IeC {\'o}n}{11}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Registro}{12}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}A\IeC {\~n}adir ingrediente}{12}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}Listado ingredientes}{14}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}Actualizaci\IeC {\'o}n ingrediente}{17}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}A\IeC {\~n}adir plato}{19}{subsection.1.1.6}
+\contentsline {subsection}{\numberline {1.1.7}Listado de platos}{21}{subsection.1.1.7}
+\contentsline {subsection}{\numberline {1.1.8}Actualizaci\IeC {\'o}n de plato}{24}{subsection.1.1.8}
+\contentsline {subsection}{\numberline {1.1.9}Configuraciones de usuario}{26}{subsection.1.1.9}
+\contentsline {subsection}{\numberline {1.1.10}Visualizaci\IeC {\'o}n semanal de los men\IeC {\'u}s}{28}{subsection.1.1.10}

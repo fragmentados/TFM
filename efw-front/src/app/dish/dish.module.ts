@@ -10,6 +10,9 @@ import { IngredientService } from '../ingredient/ingredient.service';
 import { UpdateDishComponent } from './update-dish/update-dish.component';
 import { MenuModule } from '../menu/menu.module';
 import { DishService } from './dish.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [AddDishComponent, DishesComponent, UpdateDishComponent],
@@ -18,7 +21,16 @@ import { DishService } from './dish.service';
     FormsModule,
     DishRoutingModule,
     NutritionModule,
-    MenuModule
+    MenuModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    })
   ],
   exports: [DishesComponent],
   providers: [DishRestService, DishService, IngredientService]

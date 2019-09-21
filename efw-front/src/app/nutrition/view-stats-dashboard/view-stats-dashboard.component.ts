@@ -5,6 +5,8 @@ import { Menu } from '../../models/menu/menu.model';
 import { UserConfs } from '../../models/user/userConfs.model';
 import { Stat } from '../../models/nutrition/stat.model';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_LANG } from '../../models/service';
 
 @Component({
   selector: 'app-view-stats-dashboard',
@@ -18,6 +20,7 @@ export class ViewStatsDashboardComponent implements OnInit {
   selectedDay: string;
   isMobile = true;
   isTablet = false;
+  title: string;
 
   @Input()
   menu: Menu;
@@ -33,9 +36,10 @@ export class ViewStatsDashboardComponent implements OnInit {
   @Input()
   events: Observable<void>;
 
-  constructor(private appStateService: ApplicationStateService, private menuService: MenuService) {
+  constructor(private translate: TranslateService, private appStateService: ApplicationStateService, private menuService: MenuService) {
     this.isMobile = this.appStateService.getIsMobileResolution();
     this.isTablet = this.appStateService.getIsTabletResolution();
+    this.translate.setDefaultLang(DEFAULT_LANG);
   }
 
   ngOnInit() {
@@ -55,6 +59,7 @@ export class ViewStatsDashboardComponent implements OnInit {
     this.viewageType = 'Daily';
     this.selectedDay = this.menuService.formatDate(new Date());
     this.updateSelectedDailyStats(null);
+    this.translate.get('STAT_DASHBOARD.DAILY_TITLE').subscribe(data => this.title = data);
   }
 
   switchToCurrentDay() {
@@ -66,6 +71,7 @@ export class ViewStatsDashboardComponent implements OnInit {
   switchWeekly() {
     this.viewageType = 'Weekly';
     this.selectedStats = this.menu.stats;
+    this.translate.get('STAT_DASHBOARD.WEEKLY_TITLE').subscribe(data => this.title = data);
   }
 
   updateCurrentSelectedStats(menuReceived) {
@@ -101,7 +107,7 @@ export class ViewStatsDashboardComponent implements OnInit {
   }
 
   getMinDate() {
-    if (this.isTablet) {
+    if (this.isTablet && this.viewDate) {
       return this.menuService.formatDate(this.viewDate);
     } else {
       return this.menu.startDate;
@@ -109,7 +115,7 @@ export class ViewStatsDashboardComponent implements OnInit {
   }
 
   getMaxMenuDate() {
-    if (this.isTablet) {
+    if (this.isTablet && this.viewDate) {
       const currentDate = this.menuService.formatDate(this.viewDate);
       const indexOfCurrentDay = this.menu.days.indexOf(this.menu.days.filter(d => d.date === currentDate)[0]);
       return this.menu.days[indexOfCurrentDay + 2].date;

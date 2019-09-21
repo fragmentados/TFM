@@ -6,6 +6,8 @@ import { Ingredient } from '../../models/ingredient/ingredient.model';
 import { IngredientService } from '.././ingredient.service';
 import { User } from '../../models/user/user.model';
 import { Router } from '@angular/router';
+import { DEFAULT_LANG } from '../../models/service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -18,12 +20,14 @@ export class IngredientComponent implements OnInit {
   ingredients: Ingredient[];
   bannedCategories: FoodCategory[];
   currentUser: User;
-  warningText = 'The food category of this ingredient is currently banned by you';
+  warningText;
   isMobile = false;
   isTablet = false;
 
-  constructor(private router: Router, private userService: UserService, private ingredientService: IngredientService,
-    private appStateService: ApplicationStateService) {
+  constructor(private translate: TranslateService, private router: Router, private userService: UserService,
+    private ingredientService: IngredientService, private appStateService: ApplicationStateService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
+    this.translate.get('ADD_INGREDIENT.BANNED_CATEGORY_INGREDIENT_MESSAGE').subscribe(data => this.warningText = data);
     this.currentUser = this.userService.currentUserValue;
     this.isMobile = this.appStateService.getIsMobileResolution();
     this.isTablet = this.appStateService.getIsTabletResolution();

@@ -1,9 +1,11 @@
+import { DEFAULT_LANG } from './../../models/service';
 import { UserService } from '../../user.service';
 import { Component, OnInit } from '@angular/core';
 import { Login } from '../../models/user/login.model';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FacebookService, InitParams, LoginResponse } from 'ngx-facebook';
+import { TranslateService } from '@ngx-translate/core';
 
 // imports above
 declare var window: any;
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   login: Login = new Login();
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private translate: TranslateService, private router: Router, private userService: UserService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
   }
 
   public onLoginClick() {

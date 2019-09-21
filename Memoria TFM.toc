@@ -1,86 +1,139 @@
 \select@language {spanish}
 \contentsline {chapter}{\numberline {1}Motivaci\IeC {\'o}n}{15}{chapter.1}
 \contentsline {chapter}{\numberline {2}Fundamentos te\IeC {\'o}ricos}{17}{chapter.2}
-\contentsline {chapter}{\numberline {3}Determinaci\IeC {\'o}n de la situaci\IeC {\'o}n actual}{19}{chapter.3}
-\contentsline {chapter}{\numberline {4}BASE TECN\IeC {\'O}LOGICA}{21}{chapter.4}
-\contentsline {section}{\numberline {4.1}Lenguajes}{22}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Java SE 8}{22}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}HTML}{22}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}CSS}{23}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Frameworks y librer\IeC {\'\i }as}{23}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Core}{23}{subsection.4.2.1}
-\contentsline {subsubsection}{\numberline {4.2.1.1}Spring}{23}{subsubsection.4.2.1.1}
-\contentsline {subsubsection}{\numberline {4.2.1.2}Hibernate}{24}{subsubsection.4.2.1.2}
-\contentsline {section}{\numberline {4.3}Web}{25}{section.4.3}
-\contentsline {subsubsection}{\numberline {4.3.0.1}Angular JS}{25}{subsubsection.4.3.0.1}
-\contentsline {subsubsection}{\numberline {4.3.0.2}Bootstrap}{26}{subsubsection.4.3.0.2}
-\contentsline {subsection}{\numberline {4.3.1}Pruebas}{26}{subsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.1.1}JUnit}{26}{subsubsection.4.3.1.1}
-\contentsline {subsubsection}{\numberline {4.3.1.2}Mockito}{27}{subsubsection.4.3.1.2}
-\contentsline {subsubsection}{\numberline {4.3.1.3}Spring Test Context}{27}{subsubsection.4.3.1.3}
-\contentsline {subsubsection}{\numberline {4.3.1.4}Eclemma}{28}{subsubsection.4.3.1.4}
-\contentsline {subsection}{\numberline {4.3.2}Protocolos}{28}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Hypertext Transfer Protocol o HTTP}{28}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Herramientas de Desarrollo}{29}{subsection.4.4.1}
-\contentsline {section}{\numberline {4.5}Maven}{29}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Sistemas de Gesti\IeC {\'o}n de Bases de Datos}{29}{subsection.4.5.1}
-\contentsline {subsubsection}{\numberline {4.5.1.1}MySQL}{29}{subsubsection.4.5.1.1}
-\contentsline {subsection}{\numberline {4.5.2}Herramientas de apoyo}{30}{subsection.4.5.2}
-\contentsline {chapter}{\numberline {5}INTRODUCCI\IeC {\'O}N AL DESARROLLO REALIZADO}{33}{chapter.5}
-\contentsline {section}{\numberline {5.1}Introducci\IeC {\'o}n}{33}{section.5.1}
-\contentsline {section}{\numberline {5.2}Tecnolog\IeC {\'\i }as}{33}{section.5.2}
-\contentsline {section}{\numberline {5.3}Metodolog\IeC {\'\i }a e Iteraciones}{33}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Proceso Unificado}{33}{subsection.5.3.1}
-\contentsline {subsubsection}{\numberline {5.3.1.1}Fases del proceso unificado}{33}{subsubsection.5.3.1.1}
-\contentsline {subsubsection}{\numberline {5.3.1.2}Fase de Inicio}{33}{subsubsection.5.3.1.2}
-\contentsline {subsection}{\numberline {5.3.2}Iteraciones}{33}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {6}PLANIFICACI\IeC {\'O}N Y AN\IeC {\'A}LISIS DE COSTES}{35}{chapter.6}
-\contentsline {section}{\numberline {6.1}An\IeC {\'a}lisis de viabilidad}{35}{section.6.1}
-\contentsline {section}{\numberline {6.2}Planificaci\IeC {\'o}n}{35}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Planificaci\IeC {\'o}n previa}{35}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}Iteraciones}{35}{subsection.6.2.2}
-\contentsline {subsection}{\numberline {6.2.3}Diagrama de Gantt}{35}{subsection.6.2.3}
-\contentsline {chapter}{\numberline {7}REQUISITOS DEL SISTEMA}{37}{chapter.7}
-\contentsline {section}{\numberline {7.1}Introducci\IeC {\'o}n}{37}{section.7.1}
-\contentsline {section}{\numberline {7.2}Actores}{37}{section.7.2}
-\contentsline {section}{\numberline {7.3}Casos de Uso}{37}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}Casos de uso comunes}{37}{subsection.7.3.1}
-\contentsline {section}{\numberline {7.4}Modelo de Casos de uso}{37}{section.7.4}
-\contentsline {subsection}{\numberline {7.4.1}Casos de uso comunes}{37}{subsection.7.4.1}
-\contentsline {subsection}{\numberline {7.4.2}Casos de uso usuario}{37}{subsection.7.4.2}
-\contentsline {subsection}{\numberline {7.4.3}Casos de uso administrador}{37}{subsection.7.4.3}
-\contentsline {chapter}{\numberline {8}DISE\IeC {\~N}O DE LA APLICACI\IeC {\'O}N}{39}{chapter.8}
-\contentsline {section}{\numberline {8.1}Introducci\IeC {\'o}n y Objetivos}{39}{section.8.1}
-\contentsline {section}{\numberline {8.2}Arquitectura general}{39}{section.8.2}
-\contentsline {section}{\numberline {8.3}Subsistema Backend efw-back}{39}{section.8.3}
-\contentsline {subsection}{\numberline {8.3.1}Arquitectura}{40}{subsection.8.3.1}
-\contentsline {subsection}{\numberline {8.3.2}Modelo del dominio}{42}{subsection.8.3.2}
-\contentsline {subsubsection}{\numberline {8.3.2.1}Diagrama de Entidades}{42}{subsubsection.8.3.2.1}
-\contentsline {subsubsection}{\numberline {8.3.2.2}Modelo de Datos}{42}{subsubsection.8.3.2.2}
-\contentsline {subsubsection}{\numberline {8.3.2.3}Diagrama de Entidad Relaci\IeC {\'o}n}{45}{subsubsection.8.3.2.3}
-\contentsline {subsection}{\numberline {8.3.3}Capa de Acceso a Datos}{46}{subsection.8.3.3}
-\contentsline {subsection}{\numberline {8.3.4}Capa Servicios del Modelo}{48}{subsection.8.3.4}
-\contentsline {section}{\numberline {8.4}Subsistema Frontend efw-front}{54}{section.8.4}
-\contentsline {subsection}{\numberline {8.4.1}M\IeC {\'o}dulos empleados}{55}{subsection.8.4.1}
-\contentsline {subsubsection}{\numberline {8.4.1.1}M\IeC {\'o}dulo Calendar}{55}{subsubsection.8.4.1.1}
-\contentsline {subsubsection}{\numberline {8.4.1.2}M\IeC {\'o}dulo Dish}{56}{subsubsection.8.4.1.2}
-\contentsline {subsubsection}{\numberline {8.4.1.3}M\IeC {\'o}dulo Ingredient}{57}{subsubsection.8.4.1.3}
-\contentsline {subsubsection}{\numberline {8.4.1.4}M\IeC {\'o}dulo Menu}{57}{subsubsection.8.4.1.4}
-\contentsline {subsubsection}{\numberline {8.4.1.5}M\IeC {\'o}dulo Nutrition}{58}{subsubsection.8.4.1.5}
-\contentsline {subsubsection}{\numberline {8.4.1.6}M\IeC {\'o}dulo User}{58}{subsubsection.8.4.1.6}
-\contentsline {chapter}{\numberline {9}IMPLEMENTACI\IeC {\'O}N}{61}{chapter.9}
-\contentsline {section}{\numberline {9.1}Software requerido}{61}{section.9.1}
-\contentsline {section}{\numberline {9.2}Estructura}{61}{section.9.2}
-\contentsline {subsection}{\numberline {9.2.1}Instrucciones de compilaci\IeC {\'o}n}{61}{subsection.9.2.1}
-\contentsline {chapter}{\numberline {10}PRUEBAS}{63}{chapter.10}
-\contentsline {section}{\numberline {10.1}Introducci\IeC {\'o}n}{63}{section.10.1}
-\contentsline {section}{\numberline {10.2}Pruebas Unitarias}{63}{section.10.2}
-\contentsline {section}{\numberline {10.3}Pruebas de Integraci\IeC {\'o}n}{63}{section.10.3}
-\contentsline {chapter}{\numberline {11}CONCLUSIONES Y FUTURAS L\IeC {\'I}NEAS DE TRABAJO}{65}{chapter.11}
-\contentsline {section}{\numberline {11.1}Conclusiones}{65}{section.11.1}
-\contentsline {section}{\numberline {11.2}Futuras L\IeC {\'\i }neas de Trabajo}{65}{section.11.2}
-\contentsline {chapter}{\numberline {12}ACR\IeC {\'O}NIMOS}{69}{chapter.12}
-\contentsline {chapter}{\numberline {A}AP\IeC {\'E}NDICE}{71}{appendix.Alph1}
-\contentsline {section}{\numberline {A.1}Instalaci\IeC {\'o}n del Software}{71}{section.Alph1.1}
-\contentsline {section}{\numberline {A.2}Contenido del CD}{71}{section.Alph1.2}
-\contentsline {section}{\numberline {A.3}Manual de Usuario}{71}{section.Alph1.3}
+\contentsline {chapter}{\numberline {3}Estado del arte}{21}{chapter.3}
+\contentsline {section}{\numberline {3.1}FoodPlanner}{21}{section.3.1}
+\contentsline {section}{\numberline {3.2}Eat This Much}{24}{section.3.2}
+\contentsline {section}{\numberline {3.3}Meal-planner}{27}{section.3.3}
+\contentsline {section}{\numberline {3.4}What's For Dinner}{28}{section.3.4}
+\contentsline {section}{\numberline {3.5}Otros}{30}{section.3.5}
+\contentsline {chapter}{\numberline {4}Base tecnol\IeC {\'o}gica}{31}{chapter.4}
+\contentsline {section}{\numberline {4.1}Lenguajes}{32}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Java SE 8}{32}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}HTML}{32}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}CSS}{33}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Frameworks y librer\IeC {\'\i }as}{34}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Core}{34}{subsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.1.1}Spring}{34}{subsubsection.4.2.1.1}
+\contentsline {subsubsection}{\numberline {4.2.1.2}Hibernate}{35}{subsubsection.4.2.1.2}
+\contentsline {section}{\numberline {4.3}Web}{36}{section.4.3}
+\contentsline {subsubsection}{\numberline {4.3.0.1}Angular JS}{36}{subsubsection.4.3.0.1}
+\contentsline {subsubsection}{\numberline {4.3.0.2}Bootstrap}{37}{subsubsection.4.3.0.2}
+\contentsline {subsection}{\numberline {4.3.1}Pruebas}{37}{subsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.1.1}JUnit}{37}{subsubsection.4.3.1.1}
+\contentsline {subsubsection}{\numberline {4.3.1.2}Mockito}{38}{subsubsection.4.3.1.2}
+\contentsline {subsubsection}{\numberline {4.3.1.3}Eclemma}{38}{subsubsection.4.3.1.3}
+\contentsline {subsection}{\numberline {4.3.2}Protocolos}{39}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Hypertext Transfer Protocol o HTTP}{39}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Herramientas de Desarrollo}{39}{subsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.1.1}Maven}{39}{subsubsection.4.4.1.1}
+\contentsline {subsection}{\numberline {4.4.2}Sistemas de Gesti\IeC {\'o}n de Bases de Datos}{40}{subsection.4.4.2}
+\contentsline {subsubsection}{\numberline {4.4.2.1}MySQL}{40}{subsubsection.4.4.2.1}
+\contentsline {subsection}{\numberline {4.4.3}Herramientas de apoyo}{40}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Metodolog\IeC {\'\i }a y Planificaci\IeC {\'o}n}{45}{chapter.5}
+\contentsline {section}{\numberline {5.1}Metodolog\IeC {\'\i }a e Iteraciones}{45}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Scrum}{45}{subsection.5.1.1}
+\contentsline {section}{\numberline {5.2}Planificaci\IeC {\'o}n y an\IeC {\'a}lisis de costes}{47}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}An\IeC {\'a}lisis de viabilidad}{47}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Planificaci\IeC {\'o}n}{47}{subsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.2.2.1}Planificaci\IeC {\'o}n previa}{48}{subsubsection.5.2.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2.2}Sprints}{48}{subsubsection.5.2.2.2}
+\contentsline {chapter}{\numberline {6}An\IeC {\'a}lisis}{51}{chapter.6}
+\contentsline {section}{\numberline {6.1}Introducci\IeC {\'o}n y Objetivos}{51}{section.6.1}
+\contentsline {section}{\numberline {6.2}Requisitos del sistema}{51}{section.6.2}
+\contentsline {section}{\numberline {6.3}Actores}{52}{section.6.3}
+\contentsline {section}{\numberline {6.4}Casos de Uso}{53}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Casos de uso Usuario}{53}{subsection.6.4.1}
+\contentsline {subsubsection}{\numberline {6.4.1.1}CU-001-Registro}{53}{subsubsection.6.4.1.1}
+\contentsline {subsubsection}{\numberline {6.4.1.2}CU-002-Login}{53}{subsubsection.6.4.1.2}
+\contentsline {subsubsection}{\numberline {6.4.1.3}CU-003-Logout}{53}{subsubsection.6.4.1.3}
+\contentsline {subsubsection}{\numberline {6.4.1.4}CU-004-Visualizar ingredientes}{54}{subsubsection.6.4.1.4}
+\contentsline {subsubsection}{\numberline {6.4.1.5}CU-005-Actualizar ingrediente}{54}{subsubsection.6.4.1.5}
+\contentsline {subsubsection}{\numberline {6.4.1.6}CU-006-A\IeC {\~n}adir ingrediente}{54}{subsubsection.6.4.1.6}
+\contentsline {subsubsection}{\numberline {6.4.1.7}CU-007-Borrar ingrediente}{55}{subsubsection.6.4.1.7}
+\contentsline {subsubsection}{\numberline {6.4.1.8}CU-008-Visualizar platos}{55}{subsubsection.6.4.1.8}
+\contentsline {subsubsection}{\numberline {6.4.1.9}CU-009-Actualizar plato}{55}{subsubsection.6.4.1.9}
+\contentsline {subsubsection}{\numberline {6.4.1.10}CU-010-A\IeC {\~n}adir plato}{56}{subsubsection.6.4.1.10}
+\contentsline {subsubsection}{\numberline {6.4.1.11}CU-011-Borrar plato}{56}{subsubsection.6.4.1.11}
+\contentsline {subsubsection}{\numberline {6.4.1.12}CU-012-A\IeC {\~n}adir plato a primer hueco v\IeC {\'a}lido de men\IeC {\'u}}{56}{subsubsection.6.4.1.12}
+\contentsline {subsubsection}{\numberline {6.4.1.13}CU-013-Visualizaci\IeC {\'o}n semanal de men\IeC {\'u}s}{57}{subsubsection.6.4.1.13}
+\contentsline {subsubsection}{\numberline {6.4.1.14}CU-014-Crear men\IeC {\'u}}{57}{subsubsection.6.4.1.14}
+\contentsline {subsubsection}{\numberline {6.4.1.15}CU-015-A\IeC {\~n}adir plato a men\IeC {\'u}}{57}{subsubsection.6.4.1.15}
+\contentsline {subsubsection}{\numberline {6.4.1.16}CU-016-Sugerir plato en men\IeC {\'u}}{58}{subsubsection.6.4.1.16}
+\contentsline {subsubsection}{\numberline {6.4.1.17}CU-017-Lista de la compra}{58}{subsubsection.6.4.1.17}
+\contentsline {subsubsection}{\numberline {6.4.1.18}CU-018-Limpiar men\IeC {\'u}}{59}{subsubsection.6.4.1.18}
+\contentsline {subsubsection}{\numberline {6.4.1.19}CU-019-Obtener men\IeC {\'u} aleatorio}{59}{subsubsection.6.4.1.19}
+\contentsline {subsubsection}{\numberline {6.4.1.20}CU-020-Obtener men\IeC {\'u} v\IeC {\'a}lido}{59}{subsubsection.6.4.1.20}
+\contentsline {subsubsection}{\numberline {6.4.1.21}CU-021-Guardar men\IeC {\'u} como plantilla}{60}{subsubsection.6.4.1.21}
+\contentsline {subsubsection}{\numberline {6.4.1.22}CU-022-Rellenar men\IeC {\'u} desde plantilla}{60}{subsubsection.6.4.1.22}
+\contentsline {subsubsection}{\numberline {6.4.1.23}CU-023-Actualizar configuraciones de usuario}{60}{subsubsection.6.4.1.23}
+\contentsline {subsection}{\numberline {6.4.2}Casos de uso Sistema Estimador Nutricional - SEN}{61}{subsection.6.4.2}
+\contentsline {subsubsection}{\numberline {6.4.2.1}CU-024-Estimar ingrediente}{61}{subsubsection.6.4.2.1}
+\contentsline {subsection}{\numberline {6.4.3}Casos de uso Sistema Scrapeador de Supermercado - SSS}{61}{subsection.6.4.3}
+\contentsline {subsubsection}{\numberline {6.4.3.1}CU-025-Estimar precio lista de la compra}{61}{subsubsection.6.4.3.1}
+\contentsline {section}{\numberline {6.5}Modelo de Casos de uso}{61}{section.6.5}
+\contentsline {chapter}{\numberline {7}Dise\IeC {\~n}o de la aplicaci\IeC {\'o}n}{63}{chapter.7}
+\contentsline {section}{\numberline {7.1}Mockups}{63}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Dise\IeC {\~n}o inicial}{63}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}Planificacion Semanal de Menu}{64}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}A\IeC {\~n}adir ingrediente}{65}{subsection.7.1.3}
+\contentsline {subsection}{\numberline {7.1.4}A\IeC {\~n}adir plato}{66}{subsection.7.1.4}
+\contentsline {section}{\numberline {7.2}Dise\IeC {\~n}o componentes del API}{67}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Men\IeC {\'u}}{67}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Servicios externos}{68}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}Modelo de Datos}{69}{subsection.7.2.3}
+\contentsline {subsubsection}{\numberline {7.2.3.1}Diagrama de Entidad Relaci\IeC {\'o}n}{72}{subsubsection.7.2.3.1}
+\contentsline {section}{\numberline {7.3}Arquitectura general}{73}{section.7.3}
+\contentsline {section}{\numberline {7.4}Subsistema Backend efw-back}{75}{section.7.4}
+\contentsline {subsection}{\numberline {7.4.1}Arquitectura}{75}{subsection.7.4.1}
+\contentsline {subsection}{\numberline {7.4.2}Modelo del dominio}{77}{subsection.7.4.2}
+\contentsline {subsubsection}{\numberline {7.4.2.1}Diagrama de Entidades}{77}{subsubsection.7.4.2.1}
+\contentsline {subsection}{\numberline {7.4.3}Capa de Acceso a Datos}{78}{subsection.7.4.3}
+\contentsline {subsection}{\numberline {7.4.4}Capa Servicios del Modelo}{80}{subsection.7.4.4}
+\contentsline {section}{\numberline {7.5}Subsistema Frontend efw-front}{87}{section.7.5}
+\contentsline {subsection}{\numberline {7.5.1}M\IeC {\'o}dulos empleados}{89}{subsection.7.5.1}
+\contentsline {subsubsection}{\numberline {7.5.1.1}M\IeC {\'o}dulo Calendar}{89}{subsubsection.7.5.1.1}
+\contentsline {subsubsection}{\numberline {7.5.1.2}M\IeC {\'o}dulo Dish}{90}{subsubsection.7.5.1.2}
+\contentsline {subsubsection}{\numberline {7.5.1.3}M\IeC {\'o}dulo Ingredient}{90}{subsubsection.7.5.1.3}
+\contentsline {subsubsection}{\numberline {7.5.1.4}M\IeC {\'o}dulo Menu}{91}{subsubsection.7.5.1.4}
+\contentsline {subsubsection}{\numberline {7.5.1.5}M\IeC {\'o}dulo Nutrition}{92}{subsubsection.7.5.1.5}
+\contentsline {subsubsection}{\numberline {7.5.1.6}M\IeC {\'o}dulo User}{92}{subsubsection.7.5.1.6}
+\contentsline {chapter}{\numberline {8}Implementaci\IeC {\'o}n}{93}{chapter.8}
+\contentsline {section}{\numberline {8.1}Software requerido}{93}{section.8.1}
+\contentsline {section}{\numberline {8.2}Proceso seguido}{93}{section.8.2}
+\contentsline {section}{\numberline {8.3}Generaci\IeC {\'o}n de men\IeC {\'u} aleatortio}{94}{section.8.3}
+\contentsline {subsection}{\numberline {8.3.1}Componente AngularJS: menu-calendar}{94}{subsection.8.3.1}
+\contentsline {subsubsection}{\numberline {8.3.1.1}Plantilla HTML}{95}{subsubsection.8.3.1.1}
+\contentsline {subsubsection}{\numberline {8.3.1.2}Controlador TypeScript: MenuCalendarComponent}{95}{subsubsection.8.3.1.2}
+\contentsline {subsubsection}{\numberline {8.3.1.3}Servicio TypeScript de llamada al API de men\IeC {\'u}s: MenuService}{96}{subsubsection.8.3.1.3}
+\contentsline {subsection}{\numberline {8.3.2}Controlador REST: MenuController}{96}{subsection.8.3.2}
+\contentsline {subsection}{\numberline {8.3.3}Servicio de negocio: MenuServiceImpl}{97}{subsection.8.3.3}
+\contentsline {subsection}{\numberline {8.3.4}Repositorios Spring Data: MenuRepository, DishRepository y MealRepository}{101}{subsection.8.3.4}
+\contentsline {chapter}{\numberline {9}Pruebas}{103}{chapter.9}
+\contentsline {section}{\numberline {9.1}Introducci\IeC {\'o}n}{103}{section.9.1}
+\contentsline {section}{\numberline {9.2}Pruebas Unitarias}{103}{section.9.2}
+\contentsline {section}{\numberline {9.3}Cobertura}{104}{section.9.3}
+\contentsline {section}{\numberline {9.4}Pruebas Autom\IeC {\'a}ticas de Interfaz}{105}{section.9.4}
+\contentsline {subsection}{\numberline {9.4.1}Generaci\IeC {\'o}n autom\IeC {\'a}tica de lista de la compra}{105}{subsection.9.4.1}
+\contentsline {section}{\numberline {9.5}Pruebas de Usuario}{107}{section.9.5}
+\contentsline {chapter}{\numberline {10}Conclusiones y futuras l\IeC {\'\i }neas de trabajo}{109}{chapter.10}
+\contentsline {section}{\numberline {10.1}Conclusiones}{109}{section.10.1}
+\contentsline {section}{\numberline {10.2}Futuras L\IeC {\'\i }neas de Trabajo}{111}{section.10.2}
+\contentsline {subsection}{\numberline {10.2.1}Integraci\IeC {\'o}n Continua}{111}{subsection.10.2.1}
+\contentsline {subsection}{\numberline {10.2.2}Aplicaciones nativas m\IeC {\'o}viles}{111}{subsection.10.2.2}
+\contentsline {subsection}{\numberline {10.2.3}Colecciones globales}{112}{subsection.10.2.3}
+\contentsline {subsection}{\numberline {10.2.4}Fotos de platos}{113}{subsection.10.2.4}
+\contentsline {subsection}{\numberline {10.2.5}Ingredientes ignorados en la lista de la compra}{113}{subsection.10.2.5}
+\contentsline {chapter}{\numberline {11}Acr\IeC {\'o}nimos}{119}{chapter.11}
+\contentsline {chapter}{\numberline {A}Ap\IeC {\'e}ndice}{121}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Manual de Usuario}{121}{section.Alph1.1}
+\contentsline {subsection}{\numberline {A.1.1}Autenticaci\IeC {\'o}n}{121}{subsection.Alph1.1.1}
+\contentsline {subsection}{\numberline {A.1.2}Registro}{122}{subsection.Alph1.1.2}
+\contentsline {subsection}{\numberline {A.1.3}A\IeC {\~n}adir ingrediente}{122}{subsection.Alph1.1.3}
+\contentsline {subsection}{\numberline {A.1.4}Listado ingredientes}{124}{subsection.Alph1.1.4}
+\contentsline {subsection}{\numberline {A.1.5}Actualizaci\IeC {\'o}n ingrediente}{127}{subsection.Alph1.1.5}
+\contentsline {subsection}{\numberline {A.1.6}A\IeC {\~n}adir plato}{129}{subsection.Alph1.1.6}
+\contentsline {subsection}{\numberline {A.1.7}Listado de platos}{131}{subsection.Alph1.1.7}
+\contentsline {subsection}{\numberline {A.1.8}Actualizaci\IeC {\'o}n de plato}{134}{subsection.Alph1.1.8}
+\contentsline {subsection}{\numberline {A.1.9}Configuraciones de usuario}{136}{subsection.Alph1.1.9}
+\contentsline {subsection}{\numberline {A.1.10}Visualizaci\IeC {\'o}n semanal de los men\IeC {\'u}s}{138}{subsection.Alph1.1.10}

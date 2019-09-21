@@ -42,12 +42,6 @@ public class MenuController {
 		return service.findById(id);
 	}
 
-	@PutMapping(path = { "/{id}" })
-	public Menu update(@PathVariable("id") int id, @RequestBody Menu menu) {
-		menu.setId(id);
-		return service.update(menu);
-	}
-
 	@GetMapping(path = { "/{id}/shoppingList" })
 	public ShoppingListDto getShoppingList(@PathVariable("id") int menuId,
 			@RequestParam(value = "startDate", required = false) String startDate,

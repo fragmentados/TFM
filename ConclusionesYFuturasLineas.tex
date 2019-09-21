@@ -1,0 +1,143 @@
+\documentclass[12pt, a4paper, twoside]{book}
+\usepackage[utf8]{inputenc} % Aceptar diferentes tipos de codificación de caracteres de entrada (en este caso usamos la codificación Unicode UTF-8)
+%\usepackage{natbib}
+\usepackage{listings}
+\usepackage{eurosym}
+\usepackage[spanish]{babel}
+\usepackage{titlesec}
+\usepackage{graphicx} % Soporte aumentado para gráficos 
+\usepackage{float}
+\usepackage{hyperref} % Para manejar referencias cruzadas. P.ej. añadir hiperenlaces al índice
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage[a4paper, top=3.5cm, bottom=3.5cm, left=3cm, right=3cm]{geometry}
+\spacing{1.5}
+\setcounter{secnumdepth}{4}
+\setlength{\parindent}{12pt}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%\usepackage{inconsolata}
+%
+%\usepackage[T1]{fontenc}
+%
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+
+\begin{document}	
+	
+	\thispagestyle{empty} 	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% PORTADA
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{center}		
+		\includegraphics[width=15cm]{Imagenes/Simbolo_logo_UDC.png}
+	\end{center}
+	
+	% Lista de tamaños: \Huge, \huge, \LARGE, \Large, \large, \small, \footnotesize, \tiny
+	\vspace{2cm}
+	
+	\begin{center}		
+		{\textbf{ FACULTADE DE INFORMÁTICA}}
+		
+		\vspace{1cm}
+		\LARGE{ TRABALLO FIN DE MÁSTER }	\\
+		\LARGE{ MÁSTER UNIVERSITARIO EN INGENIERÍA INFORMÁTICA } \\
+		\vspace{1cm}	
+		\LARGE{\textbf{ Aplicación web para a xestión de menús domésticos con servizos nutricionais : Eat Fit Week! }}
+	\end{center}
+	
+	\vspace{2cm}
+	\hfill \textbf{Autor: \textit{Elías Ferreiro Borreiros}}
+	
+	
+	\hfill \textbf{Director: \textit{Juan José Sánchez Penas}} 
+	
+	
+	\hfill A Coruña, Agosto, 2019					
+	
+	\clearpage
+	
+	\begin{center}
+		\LARGE{\textbf{ RESUMEN }}	
+	\end{center}
+	Hoy en día, con el cambio en los estilos de vida de las personas y tendiendo hacia unas costumbres más sedentarias, hay una mayor necesidad de enfocarse en una dieta equilibrada y saludable.
+	Para ello, se han desarrollado muchos sistemas webs y móviles para la gestión de comidas y de sus valores nutricionales.	Sin embargo, analizando esos sistemas, vemos que tienen un error en su planteamiento al inundar a los usuarios con formularios sobrecargados y repletos de información innecesaria. 
+	El otro problema principal de estos sistemas es la cantidad exagerada de trabajo manual que debe hacer el usuario antes de poder disfrutar de la funcionalidad principal. 
+	
+	Para resolver todo esto, hemos decidido plantear el desarrollo de una aplicación que solvente estos problemas y ofrezca una funcionalidad que no disponen los competidores : el análisis nutricional dinámico de las comidas planificadas para la semana configurable por el usuario. está sobrepasando.
+	
+	A mayores permitiremos la gestión de las entidades necesarias para esta planificación: ingredientes, platos, menús ... 
+	Esto se hará siguiendo la filosofía inicial del proyecto: simplificar la entrada lo más posible y disminuir el esfuerzo requerido por el usuario. 
+	Para esto llamaremos a servicios externos que nos permitirán estimar las características nutricionales de los ingredientes de forma que el usuario no tendrá que indicar esos datos y permitiremos con cada registro de usuario el alta automática de unos ingredientes base utilizables en la mayoría de recetas que agilizarán la configuración necesaria de un nuevo perfil para permitir disfrutar al máximo al usuario de las funcionalidades realmente importantes desde el momento más temprano posible.
+	
+	\clearpage
+	
+	\textbf{Título:} Aplicación web para a xestión de menús domésticos con servizos nutricionais
+	\\
+	\textbf{Autor:} Elías Ferreiro Borreiros
+	\\
+	\textbf{Tutor/Director:} Juan José Sánchez Penas
+	
+	
+	\textbf{Palabras clave:} Java EE, POJO, Maven, Angular JS, Spring, Hibernate, Web, MySQL, Tarea, Lista, Contexto, Cliente - Servidor, Food, Planning, Management, Scrum. 
+	
+	
+	\renewcommand{\contentsname}{Índice de contenidos}
+	\renewcommand{\listfigurename}{Índice de figuras}
+	\renewcommand{\listtablename}{Índice de tablas}
+	
+	\tableofcontents % indice de contenidos
+	
+	\listoffigures % indice de figuras
+	
+	\listoftables % indice de tablas
+	
+	\clearpage
+	
+	\chapter{CONCLUSIONES Y FUTURAS LÍNEAS DE TRABAJO}
+	\section{Conclusiones}
+	La principal motivación de este proyecto consistía en tomar una idea ya ejecutada de forma similar en otros sistemas abordándolo desde otro punto, el énfasis en el seguimiento semanal / diario de los stats nutricionales, y haciendo un ejercicio de mejoría sobre ellos para evitar los errores más comunes de la mayoría de ellos, desarrollando un sistema que sea fácil de usar, requiera poco esfuerzo del usuario y resulta hasta entretenido, para evitar que se convierta en un ejercicio de monotonía y repetición, motivo principal por el que este tipo de sistemas dejan de ser usados por el usuario y lo captan durante poco tiempo.	
+	Para desarrollar con éxito este proyecto, hemos requerido de la aplicación directa de muchos de los conocimientos adquiridos a lo largo del máster, especialmente de las asignaturas orientadas al desarrollo de software, diseño, recuperación de la información e inteligencia de negocio asi como las de planificación y aseguramiento de calidad.
+	Podemos afirmar que la elección de tecnologías fue la acertada ya que facilitó en gran medida el desarrollo del proyecto sobre todo gracias al conocimiento previo ya adquirido. Hemos conseguido una toma de contacto sobre una tecnología antes no conocida como es Angular JS, lo cual con un poco de trabajo adicional puede suponer una nueva aptitud profesional para el mercado laboral.
+	\section{Futuras Líneas de Trabajo}
+	\subsection{Aplicaciones nativas móviles}
+	Esta mejoría sobre el sistema no es exagerademente crucial al haberse adaptado la interfaz del mismo y su funcionamiento para poder adaptarse a diferentes pantallas entre las cuales se encuentra la de una pantalla móvil.
+	Pese a ello, las aplicaciones nativas móviles tienen la ventaja de poder aprovechar los recursos propios del teléfono: vibración, notificaciones push ...
+	A mayores, estas aplicaciones pueden ser más eficientes al estar pensadas para ejecutarse sobre el firmware de un teléfono móvil y pueden tener diseños mejor pensados para estas pantallas.
+	Como facilidad para esta futura línea de trabajo, el patrón MVC facilita la elaboración de un nuevo cliente ya que, salvo en caso de nueva funcionalidad únicamente aplicable al nuevo cliente, no se necesitaría ningún cambio sobre el modelo o la capa REST y solo se necesitaría el esfuerzo necesario para capa frontal móvil.
+	\subsection{Colecciones globales}
+	Dentro de la política del ahorro del trabajo inicial que debe hacer cada nuevo usuario para empezar a planificar sus menús una nueva funcionalidad de mucho valor para el cliente sería la opción de visualizar ingredientes, platos y menús de cualquier usuario en lugar de únicamente los suyos propios. Al acceder a esas entidades de otros usuarios podríamos indicar un botón "Clonar" que le permitiera copiarla dentro de su repertorio. De esta forma, los usuarios podrían ver un plato que les guste que ha registrado otro usuario y clonarlo para empezar a usarlo de inmediato en sus menús sin tener que pasar por el trabajo de añadir todos los ingredientes que componen el plato y añadir posteriormente el plato.
+	Esta funcionalidad mejoraría el carácter social del sistema y podría dar pie a interacciones entre los usuarios y los motivaría a registrar platos y menús de calidad para que resultaran atractivos a otros potenciales usuarios que puedan querer clonarlos en sus repertorios. Sería interesante valorar la opción de hacer platos/menús/ingredientes privados para el posible caso de que el usuario pueda no querer compartir con el resto algunos en concreto. Se debería valorar si es marca de privacidad tendría sentido hacerla a nivel de usuario o a nivel de entidad concreta.
+	\subsection{Fotos de platos}
+	Permitir añadir fotos a cada uno de los platos registrados por el usuario mejoraría radicalmente su visualización y nos permitiría mostrar en la visión semanal del menú su foto en lugar de su nombre lo cual nos daría una visión global del menú de un mero vistazo sin tener que pararnos a revisar los nombres de cada uno de los platos en él.
+	Una foto sacada con buena presentación sobre un plato puede motivar más al usuario y hacer el plato más apetecible lo cual puede asegurar que se cumpla mejor la dieta establecida en caso de estar el usuario siguiendo una.
+	\subsection{Ingredientes ignorados en la lista de la compra}
+	Una posible mejora sobre la gestión de ingredientes y la generación de la lista de la compra de cada menú es añadir esta marca sobre cada ingrediente de forma que, ingredientes que el usuario puede tener acumulados en casa y no precise comprar de forma habitual como pueden ser aceite, sal, arroz o pasta(En caso de que tenga la costumbre de comprar grandes cantidades de estos dos ingredientes poco perecederos).
+	Evitar que estos ingredientes sean incluidos en las listas de la compra puede ayudar al usuario a liberarse de ruido en las listas que obtenga del sistema y pueda tener una estimación más real del precio de los alimentos que realmente va a comprar. A su vez puede hacer algo más eficiente el proceso de generación y estimación de la lista de la compra si se filtran estos ingredientes desde el principio de los cálculos.
+	
+\end{document}
+

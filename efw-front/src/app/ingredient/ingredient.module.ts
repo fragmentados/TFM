@@ -7,13 +7,25 @@ import { AddIngredientComponent } from './add-ingredient/add-ingredient.componen
 import { FormsModule } from '@angular/forms';
 import { IngredientService } from './ingredient.service';
 import { UpdateIngredientComponent } from './update-ingredient/update-ingredient.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [IngredientComponent, AddIngredientComponent, UpdateIngredientComponent],
   imports: [
     CommonModule,
     FormsModule,
-    IngredientRoutingModule
+    IngredientRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    })
   ],
   exports: [IngredientComponent],
   providers: [IngredientService, UserService]

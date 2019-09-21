@@ -79,10 +79,14 @@ public abstract class DishToDtoMapper {
 
 	public List<StatDto> getDishStats(Dish dish) {
 		List<StatDto> stats = new ArrayList<>();
-		stats.add(new StatDto(NutritionalStatEnum.CALORIES.getName(), String.valueOf(dish.getCalories())));
-		stats.add(new StatDto(NutritionalStatEnum.FATS.getName(), String.valueOf(dish.getFats())));
-		stats.add(new StatDto(NutritionalStatEnum.PROTEINS.getName(), String.valueOf(dish.getProteins())));
-		stats.add(new StatDto(NutritionalStatEnum.CARBOHYDRATES.getName(), String.valueOf(dish.getCarbohydrates())));
+		stats.add(new StatDto(NutritionalStatEnum.CALORIES.getName(),
+				String.valueOf(Math.round(dish.getCalories() * 100.0) / 100.0)));
+		stats.add(new StatDto(NutritionalStatEnum.FATS.getName(),
+				String.valueOf(Math.round(dish.getFats() * 100.0) / 100.0)));
+		stats.add(new StatDto(NutritionalStatEnum.PROTEINS.getName(),
+				String.valueOf(Math.round(dish.getProteins() * 100.0) / 100.0)));
+		stats.add(new StatDto(NutritionalStatEnum.CARBOHYDRATES.getName(),
+				String.valueOf(Math.round(dish.getCarbohydrates() * 100.0) / 100.0)));
 		return stats;
 	}
 

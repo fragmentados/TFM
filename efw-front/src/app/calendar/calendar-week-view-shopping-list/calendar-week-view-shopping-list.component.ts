@@ -1,6 +1,8 @@
+import { DEFAULT_LANG } from './../../models/service';
 import { ShoppingList } from './../../models/menu/shoppingList/shoppingList.model';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-calendar-week-view-shopping-list',
@@ -9,8 +11,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CalendarWeekViewShoppingListComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<CalendarWeekViewShoppingListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ShoppingList) {}
+  constructor(private translate: TranslateService, public dialogRef: MatDialogRef<CalendarWeekViewShoppingListComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ShoppingList) {
+      this.translate.setDefaultLang(DEFAULT_LANG);
+    }
 
   ngOnInit() {
   }
@@ -18,17 +22,20 @@ export class CalendarWeekViewShoppingListComponent implements OnInit {
   printDialog() {
       const mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
-      mywindow.document.write('<html><head><title>Shopping List</title>');
-      mywindow.document.write('</head><body >');
-      mywindow.document.write('<h1>Shopping List</h1>');
-      mywindow.document.write(document.getElementById('shopping-list dialog').innerHTML);
-      mywindow.document.write('</body></html>');
+      const title  = this.translate.get('CALENDAR.SHOPPING_LIST').subscribe(data => {
+        mywindow.document.write('<html><head><title>' + data + '</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write('<h1>' + data + '</h1>');
+        mywindow.document.write(document.getElementById('shopping-list dialog').innerHTML);
+        mywindow.document.write('</body></html>');
 
-      mywindow.document.close(); // necessary for IE >= 10
-      mywindow.focus(); // necessary for IE >= 10*/
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
 
-      mywindow.print();
-      mywindow.close();
+        mywindow.print();
+        mywindow.close();
+      });
+
 
       return true;
   }

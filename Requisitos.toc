@@ -1,0 +1,34 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}REQUISITOS DEL SISTEMA}{11}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introducci\IeC {\'o}n}{11}{section.1.1}
+\contentsline {section}{\numberline {1.2}Actores}{12}{section.1.2}
+\contentsline {section}{\numberline {1.3}Casos de Uso}{12}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Casos de uso Usuario}{12}{subsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.1.1}CU-001-Registro}{12}{subsubsection.1.3.1.1}
+\contentsline {subsubsection}{\numberline {1.3.1.2}CU-002-Login}{13}{subsubsection.1.3.1.2}
+\contentsline {subsubsection}{\numberline {1.3.1.3}CU-003-Logout}{13}{subsubsection.1.3.1.3}
+\contentsline {subsubsection}{\numberline {1.3.1.4}CU-004-Visualizar ingredientes}{13}{subsubsection.1.3.1.4}
+\contentsline {subsubsection}{\numberline {1.3.1.5}CU-005-Actualizar ingrediente}{13}{subsubsection.1.3.1.5}
+\contentsline {subsubsection}{\numberline {1.3.1.6}CU-006-A\IeC {\~n}adir ingrediente}{14}{subsubsection.1.3.1.6}
+\contentsline {subsubsection}{\numberline {1.3.1.7}CU-007-Borrar ingrediente}{14}{subsubsection.1.3.1.7}
+\contentsline {subsubsection}{\numberline {1.3.1.8}CU-008-Visualizar platos}{15}{subsubsection.1.3.1.8}
+\contentsline {subsubsection}{\numberline {1.3.1.9}CU-009-Actualizar plato}{15}{subsubsection.1.3.1.9}
+\contentsline {subsubsection}{\numberline {1.3.1.10}CU-010-A\IeC {\~n}adir plato}{15}{subsubsection.1.3.1.10}
+\contentsline {subsubsection}{\numberline {1.3.1.11}CU-011-Borrar plato}{16}{subsubsection.1.3.1.11}
+\contentsline {subsubsection}{\numberline {1.3.1.12}CU-012-A\IeC {\~n}adir plato a primer hueco v\IeC {\'a}lido de men\IeC {\'u}}{16}{subsubsection.1.3.1.12}
+\contentsline {subsubsection}{\numberline {1.3.1.13}CU-013-Visualizaci\IeC {\'o}n semanal de men\IeC {\'u}s}{16}{subsubsection.1.3.1.13}
+\contentsline {subsubsection}{\numberline {1.3.1.14}CU-014-Crear men\IeC {\'u}}{17}{subsubsection.1.3.1.14}
+\contentsline {subsubsection}{\numberline {1.3.1.15}CU-015-A\IeC {\~n}adir plato a men\IeC {\'u}}{17}{subsubsection.1.3.1.15}
+\contentsline {subsubsection}{\numberline {1.3.1.16}CU-016-Sugerir plato en men\IeC {\'u}}{17}{subsubsection.1.3.1.16}
+\contentsline {subsubsection}{\numberline {1.3.1.17}CU-017-Lista de la compra}{18}{subsubsection.1.3.1.17}
+\contentsline {subsubsection}{\numberline {1.3.1.18}CU-018-Limpiar men\IeC {\'u}}{18}{subsubsection.1.3.1.18}
+\contentsline {subsubsection}{\numberline {1.3.1.19}CU-019-Obtener men\IeC {\'u} aleatorio}{18}{subsubsection.1.3.1.19}
+\contentsline {subsubsection}{\numberline {1.3.1.20}CU-020-Obtener men\IeC {\'u} v\IeC {\'a}lido}{19}{subsubsection.1.3.1.20}
+\contentsline {subsubsection}{\numberline {1.3.1.21}CU-021-Guardar men\IeC {\'u} como plantilla}{19}{subsubsection.1.3.1.21}
+\contentsline {subsubsection}{\numberline {1.3.1.22}CU-022-Rellenar men\IeC {\'u} desde plantilla}{19}{subsubsection.1.3.1.22}
+\contentsline {subsubsection}{\numberline {1.3.1.23}CU-023-Actualizar configuraciones de usuario}{20}{subsubsection.1.3.1.23}
+\contentsline {subsection}{\numberline {1.3.2}Casos de uso Sistema Estimador Nutricional - SEN}{20}{subsection.1.3.2}
+\contentsline {subsubsection}{\numberline {1.3.2.1}CU-024-Estimar ingrediente}{20}{subsubsection.1.3.2.1}
+\contentsline {subsection}{\numberline {1.3.3}Casos de uso Sistema Scrapeador de Supermercado - SSS}{21}{subsection.1.3.3}
+\contentsline {subsubsection}{\numberline {1.3.3.1}CU-025-Estimar precio lista de la compra}{21}{subsubsection.1.3.3.1}
+\contentsline {section}{\numberline {1.4}Modelo de Casos de uso}{21}{section.1.4}

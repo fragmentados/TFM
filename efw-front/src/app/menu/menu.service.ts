@@ -111,12 +111,16 @@ export class MenuService {
   }
 
   public formatDateWithHour(startDate: Date) {
-    return startDate.getFullYear() + '-' +
-           ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' +
-           ('0' + startDate.getDate()).slice(-2) + ' ' +
-           ('0' + startDate.getHours()).slice(-2) + ':' +
-           ('0' + startDate.getMinutes()).slice(-2) + ':' +
-           ('0' + startDate.getSeconds()).slice(-2) + '.' + '0';
+    if (startDate) {
+      return startDate.getFullYear() + '-' +
+            ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' +
+            ('0' + startDate.getDate()).slice(-2) + ' ' +
+            ('0' + startDate.getHours()).slice(-2) + ':' +
+            ('0' + startDate.getMinutes()).slice(-2) + ':' +
+            ('0' + startDate.getSeconds()).slice(-2) + '.' + '0';
+    } else {
+      return '';
+    }
   }
 
   public getDaysDiff(firstDate: string, secondDate: string) {

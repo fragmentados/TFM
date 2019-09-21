@@ -1,0 +1,272 @@
+%\documentclass[notes,10pt]{beamer}
+%\documentclass[10pt, compress]{beamer}
+%\documentclass[10pt,handout]{beamer}
+%For a handout version
+%\documentclass[handout,xcolor=pdftex,dvipsnames,table]{beamer}
+\documentclass[10pt]{beamer}
+
+%\usepackage[spanish]{babel} %Soporte en español
+%\usepackage[utf8]{inputenc} %Codificacion en UTF8
+
+\input{udc-setup_es.tex}
+
+\title[Título del Proyecto]{Aplicación web para a xestión de menús domésticos con servizos nutricionais - Eat Fit Week}
+\subtitle[Trabajo Fin de Master - Master Universitario en Enxeñaría Informática]{Trabajo Fin de Master - Master Universitario en Enxeñaría Informática}
+\author[]{Autor: Elías Ferreiro Borreiros \\ \small{Tutor: Juan José Sánchez Penas}}
+\date[Septiembre 2019]{\small{Septiembre 2019}}
+% The main document
+
+\begin{document}
+
+\begin{frame}[plain]
+  \begin{center}
+    \includegraphics[width=8cm]{figures/logo-UDC.png}
+  \end{center}
+  \titlepage
+\end{frame}
+
+\begin{frame}[plain,allowframebreaks,allowdisplaybreaks=0]{Contenido}
+  \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introducción}
+
+\begin{frame}[c,shrink]{Introducción}
+    \begin{block}{Contextualización}
+        \begin{itemize}
+        	\item Gran cantidad de personas hoy en día intentan cuidar su salud mediante su alimentación pero encuentran repetitivo y costoso utilizar otros sistemas que automatizan esta tarea.
+	        \item Para asegurar que se lleva una dieta correcta se deberá hacer un seguimiento de la información nutricional de la comida del usuario.
+        	\item Análisis DAFO:
+            \begin{itemize}
+	            \item Fortalezas: Gran cantidad de consumidores, Facilidad de implementación, Bajo coste.
+	            \item Debilidades: Gran cantidad de competición.
+	            \item Oportunidades: Sencillez de diseño, información nutricional, solución Open-Source
+	            \item Amenazas: Uso costoso para usuario
+	        \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\section{Alcance y Objetivos}
+\begin{frame}[c]{Objetivos}
+    \begin{block}{Objetivos}
+    	El objetivo principal es el diseño e implementación de una aplicación web con las siguientes funcionalidades principales:
+        \begin{itemize}
+        	\item Gestión de ingredientes y platos registrados por el usuario.
+	        \item Gestión y seguimiento de menús semanales.
+        \end{itemize}
+    	Y las siguientes características:
+    	\begin{itemize}
+	    	\item Diseño sencillo y de facilidad de uso.
+	    	\item Interfaz especializada en multiplataforma.
+    	\end{itemize}
+    \end{block}
+\end{frame}
+\begin{frame}[c]{Actores}
+	\begin{figure}[!htb]
+		\minipage{0.32\textwidth}
+		\centering
+		\includegraphics[width=2cm]{figures/userLogo.png}
+		\caption{Usuario}\label{Usuario}
+		\endminipage\hfill
+		\minipage{0.32\textwidth}
+		\includegraphics[width=2cm]{figures/edamam.jpg}
+		\caption{Edamam WS}\label{Edamam WS}
+		\endminipage\hfill
+		\minipage{0.32\textwidth}
+		\includegraphics[width=1cm]{figures/spiderScrapper.png}
+		\includegraphics[width=1cm]{figures/mercadona.png}
+		\caption{Mercadona Scrapper}\label{Mercadona Scrapper}
+		\endminipage\hfill
+	\end{figure}
+\end{frame}
+    
+\section{Desarrollo Realizado}
+
+    \subsection{Metodología}
+    \begin{frame}[c]{Metodología}
+        \begin{block}{Metodología utilizada}
+        	La metodología empleada en este proyecto es Scrum.
+            \begin{itemize}
+            \item Análisis de Dominio, Competencia y Arquitectura del sistema deseado.
+            \item Desarrollo de un MVP funcional
+            \item Desarrollo iterativo sobre el MVP planificado en Sprints con objetivos claros
+            \end{itemize}
+        \end{block}        
+    \end{frame}
+    \begin{frame}[c]{Metodología}
+    	\begin{figure}[H]
+    		\centering         
+    		\includegraphics[width=10cm]{figures/proceso.png}
+    		\caption{Scrum}\label{Scrum}
+    	\end{figure}
+    \end{frame}
+
+    \subsection{Viabilidad y Planificación}
+    \begin{frame}[c]{Viabilidad y Planificación}
+        \begin{block}{Análisis de Viabilidad}
+            \begin{itemize}
+	            \item Encuestas con potenciales usuarios de nuestra aplicación.
+	            \item Bajo coste del desarrollo del sistema.
+            \end{itemize}
+        \end{block}
+        \begin{block}{Planificación}
+	        El proyecto fue dividido en 15 sprints semanales que veremos en mayor detalle posteriormente.
+        \end{block}
+    \end{frame}
+    
+    \subsection{Sprints}
+    \begin{frame}[c,shrink]{Sprints}
+    \begin{block}{División en sprints}
+    	\begin{itemize}
+    		\item Sprint 1 - 3: Estudio del arte, requisitos, formación, análisis y diseño.
+    		\item Sprint 4 - 6: Gestión básica de ingredientes, platos y menús.
+    		\item Sprint 7 - 9: Gestión de usuarios y sus configuraciones. Seguimiento nutricional de menús
+    		\item Sprint 10 - 12: Estimación Precio, Recetario, Generaciones de menú y Redes Sociales
+    		\item Sprint 13 - 15: UX, Machine Learning, Refactorización y Pruebas exaustivas. 	            
+    	\end{itemize}            
+    \end{block}
+	\end{frame}
+    
+    \subsection{Tecnología}
+    \begin{frame}[c,shrink]{Tecnología}
+        \begin{block}{Tecnologías}
+            \begin{itemize}
+            \item Acceso a datos: MySQL, Hibernate, JDBC, Spring Data
+            \item Inyector de dependencias: Spring
+            \item Interfaz web: AngularJS
+            \end{itemize}
+        \end{block}
+        \begin{block}{Arquitectura de la Solución}
+        	Empleamos dos elementos principales:
+        	\begin{itemize}
+        		\item Backend EFW-BACK:
+        		\begin{itemize}
+        			\item Capa Controladora REST
+        			\item Capa de Servicios de Negocio
+        			\item Capa de acceso a datos.
+        		\end{itemize}
+        		\item Frontend EFW-FRONT: Componentes reutilizables
+        		\begin{itemize}
+        			\item Plantilla HTML
+        			\item Controlador visual TypeScript
+        			\item Servicio Typescript de manejo de datos
+        		\end{itemize}
+        	\end{itemize}
+        \end{block}
+    \end{frame}        
+    
+    \subsection{Análisis/Diseño de la Solución}
+    \begin{frame}[c]{Diseño}
+        \begin{block}{Diseño de la solución}
+            \begin{itemize}
+            \item Análisis
+                \begin{itemize}
+	                \item Requisitos (breve, pero idea clara de funcionalidades)
+	                \item Actores / Casos de uso (ídem, breve, agrupados, pero funcionalidad clara)
+                \end{itemize}           
+            \item Diseño
+                \begin{itemize}
+	                \item Dos subsistemas: EFW-BACK y EFW-FRONT.
+	                \item Diagrama de entidad relación de las tablas necesarias.	                
+	                \item Diagrama de clases del subsistema (o subsistemas) más importantes, comentando la idea y patrones.
+                \end{itemize}  
+            \end{itemize}
+        \end{block}
+    \end{frame}
+    \begin{frame}[c]{Diseño}
+    	\begin{figure}[H]
+    		\centering
+    		\includegraphics[width=10cm, height=6cm]{figures/DiagramaClases.png}
+    		\caption{Diagrama de clases}\label{Diagrama de clases}
+    	\end{figure}
+    \end{frame}
+	\begin{frame}[c]{Diseño}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=11cm]{figures/IngredientEstimateDesign.png}
+		\caption{Servicios externos}\label{Servicios externos}
+	\end{figure}
+	\end{frame}
+
+	\begin{frame}[c]{Arquitectura}
+		\begin{block}{Arquitectura de la Solución}
+			Empleamos dos elementos principales:
+			\begin{itemize}
+				\item Backend EFW-BACK:
+				\begin{itemize}
+					\item Capa Controladora REST
+					\item Capa de Servicios de Negocio
+					\item Capa de acceso a datos.
+				\end{itemize}
+				\item Frontend EFW-FRONT: Componentes reutilizables
+				\begin{itemize}
+					\item Plantilla HTML
+					\item Controlador visual TypeScript
+					\item Servicio Typescript de manejo de datos
+				\end{itemize}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+
+\section{Pruebas}
+    \begin{frame}[c]{Pruebas}
+        \begin{block}{Pruebas realizadas}
+            \begin{itemize}
+            	\item Unitarias: Se realizan pruebas unitarias con Mockito y JUnit sobre los servicios del backend.
+            	\item Integración: Se realizan pruebas automáticas sobre el sistema completo mediante Puppeteer.
+            	\item Usuario: Se juntan usuarios modelo del sistema y se lleva a cabo demos con ellos para probar la funcionalidad en su totalidad del sistema
+            \end{itemize}
+        \end{block}
+    \end{frame}
+    \begin{frame}[c]{Pruebas}
+    	\begin{figure}[H]
+    		\centering         
+    		\includegraphics[width=10cm, height=6cm]{figures/Cobertura.png}
+    		\caption{Cobertura}\label{Cobertura}
+    	\end{figure}
+    \end{frame}    
+\section{Demo}
+    
+\section{Conclusiones y Trabajo Futuro}
+    \begin{frame}[c]{Conclusiones y Trabajo Futuro}
+        \begin{block}{Conclusiones}
+            \begin{itemize}
+            \item Necesidad de gran valor y amplio público.
+            \item Diferente enfoque a la competencia, mejorando sus debilidades
+            \item Solución open-source
+            \item Aplicación de amplia funcionalidad
+            \item Énfasis en facilidad de uso y accesibilidad
+            \item Diseño facilitador de futuros cambios.
+            \item Interfaz enfocada a multiplataforma.
+            \item Gran aplicabilidad de los conocimientos adquiridos en el máster.
+            \item Formación obtenida por el desarrollo del proyecto.
+            \item Buena elección y gran diversidad de tecnologías actuales
+            \end{itemize}
+        \end{block}       
+    \end{frame}
+	\begin{frame}[c]{Conclusiones y Trabajo Futuro}
+		\begin{block}{Líneas de Trabajo Futuro}
+			\begin{itemize}
+				\item Integración Continua				
+				\item Cliente móvil
+				\item Colecciones Globales
+				\item Imágenes de platos
+				\item Ingredientes ignorados en la lista de la compra
+			\end{itemize}
+		\end{block}       
+	\end{frame}
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[plain]
+  \begin{center}
+    \includegraphics[width=8cm]{figures/logo-UDC.png}
+  \end{center}
+  \titlepage
+\end{frame}
+
+\end{document} 
+

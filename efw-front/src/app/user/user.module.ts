@@ -9,6 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { UserConfsComponent } from './user-confs/user-confs.component';
 import { LoginComponent } from './login/login.component';
 import { FacebookService } from 'ngx-facebook';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 @NgModule({
@@ -16,6 +19,15 @@ import { FacebookService } from 'ngx-facebook';
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    }),
     UserRoutingModule
   ],
   exports: [UserComponent, AddUserComponent],

@@ -1,19 +1,19 @@
 <div class="col-md-6">
-    <h2 class="text-center">Login</h2>
+    <h2 class="text-center">{{ 'APP_MENU.LOGIN' | translate }}</h2>
   <form>
     <div class="form-group">
-      <label for="email">Email address:</label>
-      <input type="email" [(ngModel)]="login.email" placeholder="Email" name="email" class="form-control" id="email">
+      <label for="email">{{ 'COMMON.EMAIL_ADDRESS' | translate }}:</label>
+      <input type="email" [(ngModel)]="login.email" placeholder="{{ 'COMMON.EMAIL' | translate }}" name="email" class="form-control" id="email">
     </div>
 
     <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" [(ngModel)]="login.password" placeholder="Password" name="password" class="form-control" id="password">
+      <label for="password">{{ 'COMMON.PASSWORD' | translate }}:</label>
+      <input type="password" [(ngModel)]="login.password" placeholder="{{ 'COMMON.PASSWORD' | translate }}" name="password" class="form-control" id="password">
     </div>
 
-    <button class="btn btn-success" (click)="loginAttempt()">Login</button>
+    <button id="loginButton" class="btn btn-success" (click)="loginAttempt()">{{ 'APP_MENU.LOGIN' | translate }}</button>
     <button style="margin-left:10px;" class="btn btn-primary" (click)="onLoginClick()">
-      Login with Facebook
+      {{ 'COMMON.LOGIN_FACEBOOK' | translate }}
     </button>
   </form>
   </div>

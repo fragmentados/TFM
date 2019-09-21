@@ -1,0 +1,8 @@
+\BOOKMARK [0][-]{chapter.1}{REQUISITOS DEL SISTEMA}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Introducci\363n}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Actores}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Casos de Uso}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.3.1}{Casos de uso Usuario}{section.1.3}% 5
+\BOOKMARK [2][-]{subsection.1.3.2}{Casos de uso Sistema Estimador Nutricional - SEN}{section.1.3}% 6
+\BOOKMARK [2][-]{subsection.1.3.3}{Casos de uso Sistema Scrapeador de Supermercado - SSS}{section.1.3}% 7
+\BOOKMARK [1][-]{section.1.4}{Modelo de Casos de uso}{chapter.1}% 8

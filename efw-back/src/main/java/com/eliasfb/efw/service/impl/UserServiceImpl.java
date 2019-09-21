@@ -1,8 +1,5 @@
 package com.eliasfb.efw.service.impl;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,24 +95,19 @@ public class UserServiceImpl implements UserService {
 		// User Confs
 		user.setConfigurations(userConfMapper.toEntity(confsDto, id));
 		// User Meals
-		List<Meal> mealsSentByFront = this.mealMapper.mealDtoListToMealList(confsDto.getMeals());
-		List<Meal> userMeals = user.getMeals();
-		if (mealsSentByFront != userMeals) {
-			List<Meal> mealsToUpdate = new ArrayList<>();
-			// We set the hours of the meals ordered
-			LocalDateTime hour = LocalDate.now().atStartOfDay();
-			for (Meal m : mealsSentByFront) {
-				m.setHour(hour.format(DateTimeFormatter.ofPattern("HH")));
-				if (userMeals.stream().anyMatch(userMeal -> m.getName().equals(userMeal.getName()))) {
-					this.mealRepository.save(m);
-				} else {
-					m.setUser(user);
-					mealsToUpdate.add(m);
-				}
-				hour = hour.plusHours(1);
-			}
-			user.setMeals(mealsToUpdate);
-		}
+		/*
+		 * List<Meal> mealsSentByFront =
+		 * this.mealMapper.mealDtoListToMealList(confsDto.getMeals()); List<Meal>
+		 * userMeals = user.getMeals(); if (mealsSentByFront != userMeals) { List<Meal>
+		 * mealsToUpdate = new ArrayList<>(); // We set the hours of the meals ordered
+		 * LocalDateTime hour = LocalDate.now().atStartOfDay(); for (Meal m :
+		 * mealsSentByFront) {
+		 * m.setHour(hour.format(DateTimeFormatter.ofPattern("HH"))); if
+		 * (userMeals.stream().anyMatch(userMeal ->
+		 * m.getName().equals(userMeal.getName()))) { this.mealRepository.save(m); }
+		 * else { m.setUser(user); mealsToUpdate.add(m); } hour = hour.plusHours(1); }
+		 * user.setMeals(mealsToUpdate); }
+		 */
 		// Persist changes
 		user = repository.save(user);
 

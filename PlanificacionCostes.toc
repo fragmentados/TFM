@@ -1,0 +1,9 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}INTRODUCCI\IeC {\'O}N AL DESARROLLO REALIZADO}{11}{chapter.1}
+\contentsline {section}{\numberline {1.1}Metodolog\IeC {\'\i }a e Iteraciones}{11}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Scrum}{11}{subsection.1.1.1}
+\contentsline {chapter}{\numberline {2}PLANIFICACI\IeC {\'O}N Y AN\IeC {\'A}LISIS DE COSTES}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}An\IeC {\'a}lisis de viabilidad}{13}{section.2.1}
+\contentsline {section}{\numberline {2.2}Planificaci\IeC {\'o}n}{13}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Planificaci\IeC {\'o}n previa}{15}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Sprints}{15}{subsection.2.2.2}

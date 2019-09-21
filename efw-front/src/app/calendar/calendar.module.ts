@@ -14,6 +14,9 @@ import { CalendarWeekViewAddDishComponent } from './calendar-week-view-add-dish/
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [CalendarWeekViewEventComponent,
@@ -29,7 +32,16 @@ import { CalendarHeaderComponent } from './calendar-header/calendar-header.compo
     DragAndDropModule,
     CalendarCommonModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [ HttpClient ]
+      }
+    })
   ],
   exports : [
     ResizableModule,

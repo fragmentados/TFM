@@ -1,6 +1,8 @@
+import { DEFAULT_LANG } from './../../../models/service';
 import { UserConfs } from './../../../models/user/userConfs.model';
 import { Component, Input } from '@angular/core';
 import { Stat } from '../../../models/nutrition/stat.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-view-stats',
@@ -8,6 +10,10 @@ import { Stat } from '../../../models/nutrition/stat.model';
   styleUrls: ['./view-stats.component.css']
 })
 export class ViewStatsComponent {
+
+  constructor(private translate: TranslateService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
+  }
 
   @Input() statsTitle: string;
 

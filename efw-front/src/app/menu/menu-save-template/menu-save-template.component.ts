@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuService } from '../menu.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_LANG } from '../../models/service';
 
 @Component({
   selector: 'app-menu-save-template',
@@ -11,7 +12,9 @@ export class MenuSaveTemplateComponent implements OnInit {
 
   templateName: string;
 
-  constructor(public dialogRef: MatDialogRef<MenuSaveTemplateComponent>) {}
+  constructor(private translate: TranslateService, public dialogRef: MatDialogRef<MenuSaveTemplateComponent>) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
+  }
 
   ngOnInit() {
 

@@ -1,3 +1,4 @@
+import { DEFAULT_LANG } from './../../models/service';
 import { UpdateIngredient } from './../../models/ingredient/updateIngredient.model';
 import { Ingredient } from './../../models/ingredient/ingredient.model';
 import { Component, OnInit } from '@angular/core';
@@ -8,6 +9,7 @@ import { Stat } from '../../models/nutrition/stat.model';
 import { UNIQUE_CONSTRAINT_CODE, OK_CODE } from '../../models/service';
 import { UserService } from '../../user.service';
 import { User } from '../../models/user/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './update-ingredient.component.html',
@@ -20,7 +22,9 @@ export class UpdateIngredientComponent implements OnInit {
   ingredientId: number;
   currentUser: User;
 
-  constructor(private route: ActivatedRoute, private ingredientService: IngredientService, private userService: UserService) {
+  constructor(private translate: TranslateService, private route: ActivatedRoute, private ingredientService: IngredientService,
+    private userService: UserService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.route.params.subscribe(params => this.ingredientId = params['id']);
     this.currentUser = this.userService.currentUserValue;
   }

@@ -9,7 +9,8 @@ import { UserService } from '../../user.service';
 import { Meal } from '../../models/dish/meal.model';
 import { DishService } from '../dish.service';
 import { IngredientNameAndQuantity } from '../../models/ingredient/ingredientNameAndQuantity.model';
-import { OK_CODE } from '../../models/service';
+import { OK_CODE, DEFAULT_LANG } from '../../models/service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-dish',
@@ -28,10 +29,12 @@ export class AddDishComponent implements OnInit {
   allowedMeals: Meal[] = [];
   selectedMeals: boolean[] = [];
   image;
-  statsTitle = 'Dish Stats';
+  statsTitle;
 
-  constructor(private dishRestService: DishRestService,
+  constructor(private translate: TranslateService, private dishRestService: DishRestService,
     private dishService: DishService, private ingredientService: IngredientService, private userService: UserService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
+    this.translate.get('ADD_DISHES.STATS_TITLE').subscribe(data => this.statsTitle = data);
     this.currentUser = this.userService.currentUserValue;
   }
 

@@ -1,0 +1,72 @@
+% Setup appearance:
+\mode<presentation>
+{
+    \usetheme{Darmstadt}
+    \usefonttheme[onlylarge]{structurebold}
+    \usecolortheme{whale}
+    %\usefonttheme{serif}
+    \useinnertheme{rounded}
+    \useoutertheme{mad}
+    %\useoutertheme{madsimple}
+    %\useoutertheme{infolines}
+
+    \setbeamerfont*{frametitle}{size=\small,series=\bfseries}
+
+    % possiblities Singapore, Malmoe, Dresden
+    \setbeamercovered{transparent}
+
+    %\setbeamertemplate{mini frames}[tick]
+    \setbeamertemplate{mini frames}[box]
+    \setbeamersize{mini frame size=0.05cm}
+    %\setbeamersize{mini frame offset=0.01cm}
+    %\setbeamertemplate{mini frame in current subsection}[box]
+     %\setbeamertemplate{mini frame in other subsection}[box]
+}
+
+%\setbeamertemplate{navigation symbols}{}
+% removes the navigation symbols
+
+%color setting more or less matching U of A colors
+\setbeamercolor*{palette secondary}{use=structure,fg=white,bg=structure.fg!55!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=red!50!black}
+\setbeamercolor{postit}{fg=black,bg=yellow}
+
+% Standard packages
+\usepackage{times}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{pgfpages}
+%\setbeameroption{notes on second screen}
+%\usepackage{colortbl}
+
+% Setup TikZ
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\tikzstyle{block}=[draw opacity=0.7,line width=1.4cm]
+
+% Author, Title, etc.
+\institute[TIC]
+{
+  Departamento de Tecnoloxías da Información e as Comunicacións \\
+  Facultade de Informática }
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each section:
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>[shrink,plain]
+    \frametitle{Contenido}
+    {
+        %\tableofcontents[currentsection]
+        \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+    }
+  \end{frame}
+}
+
+\logo{\includegraphics[height=0.4cm]{figures/logo-UDC-mini.png}}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+%\beamerdefaultoverlayspecification{<+->} 

@@ -1,9 +1,9 @@
 <div>
-  <h2 mat-dialog-title>Select Template</h2>
+  <h2 mat-dialog-title>{{ 'SELECT_TEMPLATE.SELECT_TEMPLATE' | translate }}</h2>
 <form>
 
   <div class="form-group">
-    <label for="templateSelect">Template</label>
+    <label for="templateSelect">{{ 'SELECT_TEMPLATE.TEMPLATE' | translate }}</label>
     <div class="form-group">
       <select [(ngModel)]="selectedTemplate" #TemplateSelect="ngModel" name="TemplateSelect" class="form-control" id="Templates">
         <option *ngFor="let template of templates" [ngValue]="template">{{template.name}}</option>
@@ -12,7 +12,7 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="selectedTemplate" cdkFocusInitial>Select</button>
+    <button mat-button [mat-dialog-close]="selectedTemplate" cdkFocusInitial>{{ 'COMMON.SELECT' | translate }}</button>
   </div>
 </form>
 </div>

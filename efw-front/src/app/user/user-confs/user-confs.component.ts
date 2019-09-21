@@ -1,3 +1,4 @@
+import { DEFAULT_LANG } from './../../models/service';
 import { IngredientService } from './../../ingredient/ingredient.service';
 import { FoodCategory } from './../../models/ingredient/foodCategory.model';
 import { UserConfs } from './../../models/user/userConfs.model';
@@ -5,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service';
 import { User } from '../../models/user/user.model';
 import { Meal } from '../../models/dish/meal.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-confs',
@@ -20,7 +22,8 @@ export class UserConfsComponent implements OnInit {
   selectedCategory: FoodCategory;
   mealToAdd: string;
 
-  constructor(private userService: UserService, private ingredientService: IngredientService) {
+  constructor(private translate: TranslateService, private userService: UserService, private ingredientService: IngredientService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.currentUser = this.userService.currentUserValue;
    }
 

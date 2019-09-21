@@ -93,9 +93,16 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public ResponseDto create(CreateMenuDto dto) {
 
-		createMenuByDto(dto);
+		ResponseDto response = new ResponseDto(ResponseDto.OK_CODE, "The menu has been created correctly");
 
-		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been created correctly");
+		try {
+			createMenuByDto(dto);
+		} catch (Exception e) {
+			response = new ResponseDto(ResponseDto.ERROR_CODE,
+					"There has been a controlled error on the menu creation");
+		}
+
+		return response;
 	}
 
 	private Menu createMenuByDto(CreateMenuDto dto) {
@@ -126,11 +133,11 @@ public class MenuServiceImpl implements MenuService {
 		Menu menu = findById(id);
 		if (menu != null && !menu.getDishes().isEmpty()) {
 			if (startDate != null && endDate != null) {
-				menuDisRelRepository.deleteByMenuIdAndDates(menu.getId(), startDate, endDate);
+				menuDisRelRepository.deleteByMenuIdAndDates(id, startDate, endDate);
 			} else if (startDate != null) {
-				menuDisRelRepository.deleteByMenuIdAndDate(menu.getId(), startDate);
+				menuDisRelRepository.deleteByMenuIdAndDate(id, startDate);
 			} else {
-				menuDisRelRepository.deleteByMenuId(menu.getId());
+				menuDisRelRepository.deleteByMenuId(id);
 			}
 		}
 		return new ResponseDto(ResponseDto.OK_CODE, "The menu has been cleared correctly");
@@ -152,18 +159,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public List<Menu> findAll() {
-		return repository.findAll();
-	}
-
-	@Override
 	public Menu findById(int id) {
 		return repository.findOne(id);
-	}
-
-	@Override
-	public Menu update(Menu menu) {
-		return repository.save(menu);
 	}
 
 	@Override
@@ -294,9 +291,9 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	@Transactional
 	public ResponseDto generateRandomMenu(Integer menuId, Integer userId, String startDate, String endDate) {
-		// First, we query the necessary info : The menu and the user dishes
+		// First, we query the necessary info : The menu, user dishes and number of
+		// meals
 		Menu menu = this.repository.findOne(menuId);
-
 		List<Dish> userDishes = this.dishRepository.findUserDishes(userId);
 		Integer mealsInWeek = this.userService.findUserMeals(userId).size();
 
@@ -356,7 +353,7 @@ public class MenuServiceImpl implements MenuService {
 
 	private Dish randomSelectDish(List<Dish> userDishes) {
 		Random random = new Random();
-		Integer randomIndex = random.nextInt((userDishes.size() - 1) - 0 + 1);
+		Integer randomIndex = random.nextInt((userDishes.size() - 1) + 1);
 		return userDishes.get(randomIndex);
 	}
 

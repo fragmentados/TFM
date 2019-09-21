@@ -1,0 +1,132 @@
+\documentclass[12pt, a4paper, twoside]{book}
+\usepackage[utf8]{inputenc} % Aceptar diferentes tipos de codificación de caracteres de entrada (en este caso usamos la codificación Unicode UTF-8)
+%\usepackage{natbib}
+\usepackage{listings}
+\usepackage{eurosym}
+\usepackage[spanish]{babel}
+\usepackage{titlesec}
+\usepackage{graphicx} % Soporte aumentado para gráficos 
+\usepackage{float}
+\usepackage{hyperref} % Para manejar referencias cruzadas. P.ej. añadir hiperenlaces al índice
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage[a4paper, top=3.5cm, bottom=3.5cm, left=3cm, right=3cm]{geometry}
+\spacing{1.5}
+\setcounter{secnumdepth}{4}
+\setlength{\parindent}{12pt}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%\usepackage{inconsolata}
+%
+%\usepackage[T1]{fontenc}
+%
+%\definecolor{pblue}{rgb}{0.13,0.13,1}
+%\definecolor{pgreen}{rgb}{0,0.5,0}
+%\definecolor{pred}{rgb}{0.9,0,0}
+%\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+%
+%\lstset{language=Java,
+%	showspaces=false,
+%	showtabs=false,
+%	breaklines=true,
+%	showstringspaces=false,
+%	breakatwhitespace=true,
+%	commentstyle=\color{pgreen},
+%	keywordstyle=\color{pblue},
+%	stringstyle=\color{pred},
+%	basicstyle=\ttfamily,
+%	moredelim=[il][\textcolor{pgrey}]{$$},
+%	moredelim=[is][\textolor{pgrey}]{\%\%}{\%%}
+%}
+
+
+\begin{document}	
+	
+	\thispagestyle{empty} 	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% PORTADA
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{center}		
+		\includegraphics[width=15cm]{Imagenes/Simbolo_logo_UDC.png}
+	\end{center}
+	
+	% Lista de tamaños: \Huge, \huge, \LARGE, \Large, \large, \small, \footnotesize, \tiny
+	\vspace{2cm}
+	
+	\begin{center}		
+		{\textbf{ FACULTADE DE INFORMÁTICA}}
+			
+		\vspace{1cm}
+		\LARGE{ TRABALLO FIN DE MÁSTER }	\\
+		\LARGE{ MÁSTER UNIVERSITARIO EN INGENIERÍA INFORMÁTICA } \\
+		\vspace{1cm}	
+		\LARGE{\textbf{ Aplicación web para a xestión de menús domésticos con servizos nutricionais : Eat Fit Week! }}
+	\end{center}
+	
+	\vspace{2cm}
+	\hfill \textbf{Autor: \textit{Elías Ferreiro Borreiros}}
+	
+	
+	\hfill \textbf{Director: \textit{Juan José Sánchez Penas}} 
+	
+	
+	\hfill A Coruña, Agosto, 2019					
+	
+	\clearpage
+	
+	\begin{center}
+		\LARGE{\textbf{ RESUMEN }}	
+	\end{center}
+	Hoy en día, con el cambio en los estilos de vida de las personas y tendiendo hacia unas costumbres más sedentarias, hay una mayor necesidad de enfocarse en una dieta equilibrada y saludable.
+	Para ello, se han desarrollado muchos sistemas webs y móviles para la gestión de comidas y de sus valores nutricionales.	Sin embargo, analizando esos sistemas, vemos que tienen un error en su planteamiento al inundar a los usuarios con formularios sobrecargados y repletos de información innecesaria. 
+	El otro problema principal de estos sistemas es la cantidad exagerada de trabajo manual que debe hacer el usuario antes de poder disfrutar de la funcionalidad principal. 
+
+	Para resolver todo esto, hemos decidido plantear el desarrollo de una aplicación que solvente estos problemas y ofrezca una funcionalidad que no disponen los competidores : el análisis nutricional dinámico de las comidas planificadas para la semana configurable por el usuario. está sobrepasando.
+
+	A mayores permitiremos la gestión de las entidades necesarias para esta planificación: ingredientes, platos, menús ... 
+	Esto se hará siguiendo la filosofía inicial del proyecto: simplificar la entrada lo más posible y disminuir el esfuerzo requerido por el usuario. 
+	Para esto llamaremos a servicios externos que nos permitirán estimar las características nutricionales de los ingredientes de forma que el usuario no tendrá que indicar esos datos y permitiremos con cada registro de usuario el alta automática de unos ingredientes base utilizables en la mayoría de recetas que agilizarán la configuración necesaria de un nuevo perfil para permitir disfrutar al máximo al usuario de las funcionalidades realmente importantes desde el momento más temprano posible.
+	
+	\clearpage
+	
+	\textbf{Título:} Aplicación web para a xestión de menús domésticos con servizos nutricionais
+	\\
+	\textbf{Autor:} Elías Ferreiro Borreiros
+	\\
+	\textbf{Tutor/Director:} Juan José Sánchez Penas
+	
+	
+	\textbf{Palabras clave:} Java EE, POJO, Maven, Angular JS, Spring, Hibernate, Web, MySQL, Tarea, Lista, Contexto, Cliente - Servidor, Food, Planning, Management, Scrum. 
+	
+	
+	\renewcommand{\contentsname}{Índice de contenidos}
+	\renewcommand{\listfigurename}{Índice de figuras}
+	\renewcommand{\listtablename}{Índice de tablas}
+	
+	\tableofcontents % indice de contenidos
+	
+	\listoffigures % indice de figuras
+	
+	\listoftables % indice de tablas
+	
+	\clearpage
+	
+	\chapter{Motivación}
+	Se inicia este proyecto con el objetivo de obtener un sistema de planificación nutricional de menús semanales de la forma lo más configurable y utilizable por el usuario posible.
+	La idea de este sistema surge de una necesidad personal del desarrollador lo que da peso a la viabilidad de la aplicación para un gran número de usuarios.
+	Existe a mayores una motivación tecnológica de aprendizaje de un framework de frontend de cliente como es Angular para un mejor desarrollo profesional del alumno.
+	\chapter{Fundamentos teóricos}
+	Gran cantidad de nutricionistas hoy en día recomiendan dietas con valores de características nutricionales (calorías, grasas ...) máximos diarios / semanales.
+	Planificar las comidas de una semana siguiendo estas directrices puede ser duro y tedioso de forma manual con el problema añadido de que, al principio, puede no conocerse cuando un alimento entra dentro de los límites y cuándo no.
+	
+	La función de nuestro sistema consiste en automatizar esta tarea y ayudar al usuario lo más posible a hacerla rápida, fácil e incluso entretenida. Con el sistema permitiremos al usuario balancear platos en toda la semana para ver que sigue cumpliendo los posibles parámetros de su dieta y, una vez hecha esta planificación semanal, facilitaremos la tarea de saber los ingredientes necesarios para la elaboración de los platos y hasta podremos darle una estimación de cuánto será el coste de toda la compra en un supermercado popular como puede ser Mercadona.
+	
+	Fuera de esta funcionalidad básica, las personas suelen encontrar repetitivo y pesado el hecho de pensar qué platos preparar para cada una de sus comidas lo cual puede en ocasiones llevar a recurrir a comida rápida o por encargo lo cual vuelve a ser perjudicial para salud. Para solucionar esto, se permitirá la generación de menús aleatorios a través de los platos registrados por el usuario, esto puede liberarlo de la tarea de tener que pensar en cada plato concreto del menú y, aunque el resultado obtenido de la generación aleatoria del menú pueda no agradar completamente al usuario en un primer momento, se le dará mucha facilidad para la reorganización de los platos dentro del mismo (Cambiarlos a otro día de la semana, a otra comida concreta, cambiar un plato por otro ...).\\
+	Combinando todas estas funcionalidades podremos hacer que el hecho de planificar el menú semanal y obtener sus ingredientes necesarios para la compra pase de una tarea aburrida y lenta a algo que puede llevar minutos y que resulta mucho menos laborioso y es más automático.
+	
+\end{document}

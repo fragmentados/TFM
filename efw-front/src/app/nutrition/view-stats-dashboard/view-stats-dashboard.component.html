@@ -1,11 +1,11 @@
 <form>
   <div class="dashboard-header">
-    <h3 class="dashboard-title" *ngIf="!isMobile || isLastPage"> {{viewageType}} Nutrition Stats</h3>
-    <h3 class="dashboard-title" *ngIf="isMobile && !isLastPage"> Nutrition Stats</h3>
-    <button (click)="switchDaily()" *ngIf="(!isMobile && (!isTablet || !isLastPage)) && viewageType === 'Weekly'"><b>Switch to Daily</b></button>
+    <h3 class="dashboard-title" *ngIf="!isMobile || isLastPage">{{title}}</h3>
+    <h3 class="dashboard-title" *ngIf="isMobile && !isLastPage"> {{'STAT_DASHBOARD.MOBILE_TITLE' | translate}}</h3>
+    <button (click)="switchDaily()" *ngIf="(!isMobile && (!isTablet || !isLastPage)) && viewageType === 'Weekly'"><b>{{ 'STAT_DASHBOARD.SWITCH_DAILY' | translate }}</b></button>
     <div class="dashboard-daily" *ngIf="!isMobile && viewageType === 'Daily'">
       <input type="date" min="{{getMinDate()}}" max="{{getMaxMenuDate()}}" #DaySelect="ngModel" name="DaySelect" (change)="updateSelectedDailyStats($event)" [(ngModel)]="selectedDay" class="form-control">
-      <button *ngIf="!isTablet" (click)="switchWeekly()"><b>Switch to Weekly</b></button>
+      <button *ngIf="!isTablet" (click)="switchWeekly()"><b>{{ 'STAT_DASHBOARD.SWITCH_WEEKLY' | translate }}</b></button>
     </div>
   </div>
 </form>

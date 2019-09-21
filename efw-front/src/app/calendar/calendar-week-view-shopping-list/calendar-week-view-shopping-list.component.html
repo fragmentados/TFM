@@ -1,13 +1,13 @@
 <div>
-  <h2 mat-dialog-title> Shopping List </h2>
+  <h2 mat-dialog-title>{{ 'CALENDAR.SHOPPING_LIST' | translate }}</h2>
   <div id="shopping-list dialog">
     <hr>
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Ingredient</th>
-        <th>Units</th>
-        <th>Quantity</th>
+        <th>{{ 'CALENDAR.INGREDIENT' | translate }}</th>
+        <th>{{ 'CALENDAR.UNITS' | translate }}</th>
+        <th>{{ 'CALENDAR.QUANTITY' | translate }}</th>
       </tr>
       </thead>
       <tbody>
@@ -20,12 +20,12 @@
     </table>
     <hr>
     <div>
-      <label>Price Estimation: {{data.priceEstimation.price}}</label>
+      <label>{{ 'CALENDAR.MERCADONA' | translate }}: {{data.priceEstimation.price}} €</label>
     </div>
   </div>
   <div mat-dialog-actions class="modal-footer">
-    <button class="btn btn-primary onPrint" (click)="printDialog()">Print</button>
-    <button class="btn btn-success onPrint" mat-button (click)="onOkClick()">Ok</button>
+    <button class="btn btn-primary onPrint" (click)="printDialog()">{{ 'CALENDAR.PRINT' | translate }}</button>
+    <button class="btn btn-success onPrint" mat-button (click)="onOkClick()">{{ 'CALENDAR.OK' | translate }}</button>
   </div>
 </div>
 

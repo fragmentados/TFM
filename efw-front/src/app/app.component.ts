@@ -3,6 +3,8 @@ import { UserService } from './user.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user/user.model';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_LANG } from './models/service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,9 @@ export class AppComponent implements OnInit {
   currentUser: User;
   isMobile = false;
 
-  constructor(private router: Router, private userService: UserService, private appState: ApplicationStateService) {
+  constructor(private translate: TranslateService, private router: Router, private userService: UserService,
+    private appState: ApplicationStateService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.userService.currentUser.subscribe(x => {
       this.currentUser = x;
     });

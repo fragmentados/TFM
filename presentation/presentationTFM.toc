@@ -1,0 +1,12 @@
+\select@language {spanish}
+\beamer@sectionintoc {1}{Introducci\'on}{3}{0}{1}
+\beamer@sectionintoc {2}{Alcance y Objetivos}{5}{0}{2}
+\beamer@sectionintoc {3}{Desarrollo Realizado}{8}{0}{3}
+\beamer@subsectionintoc {3}{1}{Metodolog\IeC {\'\i }a}{9}{0}{3}
+\beamer@subsectionintoc {3}{2}{Viabilidad y Planificaci\'on}{11}{0}{3}
+\beamer@subsectionintoc {3}{3}{Sprints}{12}{0}{3}
+\beamer@subsectionintoc {3}{4}{Tecnolog\IeC {\'\i }a}{13}{0}{3}
+\beamer@subsectionintoc {3}{5}{An\'alisis/Dise\~no de la Soluci\'on}{14}{0}{3}
+\beamer@sectionintoc {4}{Pruebas}{18}{0}{4}
+\beamer@sectionintoc {5}{Demo}{21}{0}{5}
+\beamer@sectionintoc {6}{Conclusiones y Trabajo Futuro}{22}{0}{6}

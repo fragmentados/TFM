@@ -7,6 +7,8 @@ import { UserService } from '../../user.service';
 import { User } from '../../models/user/user.model';
 import { Router } from '@angular/router';
 import { MenuService } from '../../menu/menu.service';
+import { TranslateService } from '@ngx-translate/core';
+import { DEFAULT_LANG } from '../../models/service';
 
 @Component({
   selector: 'app-dishes',
@@ -20,8 +22,9 @@ export class DishesComponent implements OnInit {
   isMobile: boolean;
   isTablet = false;
 
-  constructor(private router: Router, private userService: UserService,
+  constructor(private translate: TranslateService, private router: Router, private userService: UserService,
     private dishService: DishRestService, private menuService: MenuService, private appStateService: ApplicationStateService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.currentUser = this.userService.currentUserValue;
     this.isMobile = this.appStateService.getIsMobileResolution();
     this.isTablet = this.appStateService.getIsTabletResolution();

@@ -1,4 +1,4 @@
-import { OK_CODE } from './../../models/service';
+import { OK_CODE, DEFAULT_LANG } from './../../models/service';
 import { Component, OnInit } from '@angular/core';
 import { AddDish } from '../../models/dish/addDish.model';
 import { Ingredient } from '../../models/ingredient/ingredient.model';
@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Meal } from '../../models/dish/meal.model';
 import { DishService } from '../dish.service';
 import { IngredientNameAndQuantity } from '../../models/ingredient/ingredientNameAndQuantity.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-dish',
@@ -31,8 +32,9 @@ export class UpdateDishComponent implements OnInit {
   selectedMeals: boolean[] = [];
   statsTitle = 'Dish Stats';
 
-  constructor(private route: ActivatedRoute, private dishService: DishService, private dishRestService: DishRestService,
-    private ingredientService: IngredientService, private userService: UserService) {
+  constructor(private translate: TranslateService, private route: ActivatedRoute, private dishService: DishService,
+    private dishRestService: DishRestService, private ingredientService: IngredientService, private userService: UserService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.currentUser = this.userService.currentUserValue;
     this.route.params.subscribe(params => this.dishId = params['id']);
   }

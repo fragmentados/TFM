@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { IngredientService } from '.././ingredient.service';
 import { User } from '../../models/user/user.model';
 import { Stat } from '../../models/nutrition/stat.model';
-import { UNIQUE_CONSTRAINT_CODE, OK_CODE } from '../../models/service';
+import { UNIQUE_CONSTRAINT_CODE, OK_CODE, DEFAULT_LANG } from '../../models/service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './add-ingredient.component.html',
@@ -20,7 +21,9 @@ export class AddIngredientComponent implements OnInit {
   currentUser: User;
   categorySelectedBanned = false;
 
-  constructor(private userService: UserService, private router: Router, private ingredientService: IngredientService) {
+  constructor(private translate: TranslateService, private userService: UserService,
+    private router: Router, private ingredientService: IngredientService) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.currentUser = this.userService.currentUserValue;
   }
 
@@ -58,7 +61,7 @@ export class AddIngredientComponent implements OnInit {
         .subscribe( data => {
           if (data.errorCode === OK_CODE) {
             this.clearForm();
-            alert('Ingredient created successfully.');
+            this.translate.get('COMMON.INGREDIENT_CREATED').subscribe(trans => alert(trans));
           } else {
             alert(data.message);
           }

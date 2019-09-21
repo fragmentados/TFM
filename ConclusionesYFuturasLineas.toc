@@ -1,0 +1,8 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}CONCLUSIONES Y FUTURAS L\IeC {\'I}NEAS DE TRABAJO}{11}{chapter.1}
+\contentsline {section}{\numberline {1.1}Conclusiones}{11}{section.1.1}
+\contentsline {section}{\numberline {1.2}Futuras L\IeC {\'\i }neas de Trabajo}{12}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Aplicaciones nativas m\IeC {\'o}viles}{12}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Colecciones globales}{12}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Fotos de platos}{13}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}Ingredientes ignorados en la lista de la compra}{13}{subsection.1.2.4}

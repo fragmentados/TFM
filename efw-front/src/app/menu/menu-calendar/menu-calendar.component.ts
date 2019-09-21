@@ -1,7 +1,7 @@
 import { ApplicationStateService } from './../../application-state.service';
 import { FacebookService } from 'ngx-facebook';
 import { FillMenuFromTemplate } from './../../models/menu/fillMenuFromTemplate.model';
-import { OK_CODE } from '../../models/service';
+import { OK_CODE, DEFAULT_LANG } from '../../models/service';
 import { AddDishToMenu } from './../../models/menu/addDishToMenu.model';
 // tslint:disable-next-line:max-line-length
 import { CalendarWeekViewShoppingListComponent } from './../../calendar/calendar-week-view-shopping-list/calendar-week-view-shopping-list.component';
@@ -24,6 +24,7 @@ import { CreateMenuTemplate } from '../../models/menu/menutemplate/createMenuTem
 import { MenuSaveTemplateComponent } from '../menu-save-template/menu-save-template.component';
 import { MenuSelectTemplateComponent } from '../menu-select-template/menu-select-template.component';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 class MenuForStatUpdate {
   menu: Menu;
@@ -51,6 +52,7 @@ export class MenuCalendarComponent implements OnInit {
   isTablet = true;
   isLastPage = false;
   dayOffset = 1;
+  locale: string = DEFAULT_LANG;
 
   sendUpdateStatsEvent() {
     this.updateStatsSubject.next({
@@ -60,9 +62,10 @@ export class MenuCalendarComponent implements OnInit {
     });
   }
 
-  constructor(private userService: UserService, private menuService: MenuService,
+  constructor(private translate: TranslateService, private userService: UserService, private menuService: MenuService,
     private menuTemplateService: MenuTemplateService, private fb: FacebookService,
     private appStateService: ApplicationStateService, public dialog: MatDialog) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
     this.currentUser = this.userService.currentUserValue;
     this.isMobile = appStateService.getIsMobileResolution();
     this.isTablet = appStateService.getIsTabletResolution();
@@ -282,14 +285,16 @@ export class MenuCalendarComponent implements OnInit {
         width: '600px'
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog closed: ${result}`);
-        const createTemplate = new CreateMenuTemplate();
-        createTemplate.menuId = this.menu.id;
-        createTemplate.userId = this.currentUser.id;
-        createTemplate.name = result;
-        this.menuTemplateService.saveAsTemplate(createTemplate).subscribe(data => {
-          alert('Template correctly saved');
-        });
+        if (result) {
+          console.log(`Dialog closed: ${result}`);
+          const createTemplate = new CreateMenuTemplate();
+          createTemplate.menuId = this.menu.id;
+          createTemplate.userId = this.currentUser.id;
+          createTemplate.name = result;
+          this.menuTemplateService.saveAsTemplate(createTemplate).subscribe(data => {
+            this.translate.get('COMMON.TEMPLATE_SAVED').subscribe(trans => alert(trans));
+          });
+        }
       });
   }
 
@@ -298,16 +303,18 @@ export class MenuCalendarComponent implements OnInit {
       width: '600px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      const fillFromTemplate = new FillMenuFromTemplate();
-      fillFromTemplate.templateId = result.id;
-      fillFromTemplate.userId = this.currentUser.id;
-      this.menuService.fillMenuFromTemplate(this.menu.id, fillFromTemplate).subscribe(data => {
-        this.menu.days = data.days;
-        this.menu.stats = data.stats;
-        this.sendUpdateStatsEvent();
-        this.initCalendarEventsWithDishes();
-        alert('Menu Filled From Template');
-      });
+      if (result) {
+        const fillFromTemplate = new FillMenuFromTemplate();
+        fillFromTemplate.templateId = result.id;
+        fillFromTemplate.userId = this.currentUser.id;
+        this.menuService.fillMenuFromTemplate(this.menu.id, fillFromTemplate).subscribe(data => {
+          this.menu.days = data.days;
+          this.menu.stats = data.stats;
+          this.sendUpdateStatsEvent();
+          this.initCalendarEventsWithDishes();
+          this.translate.get('COMMON.MENU_FILLED').subscribe(trans => alert(trans));
+        });
+      }
     });
   }
 
@@ -333,7 +340,8 @@ export class MenuCalendarComponent implements OnInit {
     this.fb.ui(
       {
           method: 'feed',
-          link: 'https://localhost:4200/'
+          message: 'Trying out a description',
+          link: 'https://www.edamam.com/'
       });
   }
 

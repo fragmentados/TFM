@@ -2,22 +2,65 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Food Planner\relax }}{22}{figure.caption.4}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Food Planner Add Recipe\relax }}{23}{figure.caption.5}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Food Planner Calendar\relax }}{24}{figure.caption.6}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Eat This Much Selection\relax }}{25}{figure.caption.7}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Eat This Much Menu\relax }}{26}{figure.caption.8}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Meal Planner Survey\relax }}{27}{figure.caption.9}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Meal Planner Menu\relax }}{28}{figure.caption.10}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces What's For Dinner Search\relax }}{29}{figure.caption.11}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces What's For Dinner Menu\relax }}{29}{figure.caption.12}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Spring\relax }}{24}{figure.caption.4}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Hibernate\relax }}{25}{figure.caption.5}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Angular JS\relax }}{26}{figure.caption.6}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Git\relax }}{31}{figure.caption.7}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Spring\relax }}{35}{figure.caption.13}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Hibernate\relax }}{35}{figure.caption.14}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Angular JS\relax }}{37}{figure.caption.15}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Git\relax }}{42}{figure.caption.16}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Scrum\relax }}{46}{figure.caption.17}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Casos de uso\relax }}{62}{figure.caption.18}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Initial Design\relax }}{64}{figure.caption.19}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Mockup Menu Semanal\relax }}{65}{figure.caption.20}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Anadir Ingrediente\relax }}{66}{figure.caption.21}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Anadir Plato\relax }}{66}{figure.caption.22}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Menu\relax }}{67}{figure.caption.23}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Ingredient Estimate\relax }}{68}{figure.caption.24}
+\contentsline {figure}{\numberline {7.7}{\ignorespaces Mercadona Price Estimate\relax }}{69}{figure.caption.25}
+\contentsline {figure}{\numberline {7.8}{\ignorespaces Weka Service\relax }}{69}{figure.caption.26}
+\contentsline {figure}{\numberline {7.9}{\ignorespaces Entidad relacion\relax }}{73}{figure.caption.27}
+\contentsline {figure}{\numberline {7.10}{\ignorespaces Arquitectura global\relax }}{75}{figure.caption.28}
+\contentsline {figure}{\numberline {7.11}{\ignorespaces Arquitectura backend\relax }}{77}{figure.caption.29}
+\contentsline {figure}{\numberline {7.12}{\ignorespaces Diagrama de clases\relax }}{78}{figure.caption.30}
+\contentsline {figure}{\numberline {7.13}{\ignorespaces Diagrama Componente Angular\relax }}{89}{figure.caption.31}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces Tests Unitarios\relax }}{104}{figure.caption.32}
+\contentsline {figure}{\numberline {9.2}{\ignorespaces Cobertura\relax }}{104}{figure.caption.33}
+\contentsline {figure}{\numberline {9.3}{\ignorespaces Shopping List ScreenShot\relax }}{107}{figure.caption.34}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {8.1}{\ignorespaces Arquitectura global\relax }}{40}{figure.caption.8}
-\contentsline {figure}{\numberline {8.2}{\ignorespaces Arquitectura backend\relax }}{41}{figure.caption.9}
-\contentsline {figure}{\numberline {8.3}{\ignorespaces Diagrama de clases\relax }}{42}{figure.caption.10}
-\contentsline {figure}{\numberline {8.4}{\ignorespaces Entidad relacion\relax }}{45}{figure.caption.11}
-\contentsline {figure}{\numberline {8.5}{\ignorespaces Diagrama Componente Angular\relax }}{55}{figure.caption.12}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Log in\relax }}{121}{figure.caption.37}
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Sign up\relax }}{122}{figure.caption.38}
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Add ingredient\relax }}{123}{figure.caption.39}
+\contentsline {figure}{\numberline {A.4}{\ignorespaces Add ingredient Mobile And Tablet\relax }}{124}{figure.caption.40}
+\contentsline {figure}{\numberline {A.5}{\ignorespaces List ingredients\relax }}{125}{figure.caption.41}
+\contentsline {figure}{\numberline {A.6}{\ignorespaces List ingredients Tablet\relax }}{126}{figure.caption.42}
+\contentsline {figure}{\numberline {A.7}{\ignorespaces List ingredients Mobile\relax }}{127}{figure.caption.43}
+\contentsline {figure}{\numberline {A.8}{\ignorespaces Update ingredient\relax }}{128}{figure.caption.44}
+\contentsline {figure}{\numberline {A.9}{\ignorespaces Update ingredient Mobile Tablet\relax }}{129}{figure.caption.45}
+\contentsline {figure}{\numberline {A.10}{\ignorespaces Add dish\relax }}{130}{figure.caption.46}
+\contentsline {figure}{\numberline {A.11}{\ignorespaces Add dish Mobile And Tablet\relax }}{131}{figure.caption.47}
+\contentsline {figure}{\numberline {A.12}{\ignorespaces List dishes\relax }}{132}{figure.caption.48}
+\contentsline {figure}{\numberline {A.13}{\ignorespaces List dishes Tablet\relax }}{133}{figure.caption.49}
+\contentsline {figure}{\numberline {A.14}{\ignorespaces List dishes Mobile\relax }}{134}{figure.caption.50}
+\contentsline {figure}{\numberline {A.15}{\ignorespaces Update dish\relax }}{135}{figure.caption.51}
+\contentsline {figure}{\numberline {A.16}{\ignorespaces Update dish Mobile And Tablet\relax }}{136}{figure.caption.52}
+\contentsline {figure}{\numberline {A.17}{\ignorespaces User configurations\relax }}{137}{figure.caption.53}
+\contentsline {figure}{\numberline {A.18}{\ignorespaces User configurations Mobile And Tablet\relax }}{138}{figure.caption.54}
+\contentsline {figure}{\numberline {A.19}{\ignorespaces Menu View\relax }}{140}{figure.caption.55}
+\contentsline {figure}{\numberline {A.20}{\ignorespaces Menu View Tablet\relax }}{141}{figure.caption.56}
+\contentsline {figure}{\numberline {A.21}{\ignorespaces Menu View Mobile\relax }}{142}{figure.caption.57}
+\contentsline {figure}{\numberline {A.22}{\ignorespaces Menu Week View Mobile And Tablet\relax }}{143}{figure.caption.58}

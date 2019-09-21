@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarWeekViewAddDishComponent } from '../calendar-week-view-add-dish/calendar-week-view-add-dish.component';
 import { AddDishToMenu } from '../../models/menu/addDishToMenu.model';
 import { Dish } from '../../models/dish/dish.model';
+import { DEFAULT_LANG } from '../../models/service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-calendar-week-view-hour-segment',
@@ -16,7 +18,9 @@ import { Dish } from '../../models/dish/dish.model';
 })
 export class CalendarWeekViewHourSegmentComponent {
 
-  constructor(private menuService: MenuService, public dialog: MatDialog) { }
+  constructor(private translate: TranslateService, private menuService: MenuService, public dialog: MatDialog) {
+    this.translate.setDefaultLang(DEFAULT_LANG);
+  }
 
   @Input() segment: WeekViewHourColumn;
 
